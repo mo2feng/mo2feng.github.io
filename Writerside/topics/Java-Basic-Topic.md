@@ -1,20 +1,7 @@
-# Java 基础 - 面向对象
+# Java 基础
 
 > 本文主要介绍Java OOP 面向对象基础和相关类图。
 
-- Java 基础 - 面向对象
-    - 三大特性
-        - [封装](#封装)
-        - [继承](#继承)
-        - [多态](#多态)
-    - 类图
-        - [泛化关系 (Generalization)](#泛化关系-generalization)
-        - [实现关系 (Realization)](#实现关系-realization)
-        - [聚合关系 (Aggregation)](#聚合关系-aggregation)
-        - [组合关系 (Composition)](#组合关系-composition)
-        - [关联关系 (Association)](#关联关系-association)
-        - [依赖关系 (Dependency)](#依赖关系-dependency)
-    - [参考资料](#参考资料)
 
 ## 三大特性
 
@@ -145,7 +132,6 @@ Vehical <|-- Truck
 
 用来实现一个接口，在 Java 中使用 implements 关键字。
 
-![img](/images/pics/SoWkIImgAStDuU8goIp9ILK8IatCoQn.png)
 
 ```bash
 @startuml
@@ -166,7 +152,6 @@ MoveBehavior <|.. Run
 
 表示整体由部分组成，但是整体和部分不是强依赖的，整体不存在了部分还是会存在。
 
-![img](/images/pics/SoWkIImgAStDuU8goIp9ILLmJ4ylIar.png)
 
 ```bash
 @startuml
@@ -189,7 +174,7 @@ Computer o-- Screen
 
 和聚合不同，组合中整体和部分是强依赖的，整体不存在了部分也不存在了。比如公司和部门，公司没了部门就不存在了。但是公司和员工就属于聚合关系了，因为公司没了员工还在。
 
-![img](/images/pics/SoWkIImgAStDuU8goIp9ILLmpiyjo2_.png)
+
 
 ```bash
 @startuml
@@ -210,7 +195,6 @@ Company *-- DepartmentB
 
 表示不同类对象之间有关联，这是一种静态关系，与运行过程的状态无关，在最开始就可以确定。因此也可以用 1 对 1、多对 1、多对多这种关联关系来表示。比如学生和学校就是一种关联关系，一个学校可以有很多学生，但是一个学生只属于一个学校，因此这是一种多对一的关系，在运行开始之前就可以确定。
 
-![img](/images/pics/SoWkIImgAStDuU8goIp9ILLmB2xEJyv.png)
 
 ```bash
 @startuml
@@ -233,7 +217,6 @@ School "1" - "n" Student
 - A 类是 B 类方法当中的一个参数；
 - A 类向 B 类发送消息，从而影响 B 类发生变化；
 
-![img](/images/pics/LOun2W9134NxVugmbJPp15d4LalxC4O.png)
 
 ```bash
 @startuml
