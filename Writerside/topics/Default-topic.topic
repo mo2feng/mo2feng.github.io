@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       id="Default-topic" title="Java">
+
+    <section-starting-page>
+        <title>Section starting page title</title>
+        <description>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            condimentum feugiat sagittis.
+        </description>
+
+        <spotlight>
+            <a href="Java-Top-Basic.topic"
+               description="Sed condimentum feugiat sagittis" type="start"/>
+            <a href="Java-Concurrency.topic"
+               description="Sed condimentum feugiat sagittis" type="start"/>
+        </spotlight>
+
+        <primary>
+            <title>Main group</title>
+            <a href="Java-Top-Basic.topic"
+               description="Sed condimentum feugiat sagittis"/>
+        </primary>
+
+        <secondary>
+            <title>Highlighted group</title>
+            <a href="Java-Concurrency.topic"
+               description="Sed condimentum feugiat sagittis"/>
+        </secondary>
+
+<!--        <misc>-->
+<!--            <cards>-->
+<!--                <title>Custom cards</title>-->
+<!--                <a href="Topic.topic"-->
+<!--                   description="Sed condimentum feugiat sagittis"/>-->
+<!--                ...-->
+<!--            </cards>-->
+
+<!--            <links display="wide">-->
+<!--                <group>-->
+<!--                    <title>Custom links</title>-->
+<!--                    <a href="Topic.topic"-->
+<!--                       description="Sed condimentum feugiat sagittis"/>-->
+<!--                    ...-->
+<!--                </group>-->
+<!--                ...-->
+<!--            </links>-->
+<!--        </misc>-->
+    </section-starting-page>
+
+</topic>
