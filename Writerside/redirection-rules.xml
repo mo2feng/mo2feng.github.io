@@ -10,4 +10,8 @@
         <description>Created after removal of "Java基础常见面试题总结(上)" from 墨居</description>
         <accepts>Java-Basic-01.html</accepts>
     </rule>
+    <rule id="271c98d9">
+        <description>Created after removal of "JavaBetter" from 墨居</description>
+        <accepts>JavaBetter.html</accepts>
+    </rule>
 </rules>
