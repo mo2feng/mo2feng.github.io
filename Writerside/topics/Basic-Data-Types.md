@@ -1,3 +1,0 @@
-# 基本数据类型
-
-Start typing here...

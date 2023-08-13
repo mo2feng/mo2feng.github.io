@@ -13,41 +13,44 @@
 
         <spotlight>
             <a href="Java-Top-Basic.topic"
-               description="Sed condimentum feugiat sagittis" type="start"/>
+               description="Sed condimentum feugiat sagittis" type="learn"/>
             <a href="Java-Concurrency.topic"
-               description="Sed condimentum feugiat sagittis" type="start"/>
+               description="Sed condimentum feugiat sagittis" type="academy"/>
         </spotlight>
 
         <primary>
-            <title>Main group</title>
+            <title>Java</title>
             <a href="Java-Top-Basic.topic"
-               description="Sed condimentum feugiat sagittis"/>
+               description="Java Top Basic"/>
+            <a href="Java-Concurrency.topic"
+               description="Java Concurrency"/>
+
         </primary>
 
         <secondary>
-            <title>Highlighted group</title>
+            <title>杂谈</title>
             <a href="Java-Concurrency.topic"
                description="Sed condimentum feugiat sagittis"/>
         </secondary>
 
-<!--        <misc>-->
-<!--            <cards>-->
-<!--                <title>Custom cards</title>-->
-<!--                <a href="Topic.topic"-->
-<!--                   description="Sed condimentum feugiat sagittis"/>-->
-<!--                ...-->
-<!--            </cards>-->
+        <!--        <misc>-->
+        <!--            <cards>-->
+        <!--                <title>Custom cards</title>-->
+        <!--                <a href="Topic.topic"-->
+        <!--                   description="Sed condimentum feugiat sagittis"/>-->
+        <!--                ...-->
+        <!--            </cards>-->
 
-<!--            <links display="wide">-->
-<!--                <group>-->
-<!--                    <title>Custom links</title>-->
-<!--                    <a href="Topic.topic"-->
-<!--                       description="Sed condimentum feugiat sagittis"/>-->
-<!--                    ...-->
-<!--                </group>-->
-<!--                ...-->
-<!--            </links>-->
-<!--        </misc>-->
+        <!--            <links display="wide">-->
+        <!--                <group>-->
+        <!--                    <title>Custom links</title>-->
+        <!--                    <a href="Topic.topic"-->
+        <!--                       description="Sed condimentum feugiat sagittis"/>-->
+        <!--                    ...-->
+        <!--                </group>-->
+        <!--                ...-->
+        <!--            </links>-->
+        <!--        </misc>-->
     </section-starting-page>
 
 </topic>
