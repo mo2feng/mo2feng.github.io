@@ -1,4 +1,4 @@
-# Java 基础
+# Java基础
 
 ## 思维导图
 ![Java基础核心思维导图](Java-Basic-Mind.png) {style="block" width="400" thumbnail="true"}
