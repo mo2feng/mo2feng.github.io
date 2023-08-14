@@ -1,9 +1,11 @@
 # Java基础
+    
+<link-summary>Java基础思维导图和常见面试题</link-summary>
 
 ## 思维导图
 ![Java基础核心思维导图](Java-Basic-Mind.png) {style="block"}
 
-## Java 基础常见面试题汇总 ：
+## Java 基础常见面试题汇总
 
 * Java 语言的特点（如果你简历上有提到 C++ 可能还会问你 Java 和 C++ 的区别）。【⭐⭐】
 * 比较 JVM 和 JDK 以及 JRE 。【⭐⭐⭐】非常非常基础的一个问题！学了 Java 之后还不知这个问题如何回答的小伙伴自觉去面壁吧！
