@@ -2,13 +2,13 @@
 <!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
-       id="Java-Topic" title="Java" help-id="Default-topic;Java-topic">
+       id="Java" title="Java" help-id="Default-topic;Java-topic;Java-Topic">
 
+    <link-summary>Java 后端开发</link-summary>
     <section-starting-page>
-        <title>Section starting page title</title>
+        <title>Java 技术</title>
         <description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            condimentum feugiat sagittis.
+            Java 技术
         </description>
 
         <spotlight>

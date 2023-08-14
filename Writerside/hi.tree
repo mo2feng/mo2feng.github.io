@@ -7,7 +7,7 @@
                  start-page="Home.topic">
 
     <toc-element topic="Home.topic">
-        <toc-element topic="Java-Topic.topic">
+        <toc-element topic="Java.topic">
             <toc-element topic="Java-Basic-T.md"/>
             <toc-element topic="Java-Concurrency.topic"/>
             <toc-element topic="Java-Top-Basic.topic">
