@@ -1,240 +1,29 @@
 # Java 基础
 
-> 本文主要介绍Java OOP 面向对象基础和相关类图。
+## 思维导图
+![Java基础核心思维导图](Java-Basic-Mind.png) {style="block" width="400" thumbnail="true"}
 
-## 面向对象 {id="object-oriented-programming"}
+## Java 基础常见面试题汇总 ：
 
-### 封装
-
-利用抽象数据类型将数据和基于数据的操作封装在一起，使其构成一个不可分割的独立实体。数据被保护在抽象数据类型的内部，尽可能地隐藏内部的细节，只保留一些对外接口使之与外部发生联系。用户无需知道对象内部的细节，但可以通过对象对外提供的接口来访问该对象。
-
-优点:
-
-- 减少耦合: 可以独立地开发、测试、优化、使用、理解和修改
-- 减轻维护的负担: 可以更容易被程序员理解，并且在调试的时候可以不影响其他模块
-- 有效地调节性能: 可以通过剖析确定哪些模块影响了系统的性能
-- 提高软件的可重用性
-- 降低了构建大型系统的风险: 即使整个系统不可用，但是这些独立的模块却有可能是可用的
-
-以下 Person 类封装 name、gender、age 等属性，外界只能通过 get() 方法获取一个 Person 对象的 name 属性和 gender 属性，而无法获取
-age 属性，但是 age 属性可以供 work() 方法使用。
-
-注意到 gender 属性使用 int 数据类型进行存储，封装使得用户注意不到这种实现细节。并且在需要修改 gender
-属性使用的数据类型时，也可以在不影响客户端代码的情况下进行。
-
-```java
-public class Person {
-
-    private String name;
-    private int gender;
-    private int age;
-
-    public String getName() {
-        return name;
-    }
-
-    public String getGender() {
-        return gender == 0 ? "man" : "woman";
-    }
-
-    public void work() {
-        if (18 <= age && age <= 50) {
-            System.out.println(name + " is working very hard!");
-        } else {
-            System.out.println(name + " can't work any more!");
-        }
-    }
-}
-```
-
-### 继承
-
-继承实现了 **IS-A** 关系，例如 Cat 和 Animal 就是一种 IS-A 关系，因此 Cat 可以继承自 Animal，从而获得 Animal 非 private
-的属性和方法。
-
-继承应该遵循里氏替换原则，子类对象必须能够替换掉所有父类对象。
-
-Cat 可以当做 Animal 来使用，也就是说可以使用 Animal 引用 Cat 对象。父类引用指向子类对象称为 **向上转型** 。
-
-```java
-Animal animal=new Cat();
-```
-
-###  多态 {id="polymorphism"}
-
-多态分为编译时多态和运行时多态:
-
-- 编译时多态主要指方法的重载
-- 运行时多态指程序中定义的对象引用所指向的具体类型在运行期间才确定
-
-运行时多态有三个条件:
-
-- 继承
-- 覆盖(重写)
-- 向上转型
-
-下面的代码中，乐器类(Instrument)有两个子类: Wind 和 Percussion，它们都覆盖了父类的 play() 方法，并且在 main() 方法中使用父类
-Instrument 来引用 Wind 和 Percussion 对象。在 Instrument 引用调用 play() 方法时，会执行实际引用对象所在类的 play() 方法，而不是
-Instrument 类的方法。
-
-```java
-public class Instrument {
-    public void play() {
-        System.out.println("Instrument is playing...");
-    }
-}
-
-public class Wind extends Instrument {
-    public void play() {
-        System.out.println("Wind is playing...");
-    }
-}
-
-public class Percussion extends Instrument {
-    public void play() {
-        System.out.println("Percussion is playing...");
-    }
-}
-
-public class Music {
-    public static void main(String[] args) {
-        List<Instrument> instruments = new ArrayList<>();
-        instruments.add(new Wind());
-        instruments.add(new Percussion());
-        for (Instrument instrument : instruments) {
-            instrument.play();
-        }
-    }
-}
-```
-
-## 类图 {id="class-diagram"}
-
-### 泛化关系 (Generalization) {id="generalization"
-
-用来描述继承关系，在 Java 中使用 extends 关键字。
-
-```mermaid
----
-title: 泛化关系
----
-classDiagram
-    class Vehicle
-    class Car
-    class Truck
-
-    Vehicle <|-- Car
-    Vehicle <|-- Truck
-```
-
-###  实现关系 (Realization) {id="realization"}
-
-用来实现一个接口，在 Java 中使用 implements 关键字。
-
-```mermaid
----
-title: 实现关系
----
-classDiagram
-    class MoveBehavior {
-        <<interface>>
-    }
-    class Fly
-    class Run
-
-    MoveBehavior <|.. Fly
-    MoveBehavior <|.. Run
-```
-
-### 聚合关系 (Aggregation) {id="aggregation"}
-
-表示整体由部分组成，但是整体和部分不是强依赖的，整体不存在了部分还是会存在。
-
-```mermaid
----
-title: Aggregation
----
-classDiagram
-    class Computer
-    class Keyboard
-    class Mouse
-    class Screen
-    
-    Computer o-- Keyboard
-    Computer o-- Mouse
-    Computer o-- Screen
-```
-
-### 组合关系 (Composition) {id="composition"}
-
-和聚合不同，组合中整体和部分是强依赖的，整体不存在了部分也不存在了。比如公司和部门，公司没了部门就不存在了。但是公司和员工就属于聚合关系了，因为公司没了员工还在。
-
-```mermaid
----
-title: Composition
----
-classDiagram
-    class Company
-    class Department
-    class Employee
-    
-    Company *-- Department
-    Department *-- Employee
-```
-
-### 关联关系 (Association) {id="association"}
-
-表示不同类对象之间有关联，这是一种静态关系，与运行过程的状态无关，在最开始就可以确定。因此也可以用 1 对 1、多对
-1、多对多这种关联关系来表示。比如学生和学校就是一种关联关系，一个学校可以有很多学生，但是一个学生只属于一个学校，因此这是一种多对一的关系，在运行开始之前就可以确定。
-
-```mermaid
----
-title: 关联关系
----
-classDiagram
-    class School
-    class Student
-    
-    School "1" -- "n" Student
-```
-### 依赖关系 (Dependency) {id="dependency"}
-
-和关联关系不同的是，依赖关系是在运行过程中起作用的。A 类和 B 类是依赖关系主要有三种形式:
-
-- A 类是 B 类中的(某中方法的)局部变量；
-- A 类是 B 类方法当中的一个参数；
-- A 类向 B 类发送消息，从而影响 B 类发生变化；
-
-```mermaid
----
-title: Dependency
----
-
-classDiagram
-class Vehicle  {
-    move(MoveBehavior moveBehavior)
-}
-
-class  MoveBehavior {
-    <<interface>>
-    move()
-}
-
-
-Vehicle ..> MoveBehavior
-
-Vehicle .. MoveBehavior
-```
-
-## 参考资料 {id="参考资料"} {collapsible="true"}
-
-- Java 编程思想
-- 敏捷软件开发: 原则、模式与实践
-- [面向对象设计的 SOLID 原则](http://www.cnblogs.com/shanyou/archive/2009/09/21/1570716.html)
-- [看懂 UML 类图和时序图](http://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html#generalization)
-- [UML 系列——时序图(顺序图)sequence diagram](http://www.cnblogs.com/wolf-sun/p/UML-Sequence-diagram.html)
-- [面向对象编程三大特性 ------ 封装、继承、多态](http://blog.csdn.net/jianyuerensheng/article/details/51602015)
-- java oop基础知识总结 https://blog.csdn.net/weixin_38173324/article/details/70037927
-- Java实现OOP(面向对象编程) https://www.cnblogs.com/AlanLee/p/6475334.html
-- Java 抽象类与oop三大特征 http://www.cnblogs.com/wujing-hubei/p/6012105.html
-
+* Java 语言的特点（如果你简历上有提到 C++ 可能还会问你 Java 和 C++ 的区别）。【⭐⭐】
+* 比较 JVM 和 JDK 以及 JRE 。【⭐⭐⭐】非常非常基础的一个问题！学了 Java 之后还不知这个问题如何回答的小伙伴自觉去面壁吧！
+* 为什么说 Java 语言“解释与编译并存”。【⭐⭐】
+* Java 基本类型有哪几种，各占多少位？【⭐⭐】前些年面试常问的一个问题，去年面试过程中只京东问我了
+* Java 泛型，类型擦除。【⭐⭐⭐】
+* == 和 equals() 的区别。【⭐⭐⭐】：这个问题在 2018 年之前几乎是面试必问的问题，但是现在大厂以及比较少问了，现在小厂中厂问的多。
+* hashCode() 和 equals() 【⭐⭐⭐⭐】：这个问题经常问，面试官经常问为什么重写 equals() 时要重写 hashCode() 方法？另外，这个问题经常结合着 HashSet 问。
+* 重载和重写的区别。 【⭐⭐⭐⭐】
+* 深拷贝和浅拷贝。【⭐】
+* 面向对象和面向过程的区别。【⭐⭐⭐】
+* 成员变量与局部变量的区别。【⭐⭐⭐】
+* 面向对象三大特性是什么。并解释这三大特性。【⭐⭐⭐⭐】
+* String、StringBuffer 和 StringBuilder 的区别。 【⭐⭐⭐⭐】
+* Java 异常。【⭐⭐⭐】：不会问的特别细。经常的问法是异常可以分为哪几种，然后你答了可检查异常和不可检查异常以后，会让你举例可检查异常有哪些，不可检查有哪些。然后，异常的代码要会写，有一场字节的面试，直接让我写一个把异常捕获了然后抛出去的代码。
+* 序列化和反序列化【⭐⭐】
+* 反射【⭐⭐】面试官可能会问你什么是反射，它的优缺点是什么，有哪些应用场景。
+* List、Set、 Map 的区别。【⭐⭐】
+* ArrayList 和 LinkedList 的区别。【⭐⭐⭐⭐】：答清楚每个分别采用什么数据结构，对比相应的优点和缺点。
+* 比较 HashSet、LinkedHashSet 和 TreeSet 三者的异同。【⭐⭐⭐】
+* HashMap 多线程操作导致死循环问题。【⭐⭐⭐】jdk 1.8 后解决了这个问题，但是还是不建议在多线程下使用 HashMap,因为多线程下使用 HashMap 还是会存在其他问题比如数据丢失。并发环境下推荐使用 ConcurrentHashMap 。
+* HashMap 的长度为什么是 2 的幂次方。【⭐⭐⭐】主要是考虑到了对运算效率的提升。
+* HashMap、HashTable、以及 ConcurrentHashMap 的区别。【⭐⭐⭐⭐⭐】：现在面试的超高频考点。当面试官问到这个问题的时候，展现你背面试八股文能力的机会来了。你可以展开去讲在 Java7 和 Java8 中 HashMap 分别采用什么数据结构，为什么 Java8 把之前的头插法改成了尾插法，怎样实现扩容，为什么负载因子是 0.75，为什么要用红黑树等等一系列的东西。只要面试官不打断我，我在这个知识点上能背到面试官下班。
