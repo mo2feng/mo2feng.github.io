@@ -4,27 +4,29 @@
 
 <instance-profile id="hi"
                  name="墨居"
-                 start-page="Default-topic.topic">
+                 start-page="Home.topic">
 
-    <toc-element topic="Default-topic.topic">
-        <toc-element topic="Java-Basic-T.md"/>
-        <toc-element topic="Java-Concurrency.topic"/>
-    </toc-element>
-    <toc-element topic="Java-Top-Basic.topic">
-        <toc-element topic="Object-Oriented.topic">
-            <toc-element topic="What-Is-Object-Oriented.topic"/>
-            <toc-element topic="Encapsulation-Inheritance-Polymorphism.md"/>
-            <toc-element topic="Platform-Independent.md"/>
-            <toc-element topic="Parameter-Pass-By.md"/>
-        </toc-element>
-        <toc-element topic="Java-Top-Basic-Knowledge.md">
-            <toc-element topic="Basic-Data-Types.topic"/>
-            <toc-element topic="Boxing-Unboxing.topic"/>
-            <toc-element topic="String.md"/>
-            <toc-element topic="Java-Keywords.md"/>
-            <toc-element topic="Collections.md"/>
-            <toc-element topic="Java-Enumerate.md"/>
-            <toc-element topic="Java-IO.md"/>
+    <toc-element topic="Home.topic">
+        <toc-element topic="Java-Topic.topic">
+            <toc-element topic="Java-Basic-T.md"/>
+            <toc-element topic="Java-Concurrency.topic"/>
+            <toc-element topic="Java-Top-Basic.topic">
+                <toc-element topic="Object-Oriented.topic">
+                    <toc-element topic="What-Is-Object-Oriented.topic"/>
+                    <toc-element topic="Encapsulation-Inheritance-Polymorphism.md"/>
+                    <toc-element topic="Platform-Independent.md"/>
+                    <toc-element topic="Parameter-Pass-By.md"/>
+                </toc-element>
+                <toc-element topic="Java-Top-Basic-Knowledge.md">
+                    <toc-element topic="Basic-Data-Types.topic"/>
+                    <toc-element topic="Boxing-Unboxing.topic"/>
+                    <toc-element topic="String.md"/>
+                    <toc-element topic="Java-Keywords.md"/>
+                    <toc-element topic="Collections.md"/>
+                    <toc-element topic="Java-Enumerate.md"/>
+                    <toc-element topic="Java-IO.md"/>
+                </toc-element>
+            </toc-element>
         </toc-element>
     </toc-element>
 </instance-profile>

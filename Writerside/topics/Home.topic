@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Home" id="Home">
+
+    <section-starting-page>
+        <title>Better Backend</title>
+        <description>
+        </description>
+
+        <spotlight>
+            <a href="Java-Topic.topic"
+               description="Sed condimentum feugiat sagittis" type="learn"/>
+            <a href="Java-Concurrency.topic"
+               description="Sed condimentum feugiat sagittis" type="academy"/>
+        </spotlight>
+
+        <primary>
+            <title>Java</title>
+            <a href="Java-Top-Basic.topic"
+               description="Java Top Basic"/>
+            <a href="Java-Concurrency.topic"
+               description="Java Concurrency"/>
+
+        </primary>
+
+        <secondary>
+            <title>杂谈</title>
+            <a href="Java-Concurrency.topic"
+               description="Sed condimentum feugiat sagittis"/>
+        </secondary>
+    </section-starting-page>
+
+</topic>

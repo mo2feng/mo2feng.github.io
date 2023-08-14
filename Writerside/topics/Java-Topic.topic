@@ -2,7 +2,7 @@
 <!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
-       id="Default-topic" title="Java">
+       id="Java-Topic" title="Java" help-id="Default-topic;Java-topic">
 
     <section-starting-page>
         <title>Section starting page title</title>
@@ -12,10 +12,10 @@
         </description>
 
         <spotlight>
-            <a href="Java-Top-Basic.topic"
-               description="Sed condimentum feugiat sagittis" type="learn"/>
+            <a href="Java-Topic.topic"
+               description="Java" type="start"/>
             <a href="Java-Concurrency.topic"
-               description="Sed condimentum feugiat sagittis" type="academy"/>
+               description="Java Concurrency" type="learn"/>
         </spotlight>
 
         <primary>
@@ -32,25 +32,6 @@
             <a href="Java-Concurrency.topic"
                description="Sed condimentum feugiat sagittis"/>
         </secondary>
-
-        <!--        <misc>-->
-        <!--            <cards>-->
-        <!--                <title>Custom cards</title>-->
-        <!--                <a href="Topic.topic"-->
-        <!--                   description="Sed condimentum feugiat sagittis"/>-->
-        <!--                ...-->
-        <!--            </cards>-->
-
-        <!--            <links display="wide">-->
-        <!--                <group>-->
-        <!--                    <title>Custom links</title>-->
-        <!--                    <a href="Topic.topic"-->
-        <!--                       description="Sed condimentum feugiat sagittis"/>-->
-        <!--                    ...-->
-        <!--                </group>-->
-        <!--                ...-->
-        <!--            </links>-->
-        <!--        </misc>-->
     </section-starting-page>
 
 </topic>
