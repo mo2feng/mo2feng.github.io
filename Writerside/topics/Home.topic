@@ -30,7 +30,7 @@
         <secondary>
             <title>杂谈</title>
             <a href="Java-Concurrency.topic"
-               description="Sed condimentum feugiat sagittis"/>
+               description="Java Concurrency"/>
         </secondary>
     </section-starting-page>
 

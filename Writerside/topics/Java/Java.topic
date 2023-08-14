@@ -4,7 +4,6 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        id="Java" title="Java" help-id="Default-topic;Java-topic;Java-Topic">
 
-    <link-summary>Java 后端开发</link-summary>
     <section-starting-page>
         <title>Java 技术</title>
         <description>
