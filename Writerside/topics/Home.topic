@@ -8,13 +8,14 @@
     <section-starting-page>
         <title>Better Backend</title>
         <description>
+            A Collection of Backend Development
         </description>
 
         <spotlight>
             <a href="Java-Topic.topic"
-               description="Sed condimentum feugiat sagittis" type="learn"/>
+               description="Java Backend Development" type="learn"/>
             <a href="Java-Concurrency.topic"
-               description="Sed condimentum feugiat sagittis" type="academy"/>
+               description="Java Concurrency" type="academy"/>
         </spotlight>
 
         <primary>
