@@ -1,7 +1,7 @@
 # Java基础
 
 ## 思维导图
-![Java基础核心思维导图](Java-Basic-Mind.png) {style="block" width="400" thumbnail="true"}
+![Java基础核心思维导图](Java-Basic-Mind.png) {style="block"}
 
 ## Java 基础常见面试题汇总 ：
 

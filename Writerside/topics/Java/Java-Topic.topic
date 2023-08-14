@@ -12,7 +12,7 @@
         </description>
 
         <spotlight>
-            <a href="Java-Topic.topic"
+            <a href="Java-Basic-T.md"
                description="Java" type="start"/>
             <a href="Java-Concurrency.topic"
                description="Java Concurrency" type="learn"/>
