@@ -2155,7 +2155,7 @@ JDK 提供了很多内置的注解（比如 `@Override`、`@Deprecated`），同
 
 ## SPI {id="java-spi"}
 
-关于 SPI 的详细解读，请看这篇文章 [Java SPI 机制详解](./Java-SPI.md) 。
+关于 SPI 的详细解读，请看这篇文章 [Java SPI 机制详解]() 。
 
 ### 何谓 SPI? {id="what-is-spi"}
 
