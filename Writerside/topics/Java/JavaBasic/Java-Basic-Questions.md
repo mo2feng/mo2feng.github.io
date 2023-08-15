@@ -80,8 +80,8 @@ AOT 可以提前编译节省启动时间，那为什么不全部使用这种编�
 
 我们可以将高级编程语言按照程序的执行方式分为两种：
 
-- **编译型**：[编译型语言][1] 会通过[编译器]()将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
-- **解释型**：[解释型语言]()会通过[解释器](https://zh.wikipedia.org/wiki/直譯器)一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
+- **编译型**：[编译型语言][1] 会通过[编译器](2)将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
+- **解释型**：[解释型语言](3)会通过[解释器](4)一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
 
 ![编译型语言和解释型语言](https://oss.javaguide.cn/github/javaguide/java/basis/compiled-and-interpreted-languages.png)
 
@@ -2331,6 +2331,7 @@ Java 中最常用的语法糖主要有泛型、自动拆装箱、变长参数、
 - R 大（RednaxelaFX）关于常量折叠的回答：https://www.zhihu.com/question/55976094/answer/147302764
 
 
-[1]: https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E8%AA%9E%E8%A8%80
-[2]: https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E5%99%A8
-[3]: https://zh.wikipedia.org/wiki/%E7%9B%B4%E8%AD%AF%E8%AA%9E%E8%A8%80
+[1]: https://zh.wikipedia.org/wiki/編譯語言
+[2]: https://zh.wikipedia.org/wiki/編譯器
+[3]: https://zh.wikipedia.org/wiki/直譯語言
+[4]：https://zh.wikipedia.org/wiki/直譯器
