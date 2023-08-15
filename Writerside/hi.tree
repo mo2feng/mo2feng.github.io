@@ -3,7 +3,7 @@
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
 
 <instance-profile id="hi"
-                 name="墨居"
+                 name="墨风知识库"
                  start-page="Home.topic">
 
     <toc-element topic="Home.topic">
