@@ -12,6 +12,7 @@
                 <toc-element topic="Java-Basic-Questions.md"/>
                 <toc-element topic="Java-Keyword-Summary.md"/>
             </toc-element>
+            <toc-element topic="Java-Collection.md"/>
             <toc-element topic="Java-Concurrency.topic"/>
             <toc-element topic="Java-Top-Basic.topic">
                 <toc-element topic="Object-Oriented.topic">

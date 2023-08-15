@@ -1,4 +1,4 @@
-# final,static,this,super 关键字总结 {id="final-static-this-super-keyword-summary"}
+# final,static,this,super关键字
 
 ## final 关键字 {id="final-keyword"}
 

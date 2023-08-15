@@ -1,5 +1,5 @@
 
-# Java基础常见面试题总结 {id="java-basic-questions"}
+# Java基础常见面试题
 
 > 转载自：https://javaguide.cn
 
@@ -80,8 +80,8 @@ AOT 可以提前编译节省启动时间，那为什么不全部使用这种编�
 
 我们可以将高级编程语言按照程序的执行方式分为两种：
 
-- **编译型**：[编译型语言][1] 会通过[编译器][2]将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
-- **解释型**：[解释型语言][3]会通过[解释器][4]一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
+- **编译型**：[编译型语言](https://zh.wikipedia.org/wiki/編譯語言) 会通过[编译器](https://zh.wikipedia.org/wiki/編譯器)将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
+- **解释型**：[解释型语言](https://zh.wikipedia.org/wiki/直譯語言)会通过[解释器](https://zh.wikipedia.org/wiki/直譯器)一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
 
 ![编译型语言和解释型语言](https://oss.javaguide.cn/github/javaguide/java/basis/compiled-and-interpreted-languages.png)
 
@@ -2327,10 +2327,5 @@ Java 中最常用的语法糖主要有泛型、自动拆装箱、变长参数、
 - Oracle vs OpenJDK：https://www.educba.com/oracle-vs-openjdk/
 - Differences between Oracle JDK and OpenJDK：https://stackoverflow.com/questions/22358071/differences-between-oracle-jdk-and-openjdk
 - 彻底弄懂 Java 的移位操作符：https://juejin.cn/post/6844904025880526861
-- 深入解析 String#intern：<https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html>
+- 深入解析 String#intern：https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html
 - R 大（RednaxelaFX）关于常量折叠的回答：https://www.zhihu.com/question/55976094/answer/147302764
-
-[1]: https://zh.wikipedia.org/wiki/編譯語言
-[2]: https://zh.wikipedia.org/wiki/編譯器
-[3]: https://zh.wikipedia.org/wiki/直譯語言
-[4]：https://zh.wikipedia.org/wiki/直譯器
