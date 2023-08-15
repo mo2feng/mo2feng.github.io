@@ -1,6 +1,5 @@
 # Java集合常见面试题
 
-<topic>
 <show-structure depth="2" />
 
 ## 集合概述 {id="collection-overview"}
