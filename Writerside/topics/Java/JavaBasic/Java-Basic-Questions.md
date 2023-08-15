@@ -1,16 +1,16 @@
 
-# Java基础常见面试题总结(上)
+# Java基础常见面试题总结 {id="java-basic-questions"}
 
 > 转载自：https://javaguide.cn
 
-## 基础概念与常识
+## 基础概念与常识 {id="java-basic-concept-and-common-sense"}
 
-### Java 语言有哪些特点?
+### Java 语言有哪些特点? {id="java-language-characteristics"}
 
 1. 简单易学；
 2. 面向对象（封装，继承，多态）；
 3. 平台无关性（ Java 虚拟机实现平台无关性）；
-4. 支持多线程（ C++ 语言没有内置的多线程机制，因此必须调用操作系统的多线程功能来进行多线程程序设计，而 Java 语言却提供了多线程支持）；
+4. 支持多线程
 5. 可靠性（具备异常处理和自动内存管理机制）；
 6. 安全性（Java 语言本身的设计就提供了多重安全防护机制如访问权限修饰符、限制程序直接访问操作系统资源）；
 7. 高效性（通过 Just In Time 编译器等技术的优化，Java 语言的运行效率还是非常不错的）；
@@ -18,15 +18,13 @@
 9. 编译与解释并存；
 10. ......
 
-> **🐛 修正（参见：[issue#544](https://github.com/Snailclimb/JavaGuide/issues/544)）**：C++11 开始（2011 年的时候）,C++就引入了多线程库，在 windows、linux、macos 都可以使用`std::thread`和`std::async`来创建线程。参考链接：http://www.cplusplus.com/reference/thread/thread/?kw=thread
 
-🌈 拓展一下：
 
-“Write Once, Run Anywhere（一次编写，随处运行）”这句宣传口号，真心经典，流传了好多年！以至于，直到今天，依然有很多人觉得跨平台是 Java 语言最大的优势。实际上，跨平台已经不是 Java 最大的卖点了，各种 JDK 新特性也不是。目前市面上虚拟化技术已经非常成熟，比如你通过 Docker 就很容易实现跨平台了。在我看来，Java 强大的生态才是！
+> “Write Once, Run Anywhere（一次编写，随处运行）”这句宣传口号，真心经典，流传了好多年！以至于，直到今天，依然有很多人觉得跨平台是 Java 语言最大的优势。实际上，跨平台已经不是 Java 最大的卖点了，各种 JDK 新特性也不是。目前市面上虚拟化技术已经非常成熟，比如你通过 Docker 就很容易实现跨平台了。在我看来，Java 强大的生态才是！
 
-### JVM vs JDK vs JRE
+### JVM vs JDK vs JRE {id="jvm-vs-jdk-vs-jre"}
 
-#### JVM
+#### JVM {id="java-jvm"}
 
 Java 虚拟机（JVM）是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节码，它们都会给出相同的结果。字节码和不同系统的 JVM 实现是 Java 语言“一次编译，随处可以运行”的关键所在。
 
@@ -38,7 +36,7 @@ Java 虚拟机（JVM）是运行 Java 字节码的虚拟机。JVM 有针对不�
 
 ![](https://oss.javaguide.cn/github/javaguide/java/basis/JavaSeSpecifications.jpg)
 
-#### JDK 和 JRE
+#### JDK 和 JRE {id="jdk-and-jre"}
 
 JDK（Java Development Kit），它是功能齐全的 Java SDK，是提供给开发者使用的，能够创建和编译 Java 程序。他包含了 JRE，同时还包含了编译 java 源码的编译器 javac 以及一些其他工具比如 javadoc（文档注释工具）、jdb（调试器）、jconsole（基于 JMX 的可视化监控⼯具）、javap（反编译工具）等等。
 
@@ -48,7 +46,7 @@ JRE（Java Runtime Environment） 是 Java 运行时环境。它是运行已编�
 
 ![JDK 包含 JRE](https://oss.javaguide.cn/github/javaguide/java/basis/jdk-include-jre.png)
 
-### 什么是字节码?采用字节码的好处是什么?
+### 什么是字节码?采用字节码的好处是什么? {id="what-is-bytecode"}
 
 在 Java 中，JVM 可以理解的代码就叫做字节码（即扩展名为 `.class` 的文件），它不面向任何特定的处理器，只面向虚拟机。Java 语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以， Java 程序运行时相对来说还是高效的（不过，和 C++，Rust，Go 等语言还是有一定差距的），而且，由于字节码并不针对一种特定的机器，因此，Java 程序无须重新编译便可在多种不同操作系统的计算机上运行。
 
@@ -70,20 +68,20 @@ JDK、JRE、JVM、JIT 这四者的关系如下图所示。
 
 ![JVM 的大致结构模型](https://oss.javaguide.cn/github/javaguide/java/basis/jvm-rough-structure-model.png)
 
-### 为什么不全部使用 AOT 呢？
+### 为什么不全部使用 AOT 呢？ {id="why-not-use-aot"}
 
 AOT 可以提前编译节省启动时间，那为什么不全部使用这种编译方式呢？
 
 长话短说，这和 Java 语言的动态特性有千丝万缕的联系了。举个例子，CGLIB 动态代理使用的是 ASM 技术，而这种技术大致原理是运行时直接在内存中生成并加载修改后的字节码文件也就是 `.class` 文件，如果全部使用 AOT 提前编译，也就不能使用 ASM 技术了。为了支持类似的动态特性，所以选择使用 JIT 即时编译器。
 
-### 为什么说 Java 语言“编译与解释并存”？
+### 为什么说 Java 语言“编译与解释并存”？ {id="why-say-java-compiled-and-interpreted-coexist"}
 
 其实这个问题我们讲字节码的时候已经提到过，因为比较重要，所以我们这里再提一下。
 
 我们可以将高级编程语言按照程序的执行方式分为两种：
 
-- **编译型**：[编译型语言](https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E8%AA%9E%E8%A8%80) 会通过[编译器](https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E5%99%A8)将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
-- **解释型**：[解释型语言](https://zh.wikipedia.org/wiki/%E7%9B%B4%E8%AD%AF%E8%AA%9E%E8%A8%80)会通过[解释器](https://zh.wikipedia.org/wiki/直譯器)一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
+- **编译型**：[编译型语言][1] 会通过[编译器]()将源代码一次性翻译成可被该平台执行的机器码。一般情况下，编译语言的执行速度比较快，开发效率比较低。常见的编译性语言有 C、C++、Go、Rust 等等。
+- **解释型**：[解释型语言]()会通过[解释器](https://zh.wikipedia.org/wiki/直譯器)一句一句的将代码解释（interpret）为机器代码后再执行。解释型语言开发效率比较快，执行速度比较慢。常见的解释性语言有 Python、JavaScript、PHP 等等。
 
 ![编译型语言和解释型语言](https://oss.javaguide.cn/github/javaguide/java/basis/compiled-and-interpreted-languages.png)
 
@@ -93,11 +91,11 @@ AOT 可以提前编译节省启动时间，那为什么不全部使用这种编�
 >
 > 相关阅读：[基本功 | Java 即时编译器原理解析及实践](https://tech.meituan.com/2020/10/22/java-jit-practice-in-meituan.html)
 
-**为什么说 Java 语言“编译与解释并存”？**
+**为什么说 Java 语言“编译与解释并存”？** {id="why-say-java-compiled-and-interpreted-coexist"}
 
 这是因为 Java 语言既具有编译型语言的特征，也具有解释型语言的特征。因为 Java 程序要经过先编译，后解释两个步骤，由 Java 编写的程序需要先经过编译步骤，生成字节码（`.class` 文件），这种字节码必须由 Java 解释器来解释执行。
 
-### Oracle JDK vs OpenJDK
+### Oracle JDK vs OpenJDK {id="oracle-jdk-vs-openjdk"}
 
 可能在看这个问题之前很多人和我一样并没有接触和使用过 OpenJDK 。那么 Oracle JDK 和 OpenJDK 之间是否存在重大差异？下面我通过收集到的一些资料，为你解答这个被很多人忽视的问题。
 
@@ -142,7 +140,7 @@ AOT 可以提前编译节省启动时间，那为什么不全部使用这种编�
 - BCL 协议（Oracle Binary Code License Agreement）：可以使用 JDK（支持商用），但是不能进行修改。
 - OTN 协议（Oracle Technology Network License Agreement）：11 及之后新发布的 JDK 用的都是这个协议，可以自己私下用，但是商用需要付费。
 
-### Java 和 C++ 的区别?
+### Java 和 C++ 的区别? {id="java-and-cpp-difference"}
 
 我知道很多人没学过 C++，但是面试官就是没事喜欢拿咱们 Java 和 C++ 比呀！没办法！！！就算没学过 C++，也要记下来。
 
@@ -154,9 +152,9 @@ AOT 可以提前编译节省启动时间，那为什么不全部使用这种编�
 - C ++同时支持方法重载和操作符重载，但是 Java 只支持方法重载（操作符重载增加了复杂性，这与 Java 最初的设计思想不符）。
 - ......
 
-## 基本语法
+## 基本语法 {id="basic-grammar"}
 
-### 注释有哪几种形式？
+### 注释有哪几种形式？ {id="what-are-the-different-forms-of-comments"}
 
 Java 中的注释有三种：
 
@@ -195,13 +193,13 @@ Java 中的注释有三种：
 > if (employee.isEligibleForFullBenefits())
 > ```
 
-### 标识符和关键字的区别是什么？
+### 标识符和关键字的区别是什么？{id="what-is-the-difference-between-identifiers-and-keywords"}
 
 在我们编写程序的时候，需要大量地为程序、类、变量、方法等取名字，于是就有了 **标识符** 。简单来说， **标识符就是一个名字** 。
 
 有一些标识符，Java 语言已经赋予了其特殊的含义，只能用于特定的地方，这些特殊的标识符就是 **关键字** 。简单来说，**关键字是被赋予特殊含义的标识**符 。比如，在我们的日常生活中，如果我们想要开一家店，则要给这个店起一个名字，起的这个“名字”就叫标识符。但是我们店的名字不能叫“警察局”，因为“警察局”这个名字已经被赋予了特殊的含义，而“警察局”就是我们日常生活中的关键字。
 
-### Java 语言关键字有哪些？
+### Java 语言关键字有哪些？ {id="what-are-the-keywords-of-the-java-language"}
 
 | 分类                 | 关键字   |            |          |              |            |           |        |
 | :------------------- | -------- | ---------- | -------- | ------------ | ---------- | --------- | ------ |
@@ -229,13 +227,13 @@ Java 中的注释有三种：
 
 官方文档：[https://docs.oracle.com/javase/tutorial/java/nutsandbolts/\_keywords.html](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html)
 
-### 自增自减运算符
+### 自增自减运算符 {id="self-increment-and-decrement-operators"}
 
 在写代码的过程中，常见的一种情况是需要某个整数类型变量增加 1 或减少 1，Java 提供了一种特殊的运算符，用于这种表达式，叫做自增运算符（++)和自减运算符（--）。
 
 ++ 和 -- 运算符可以放在变量之前，也可以放在变量之后，当运算符放在变量之前时(前缀)，先自增/减，再赋值；当运算符放在变量之后时(后缀)，先赋值，再自增/减。例如，当 `b = ++a` 时，先自增（自己增加 1），再赋值（赋值给 b）；当 `b = a++` 时，先赋值(赋值给 b)，再自增（自己增加 1）。也就是，++a 输出的是 a+1 的值，a++输出的是 a 值。用一句口诀就是：“符号在前就先加/减，符号在后就后加/减”。
 
-### 移位运算符
+### 移位运算符 {id="shift-operator"}
 
 移位运算符是最基本的运算符之一，几乎每种编程语言都包含这一运算符。移位操作中，被操作的数据被视为二进制数，移位就是将其向左或向右移动若干位的运算。
 
@@ -307,7 +305,7 @@ System.out.println("左移 10 位后的数据对应的二进制字符 " + Intege
 
 右移运算符使用类似，篇幅问题，这里就不做演示了。
 
-### continue、break 和 return 的区别是什么？
+### continue、break 和 return 的区别是什么？ {id="what-is-the-difference-between-continue-break-and-return"}
 
 在循环结构中，当循环条件不满足或者循环次数达到要求时，循环会正常结束。但是，有时候可能需要在循环的过程中，当发生了某种条件之后 ，提前终止循环，这就需要用到下面几个关键词：
 
@@ -361,9 +359,9 @@ xixi
 haha
 ```
 
-## 基本数据类型
+## 基本数据类型 {id="basic-data-types"}
 
-### Java 中的几种基本数据类型了解么？
+### Java 中的几种基本数据类型了解么？ {id="do-you-know-the-basic-data-types-in-java"}
 
 Java 中有 8 种基本数据类型，分别为：
 
@@ -397,7 +395,7 @@ Java 中有 8 种基本数据类型，分别为：
 
 这八种基本类型都有对应的包装类分别为：`Byte`、`Short`、`Integer`、`Long`、`Float`、`Double`、`Character`、`Boolean` 。
 
-### 基本类型和包装类型的区别？
+### 基本类型和包装类型的区别？ {id="what-is-the-difference-between-basic-types-and-packaging-types"}
 
 ![基本类型 vs 包装类型](https://oss.javaguide.cn/github/javaguide/java/basis/primitive-type-vs-packaging-type.png)
 
@@ -417,7 +415,7 @@ class BasicTypeVar{
 }
 ```
 
-### 包装类型的缓存机制了解么？
+### 包装类型的缓存机制了解么？ {id="do-you-know-the-caching-mechanism-of-the-packaging-type"}
 
 Java 基本数据类型的包装类型的大部分都用到了缓存机制来提升性能。
 
@@ -504,7 +502,7 @@ System.out.println(i1==i2);
 
 ![](https://oss.javaguide.cn/github/javaguide/up-1ae0425ce8646adfb768b5374951eeb820d.png)
 
-### 自动装箱与拆箱了解吗？原理是什么？
+### 自动装箱与拆箱了解吗？原理是什么？ {id="do-you-know-the-automatic-boxing-and-unboxing"}
 
 **什么是自动拆装箱？**
 
@@ -569,7 +567,7 @@ private static long sum() {
 }
 ```
 
-### 为什么浮点数运算的时候会有精度丢失的风险？
+### 为什么浮点数运算的时候会有精度丢失的风险？ {id="why-is-there-a-risk-of-precision-loss-when-floating-point-operations-are-performed"}
 
 浮点数运算精度丢失代码演示：
 
@@ -600,7 +598,7 @@ System.out.println(a == b);// false
 
 关于浮点数的更多内容，建议看一下[计算机系统基础（四）浮点数](http://kaito-kidd.com/2018/08/08/computer-system-float-point/)这篇文章。
 
-### 如何解决浮点数运算的精度丢失问题？
+### 如何解决浮点数运算的精度丢失问题？{id="how-to-solve-the-problem-of-precision-loss-in-floating-point-operations"}
 
 `BigDecimal` 可以实现对浮点数的运算，不会造成精度丢失。通常情况下，大部分需要浮点数精确运算结果的业务场景（比如涉及到钱的场景）都是通过 `BigDecimal` 来做的。
 
@@ -617,9 +615,9 @@ System.out.println(y); /* 0.1 */
 System.out.println(Objects.equals(x, y)); /* true */
 ```
 
-关于 `BigDecimal` 的详细介绍，可以看看我写的这篇文章：[BigDecimal 详解](https://javaguide.cn/java/basis/bigdecimal.html)。
+关于 `BigDecimal` 的详细介绍，可以看看我写的这篇文章：[BigDecimal 详解]()。
 
-### 超过 long 整型的数据应该如何表示？
+### 超过 long 整型的数据应该如何表示？{id="how-should-data-larger-than-long-integer-be-represented"}
 
 基本数值类型都有一个表达范围，如果超过这个范围就会有数值溢出的风险。
 
@@ -635,9 +633,9 @@ System.out.println(l + 1 == Long.MIN_VALUE); // true
 
 相对于常规整数类型的运算来说，`BigInteger` 运算的效率会相对较低。
 
-## 变量
+## 变量 {id="java-variable"}
 
-### 成员变量与局部变量的区别？
+### 成员变量与局部变量的区别？ {id="what-is-the-difference-between-member-variables-and-local-variables"}
 
 ![成员变量 vs 局部变量](https://oss.javaguide.cn/github/javaguide/java/basis/member-var-vs-local-var.png)
 
@@ -682,7 +680,7 @@ public class VariableExample {
 
 ```
 
-### 静态变量有什么作用？
+### 静态变量有什么作用？{id="what-is-the-role-of-static-variables"}
 
 静态变量也就是被 `static` 关键字修饰的变量。它可以被类的所有实例共享，无论一个类创建了多少个对象，它们都共享同一份静态变量。也就是说，静态变量只会被分配一次内存，即使创建多个对象，这样可以节省内存。
 
@@ -704,7 +702,7 @@ public class ConstantVariableExample {
 }
 ```
 
-### 字符型常量和字符串常量的区别?
+### 字符型常量和字符串常量的区别? {id="what-is-the-difference-between-character-constants-and-string-constants"}
 
 - **形式** : 字符常量是单引号引起的一个字符，字符串常量是双引号引起的 0 个或若干个字符。
 - **含义** : 字符常量相当于一个整型值( ASCII 值),可以参加表达式运算; 字符串常量代表一个地址值(该字符串在内存中存放位置)。
@@ -735,9 +733,9 @@ public class StringExample {
 字符串常量占用的字节数为：13
 ```
 
-## 方法
+## 方法 {id="java-method"}
 
-### 什么是方法的返回值?方法有哪几种类型？
+### 什么是方法的返回值?方法有哪几种类型？ {id="what-is-the-return-value-of-the-method"}
 
 **方法的返回值** 是指我们获取到的某个方法体中的代码执行后产生的结果！（前提是该方法可能产生结果）。返回值的作用是接收出结果，使得它可以用于其他的操作！
 
@@ -784,7 +782,7 @@ public int f4(int a, int b) {
 }
 ```
 
-### 静态方法为什么不能调用非静态成员?
+### 静态方法为什么不能调用非静态成员? {id="why-cant-static-methods-call-non-static-members"}
 
 这个需要结合 JVM 的相关知识，主要原因如下：
 
@@ -809,7 +807,7 @@ public class Example {
 }
 ```
 
-### 静态方法和实例方法有何不同？
+### 静态方法和实例方法有何不同？ {id="what-is-the-difference-between-static-methods-and-instance-methods"}
 
 **1、调用方式**
 
@@ -842,13 +840,13 @@ public class Person {
 
 静态方法在访问本类的成员时，只允许访问静态成员（即静态成员变量和静态方法），不允许访问实例成员（即实例成员变量和实例方法），而实例方法不存在这个限制。
 
-### 重载和重写有什么区别？
+### 重载和重写有什么区别？ {id="what-is-the-difference-between-overloading-and-overriding"}
 
 > 重载就是同样的一个方法能够根据输入数据的不同，做出不同的处理
 >
 > 重写就是当子类继承自父类的相同方法，输入数据一样，但要做出有别于父类的响应时，你就要覆盖父类方法
 
-#### 重载
+#### 重载 {id="java-overload"}
 
 发生在同一个类中（或者父类和子类之间），方法名必须相同，参数类型不同、个数不同、顺序不同，方法返回值和访问修饰符可以不同。
 
@@ -867,7 +865,7 @@ public class Person {
 
 综上：重载就是同一个类中多个同名方法根据不同的传参来执行不同的逻辑处理。
 
-#### 重写
+#### 重写 {id="java-override"}
 
 重写发生在运行期，是子类对父类的允许访问的方法的实现过程进行重新编写。
 
@@ -875,7 +873,7 @@ public class Person {
 2. 如果父类方法访问修饰符为 `private/final/static` 则子类就不能重写该方法，但是被 `static` 修饰的方法能够被再次声明。
 3. 构造方法无法被重写
 
-#### 总结
+#### 总结 {id="java-overload-override-summary"}
 
 综上：**重写就是子类对父类方法的重新改造，外部样子不能改变，内部逻辑可以改变。**
 
@@ -924,7 +922,7 @@ public class SuperSuperMan extends SuperMan {
 }
 ```
 
-### 什么是可变长参数？
+### 什么是可变长参数？{id="what-is-a-variable-length-parameter"}
 
 从 Java5 开始，Java 支持定义可变长参数，所谓可变长参数就是允许在调用方法时传入不定长度的参数。就比如下面的这个 `printVariable` 方法就可以接受 0 个或者多个参数。
 
@@ -997,9 +995,9 @@ public class VariableLengthArgument {
 }
 ```
 
-## 面向对象基础
+## 面向对象基础 {id="java-object-oriented-basics"}
 
-### 面向对象和面向过程的区别
+### 面向对象和面向过程的区别 {id="what-is-the-difference-between-object-oriented-and-procedural"}
 
 两者的主要区别在于解决问题的方式不同：
 
@@ -1068,7 +1066,7 @@ public class Main {
 
 我们直接定义了圆的半径，并使用该半径直接计算出圆的面积和周长。
 
-### 创建一个对象用什么运算符?对象实体与对象引用有何不同?
+### 创建一个对象用什么运算符?对象实体与对象引用有何不同? {id="what-operator-is-used-to-create-an-object"}
 
 new 运算符，new 创建对象实例（对象实例在
 内存中），对象引用指向对象实例（对象引用存放在栈内存中）。
@@ -1076,7 +1074,7 @@ new 运算符，new 创建对象实例（对象实例在
 - 一个对象引用可以指向 0 个或 1 个对象（一根绳子可以不系气球，也可以系一个气球）；
 - 一个对象可以有 n 个引用指向它（可以用 n 条绳子系住一个气球）。
 
-### 对象的相等和引用相等的区别
+### 对象的相等和引用相等的区别 {id="what-is-the-difference-between-object-equality-and-reference-equality"}
 
 - 对象的相等一般比较的是内存中存放的内容是否相等。
 - 引用相等一般比较的是他们指向的内存地址是否相等。
@@ -1110,7 +1108,8 @@ true
 - `str1` 和 `str2` 不相等，而 `str1` 和 `str3` 相等。这是因为 `==` 运算符比较的是字符串的引用是否相等。
 - `str1`、 `str2`、`str3` 三者的内容都相等。这是因为`equals` 方法比较的是字符串的内容，即使这些字符串的对象引用不同，只要它们的内容相等，就认为它们是相等的。
 
-### 如果一个类没有声明构造方法，该程序能正确执行吗?
+### 如果一个类没有声明构造方法，该程序能正确执行吗? {id="can-a-program-run-correctly-if-a-class-does-not-declare-a-constructor"}
+
 
 构造方法是一种特殊的方法，主要作用是完成对象的初始化工作。
 
@@ -1118,7 +1117,7 @@ true
 
 我们一直在不知不觉地使用构造方法，这也是为什么我们在创建对象的时候后面要加一个括号（因为要调用无参的构造方法）。如果我们重载了有参的构造方法，记得都要把无参的构造方法也写出来（无论是否用到），因为这可以帮助我们在创建对象的时候少踩坑。
 
-### 构造方法有哪些特点？是否可被 override?
+### 构造方法有哪些特点？是否可被 override? {id="what-are-the-characteristics-of-a-constructor-method"}
 
 构造方法特点如下：
 
@@ -1128,9 +1127,9 @@ true
 
 构造方法不能被 override（重写）,但是可以 overload（重载）,所以你可以看到一个类中有多个构造函数的情况。
 
-### 面向对象三大特征
+### 面向对象三特征  {id="three-features-of-object-oriented"}
 
-#### 封装
+#### 封装 {id="encapsulation"}
 
 封装是指把一个对象的状态信息（也就是属性）隐藏在对象内部，不允许外部对象直接访问对象的内部信息。但是可以提供一些可以被外界访问的方法来操作属性。就好像我们看不到挂在墙上的空调的内部的零件信息（也就是属性），但是可以通过遥控器（方法）来控制空调。如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。就好像如果没有空调遥控器，那么我们就无法操控空凋制冷，空调本身就没有意义了（当然现在还有很多其他方法 ，这里只是为了举例子）。
 
@@ -1161,7 +1160,7 @@ public class Student {
 }
 ```
 
-#### 继承
+#### 继承 {id="inheritance"}
 
 不同类型的对象，相互之间经常有一定数量的共同点。例如，小明同学、小红同学、小李同学，都共享学生的特性（班级、学号等）。同时，每一个对象还定义了额外的特性使得他们与众不同。例如小明的数学比较好，小红的性格惹人喜爱；小李的力气比较大。继承是使用已存在的类的定义作为基础建立新类的技术，新类的定义可以增加新的数据或新的功能，也可以用父类的功能，但不能选择性地继承父类。通过使用继承，可以快速地创建新的类，可以提高代码的重用，程序的可维护性，节省大量创建新类的时间 ，提高我们的开发效率。
 
@@ -1171,7 +1170,7 @@ public class Student {
 2. 子类可以拥有自己属性和方法，即子类可以对父类进行扩展。
 3. 子类可以用自己的方式实现父类的方法。（以后介绍）。
 
-#### 多态
+#### 多态 {id="polymorphism"}
 
 多态，顾名思义，表示一个对象具有多种的状态，具体表现为父类的引用指向子类的实例。
 
@@ -1182,7 +1181,7 @@ public class Student {
 - 多态不能调用“只在子类存在但在父类不存在”的方法；
 - 如果子类重写了父类的方法，真正执行的是子类覆盖的方法，如果子类没有覆盖父类的方法，执行的是父类的方法。
 
-### 接口和抽象类有什么共同点和区别？
+### 接口和抽象类有什么共同点和区别？ {id="what-are-the-similarities-and-differences-between-interfaces-and-abstract-classes"}
 
 **共同点**：
 
@@ -1196,7 +1195,7 @@ public class Student {
 - 一个类只能继承一个类，但是可以实现多个接口。
 - 接口中的成员变量只能是 `public static final` 类型的，不能被修改且必须有初始值，而抽象类的成员变量默认 default，可在子类中被重新定义，也可被重新赋值。
 
-### 深拷贝和浅拷贝区别了解吗？什么是引用拷贝？
+### 深拷贝和浅拷贝区别了解吗？什么是引用拷贝？{id="what-is-the-difference-between-deep-copy-and-shallow-copy"}
 
 关于深拷贝和浅拷贝区别，我这里先给结论：
 
@@ -1205,7 +1204,7 @@ public class Student {
 
 上面的结论没有完全理解的话也没关系，我们来看一个具体的案例！
 
-#### 浅拷贝
+#### 浅拷贝 {id="shallow-copy"}
 
 浅拷贝的示例代码如下，我们这里实现了 `Cloneable` 接口，并重写了 `clone()` 方法。
 
@@ -1251,7 +1250,7 @@ System.out.println(person1.getAddress() == person1Copy.getAddress());
 
 从输出结构就可以看出， `person1` 的克隆对象和 `person1` 使用的仍然是同一个 `Address` 对象。
 
-#### 深拷贝
+#### 深拷贝 {id="deep-copy"}
 
 这里我们简单对 `Person` 类的 `clone()` 方法进行修改，连带着要把 `Person` 对象内部的 `Address` 对象一起复制。
 
@@ -1285,9 +1284,9 @@ System.out.println(person1.getAddress() == person1Copy.getAddress());
 
 ![浅拷贝、深拷贝、引用拷贝示意图](https://oss.javaguide.cn/github/javaguide/java/basis/shallow&deep-copy.png)
 
-## Object
+## Object类 {id="java-object-class"}
 
-### Object 类的常见方法有哪些？
+### Object类的常见方法有哪些？{id="what-are-the-common-methods-of-the-object-class"}
 
 Object 类是一个特殊的类，是所有类的父类。它主要提供了以下 11 个方法：
 
@@ -1338,7 +1337,7 @@ public final void wait() throws InterruptedException
 protected void finalize() throws Throwable { }
 ```
 
-### == 和 equals() 的区别
+### == 和 equals() 的区别 {id="what-is-the-difference-between-and-equals"}
 
 **`==`** 对于基本类型和引用类型的作用效果是不同的：
 
@@ -1405,7 +1404,7 @@ public boolean equals(Object anObject) {
 }
 ```
 
-### hashCode() 有什么用？
+### hashCode() 有什么用？ {id="what-is-the-use-of-hashcode"}
 
 `hashCode()` 的作用是获取哈希码（`int` 整数），也称为散列码。这个哈希码的作用是确定该对象在哈希表中的索引位置。
 
@@ -1424,7 +1423,7 @@ public native int hashCode();
 
 散列表存储的是键值对(key-value)，它的特点是：**能根据“键”快速的检索出对应的“值”。这其中就利用到了散列码！（可以快速找到所需要的对象）**
 
-### 为什么要有 hashCode？
+### 为什么要有 hashCode？ {id="why-must-have-hashcode"}
 
 我们以“`HashSet` 如何检查重复”为例子来说明为什么要有 `hashCode`？
 
@@ -1456,7 +1455,7 @@ public native int hashCode();
 
 相信大家看了我前面对 `hashCode()` 和 `equals()` 的介绍之后，下面这个问题已经难不倒你们了。
 
-### 为什么重写 equals() 时必须重写 hashCode() 方法？
+### 为什么重写 equals() 时必须重写 hashCode() 方法？{id="why-must-override-hashcode-when-overriding-equals"}
 
 因为两个相等的对象的 `hashCode` 值必须是相等。也就是说如果 `equals` 方法判断两个对象是相等的，那这两个对象的 `hashCode` 值也要相等。
 
@@ -1511,9 +1510,9 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 2. 单线程操作字符串缓冲区下操作大量数据: 适用 `StringBuilder`
 3. 多线程操作字符串缓冲区下操作大量数据: 适用 `StringBuffer`
 
-### String 为什么是不可变的?
+### String 为什么是不可变的? {id="why-is-string-immutable"}
 
-`String` 类中使用 `final` 关键字修饰字符数组来保存字符串，~~所以`String` 对象是不可变的。~~
+`String` 类中使用 `final` 关键字修饰字符数组来保存字符串
 
 ```java
 public final class String implements java.io.Serializable, Comparable<String>, CharSequence {
@@ -1522,7 +1521,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 }
 ```
 
-> 🐛 修正：我们知道被 `final` 关键字修饰的类不能被继承，修饰的方法不能被重写，修饰的变量是基本数据类型则值不能改变，修饰的变量是引用类型则不能再指向其他对象。因此，`final` 关键字修饰的数组保存字符串并不是 `String` 不可变的根本原因，因为这个数组保存的字符串是可变的（`final` 修饰引用类型变量的情况）。
+> 🐛：我们知道被 `final` 关键字修饰的类不能被继承，修饰的方法不能被重写，修饰的变量是基本数据类型则值不能改变，修饰的变量是引用类型则不能再指向其他对象。因此，`final` 关键字修饰的数组保存字符串并不是 `String` 不可变的根本原因，因为这个数组保存的字符串是可变的（`final` 修饰引用类型变量的情况）。
 >
 > `String` 真正不可变有下面几点原因：
 >
@@ -1546,7 +1545,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 > }
 > ```
 >
-> **Java 9 为何要将 `String` 的底层实现由 `char[]` 改成了 `byte[]` ?**
+> **Java9为何要将 `String` 的底层实现由 `char[]` 改成了 `byte[]` ?** 
 >
 > 新版的 String 其实支持两个编码方案：Latin-1 和 UTF-16。如果字符串中包含的汉字没有超过 Latin-1 可表示范围内的字符，那就会使用 Latin-1 作为编码方案。Latin-1 编码方案下，`byte` 占一个字节(8 位)，`char` 占用 2 个字节（16），`byte` 相较 `char` 节省一半的内存空间。
 >
@@ -1558,7 +1557,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 >
 > 这是官方的介绍：https://openjdk.java.net/jeps/254 。
 
-### 字符串拼接用“+” 还是 StringBuilder?
+### 字符串拼接用“+” 还是 StringBuilder? {id="string-splicing"}
 
 Java 语言本身并不支持运算符重载，“+”和“+=”是专门为 String 类重载过的运算符，也是 Java 中仅有的两个重载过的运算符。
 
@@ -1607,11 +1606,11 @@ System.out.println(s);
 
 不过，使用 “+” 进行字符串拼接会产生大量的临时对象的问题在 JDK9 中得到了解决。在 JDK9 当中，字符串相加 “+” 改为了用动态方法 `makeConcatWithConstants()` 来实现，而不是大量的 `StringBuilder` 了。这个改进是 JDK9 的 [JEP 280](https://openjdk.org/jeps/280) 提出的，这也意味着 JDK 9 之后，你可以放心使用“+” 进行字符串拼接了。关于这部分改进的详细介绍，推荐阅读这篇文章：还在无脑用 [StringBuilder？来重温一下字符串拼接吧](https://juejin.cn/post/7182872058743750715) 。
 
-### String#equals() 和 Object#equals() 有何区别？
+### String#equals() 和 Object#equals() 有何区别？ {id="what-is-the-difference-between-string-equals-and-object-equals"}
 
 `String` 中的 `equals` 方法是被重写过的，比较的是 String 字符串的值是否相等。 `Object` 的 `equals` 方法是比较的对象的内存地址。
 
-### 字符串常量池的作用了解吗？
+### 字符串常量池的作用了解吗？{id="what-is-the-string-pool"}
 
 **字符串常量池** 是 JVM 为了提升性能和减少内存消耗针对字符串（String 类）专门开辟的一块区域，主要目的是为了避免字符串的重复创建。
 
@@ -1626,7 +1625,7 @@ System.out.println(aa==bb);// true
 
 更多关于字符串常量池的介绍可以看一下 [Java 内存区域详解](https://javaguide.cn/java/jvm/memory-area.html) 这篇文章。
 
-### String s1 = new String("abc");这句话创建了几个字符串对象？
+### String s1 = new String("abc");这句话创建了几个字符串对象？ {id="how-many-string-objects-does-the-sentence-create"}
 
 会创建 1 或 2 个字符串对象。
 
@@ -1661,7 +1660,7 @@ String s2 = new String("abc");
 
 这里就不对上面的字节码进行详细注释了，7 这个位置的 `ldc` 命令不会在堆中创建新的字符串对象“abc”，这是因为 0 这个位置已经执行了一次 `ldc` 命令，已经在堆中创建过一次字符串对象“abc”了。7 这个位置执行 `ldc` 命令会直接返回字符串常量池中字符串对象“abc”对应的引用。
 
-### String#intern 方法有什么作用?
+### String#intern 方法有什么作用? {id="what-is-the-function-of-string-intern"}
 
 `String.intern()` 是一个 native（本地）方法，其作用是将指定的字符串对象的引用保存在字符串常量池中，可以简单分为两种情况：
 
@@ -1763,20 +1762,20 @@ public static String getStr() {
 }
 ```
 
-## 异常
+## 异常 {id="java-exception"}
 
 **Java 异常类层次结构图概览**：
 
 ![Java 异常类层次结构图](https://oss.javaguide.cn/github/javaguide/java/basis/types-of-exceptions-in-java.png)
 
-### Exception 和 Error 有什么区别？
+### Exception 和 Error 有什么区别？ {id="what-is-the-difference-between-exception-and-error"}
 
 在 Java 中，所有的异常都有一个共同的祖先 `java.lang` 包中的 `Throwable` 类。`Throwable` 类有两个重要的子类:
 
 - **`Exception`** :程序本身可以处理的异常，可以通过 `catch` 来进行捕获。`Exception` 又可以分为 Checked Exception (受检查异常，必须处理) 和 Unchecked Exception (不受检查异常，可以不处理)。
-- **`Error`**：`Error` 属于程序无法处理的错误 ，~~我们没办法通过 `catch` 来进行捕获~~不建议通过`catch`捕获 。例如 Java 虚拟机运行错误（`Virtual MachineError`）、虚拟机内存不够错误(`OutOfMemoryError`)、类定义错误（`NoClassDefFoundError`）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止。
+- **`Error`**：`Error` 属于程序无法处理的错误 。不建议通过`catch`捕获 。例如 Java 虚拟机运行错误（`Virtual MachineError`）、虚拟机内存不够错误(`OutOfMemoryError`)、类定义错误（`NoClassDefFoundError`）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止。
 
-### Checked Exception 和 Unchecked Exception 有什么区别？
+### Checked Exception 和 Unchecked Exception 有什么区别？{id="what-is-the-difference-between-checked-exception-and-unchecked-exception"}
 
 **Checked Exception** 即 受检查异常 ，Java 代码在编译过程中，如果受检查异常没有被 `catch`或者`throws` 关键字处理的话，就没办法通过编译。
 
@@ -1802,14 +1801,14 @@ public static String getStr() {
 
 ![](https://oss.javaguide.cn/github/javaguide/java/basis/unchecked-exception.png)
 
-### Throwable 类常用方法有哪些？
+### Throwable 类常用方法有哪些？ {id="what-are-the-common-methods-of-throwable-class"}
 
 - `String getMessage()`: 返回异常发生时的简要描述
 - `String toString()`: 返回异常发生时的详细信息
 - `String getLocalizedMessage()`: 返回异常对象的本地化信息。使用 `Throwable` 的子类覆盖这个方法，可以生成本地化信息。如果子类没有覆盖该方法，则该方法返回的信息与 `getMessage()`返回的结果相同
 - `void printStackTrace()`: 在控制台上打印 `Throwable` 对象封装的异常信息
 
-### try-catch-finally 如何使用？
+### try-catch-finally 如何使用？ {id="how-to-use-try-catch-finally"}
 
 - `try`块：用于捕获异常。其后可接零个或多个 `catch` 块，如果没有 `catch` 块，则必须跟一个 `finally` 块。
 - `catch`块：用于处理 try 捕获到的异常。
@@ -1870,7 +1869,7 @@ public static int f(int value) {
 0
 ```
 
-### finally 中的代码一定会执行吗？
+### finally 中的代码一定会执行吗？ {id="will-the-code-in-finally-always-be-executed"}
 
 不一定的！在某些情况下，finally 中的代码不会被执行。
 
@@ -1903,9 +1902,9 @@ Catch Exception -> RuntimeException
 
 相关 issue：<https://github.com/Snailclimb/JavaGuide/issues/190>。
 
-🧗🏻 进阶一下：从字节码角度分析`try catch finally`这个语法糖背后的实现原理。
+> 🧗🏻 进阶一下：从字节码角度分析`try catch finally`这个语法糖背后的实现原理。
 
-### 如何使用 `try-with-resources` 代替`try-catch-finally`？
+### 如何使用 `try-with-resources` 代替`try-catch-finally`？ {id="how-to-use-try-with-resources-instead-of-try-catch-finally"}
 
 1. **适用范围（资源的定义）：** 任何实现 `java.lang.AutoCloseable`或者 `java.io.Closeable` 的对象
 2. **关闭资源和 finally 块的执行顺序：** 在 `try-with-resources` 语句中，任何 catch 或 finally 块在声明的资源关闭后运行
@@ -1962,7 +1961,7 @@ catch (IOException e) {
 }
 ```
 
-### 异常使用有哪些需要注意的地方？
+### 异常使用有哪些需要注意的地方？ {id="what-are-the-places-to-pay-attention-to-when-using-exceptions"}
 
 - 不要把异常定义为静态变量，因为这样会导致异常栈信息错乱。每次手动抛出异常，我们都需要手动 new 一个异常对象抛出。
 - 抛出的异常信息一定要有意义。
@@ -1970,9 +1969,9 @@ catch (IOException e) {
 - 使用日志打印异常之后就不要再抛出异常了（两者不要同时存在一段代码逻辑中）。
 - ......
 
-## 泛型
+## 泛型  {#java-basis-generic}
 
-### 什么是泛型？有什么作用？
+### 什么是泛型？有什么作用？{id="what-is-generic"}
 
 **Java 泛型（Generics）** 是 JDK 5 中引入的一个新特性。使用泛型参数，可以增强代码的可读性以及稳定性。
 
@@ -1984,7 +1983,7 @@ ArrayList<E> extends AbstractList<E>
 
 并且，原生 `List` 返回类型是 `Object` ，需要手动转换类型才能使用，使用泛型后编译器自动转换。
 
-### 泛型的使用方式有哪几种？
+### 泛型的使用方式有哪几种？ {id="what-are-the-ways-to-use-generics"}
 
 泛型一般有三种使用方式:**泛型类**、**泛型接口**、**泛型方法**。
 
@@ -2067,22 +2066,22 @@ printArray( stringArray  );
 
 > 注意: `public static < E > void printArray( E[] inputArray )` 一般被称为静态泛型方法;在 java 中泛型只是一个占位符，必须在传递类型后才能使用。类在实例化时才能真正的传递类型参数，由于静态方法的加载先于类的实例化，也就是说类中的泛型还没有传递真正的类型参数，静态的方法的加载就已经完成了，所以静态泛型方法是没有办法使用类上声明的泛型的。只能使用自己声明的 `<E>`
 
-### 项目中哪里用到了泛型？
+### 项目中哪里用到了泛型？ {id="where-does-generics-appear-in-the-project"}
 
 - 自定义接口通用返回结果 `CommonResult<T>` 通过参数 `T` 可根据具体的返回类型动态指定结果的数据类型
 - 定义 `Excel` 处理类 `ExcelUtil<T>` 用于动态指定 `Excel` 导出的数据类型
 - 构建集合工具类（参考 `Collections` 中的 `sort`, `binarySearch` 方法）。
 - ......
 
-## 反射
+## 反射  {id="java-reflection"}
 
-关于反射的详细解读，请看这篇文章 [Java 反射机制详解](./reflection.md) 。
+关于反射的详细解读，请看这篇文章 [Java 反射机制详解]() 。
 
-### 何谓反射？
+### 何谓反射？ {id="what-is-relfection}
 
 如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些方法和属性。
 
-### 反射的优缺点？
+### 反射的优缺点？{id="what-are-the-advantages-and-disadvantages-of-reflection"}
 
 反射可以让我们的代码更加灵活、为各种框架提供开箱即用的功能提供了便利。
 
@@ -2090,7 +2089,7 @@ printArray( stringArray  );
 
 相关阅读：[Java Reflection: Why is it so slow?](https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow) 。
 
-### 反射的应用场景？
+### 反射的应用场景？{id="what-are-the-application-scenarios-of-reflection"}
 
 像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。但是！这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像 Spring/Spring Boot、MyBatis 等等框架中都大量使用了反射机制。
 
@@ -2125,9 +2124,9 @@ public class DebugInvocationHandler implements InvocationHandler {
 
 这些都是因为你可以基于反射分析类，然后获取到类/属性/方法/方法的参数上的注解。你获取到注解之后，就可以做进一步的处理。
 
-## 注解
+## 注解 {id="java-annotation"}
 
-### 何谓注解？
+### 何谓注解？{id="what-is-annotation"}
 
 `Annotation` （注解） 是 Java5 开始引入的新特性，可以看作是一种特殊的注释，主要用于修饰类、方法或者变量，提供某些信息供程序在编译或者运行时使用。
 
@@ -2147,18 +2146,18 @@ public interface Override extends Annotation{
 
 JDK 提供了很多内置的注解（比如 `@Override`、`@Deprecated`），同时，我们还可以自定义注解。
 
-### 注解的解析方法有哪几种？
+### 注解的解析方法有哪几种？{id="what-are-the-parsing-methods-of-annotations"}
 
 注解只有被解析之后才会生效，常见的解析方法有两种：
 
 - **编译期直接扫描**：编译器在编译 Java 代码的时候扫描对应的注解并处理，比如某个方法使用`@Override` 注解，编译器在编译的时候就会检测当前的方法是否重写了父类对应的方法。
 - **运行期通过反射处理**：像框架中自带的注解(比如 Spring 框架的 `@Value`、`@Component`)都是通过反射来进行处理的。
 
-## SPI
+## SPI {id="java-spi"}
 
-关于 SPI 的详细解读，请看这篇文章 [Java SPI 机制详解](./spi.md) 。
+关于 SPI 的详细解读，请看这篇文章 [Java SPI 机制详解](./Java-SPI.md) 。
 
-### 何谓 SPI?
+### 何谓 SPI? {id="what-is-spi"}
 
 SPI 即 Service Provider Interface ，字面意思就是：“服务提供者的接口”，我的理解是：专门提供给服务提供者或者扩展框架功能的开发者去使用的一个接口。
 
@@ -2168,7 +2167,7 @@ SPI 将服务接口和具体的服务实现分离开来，将服务调用方和�
 
 ![](https://oss.javaguide.cn/github/javaguide/java/basis/spi/22e1830e0b0e4115a882751f6c417857tplv-k3u1fbpfcp-zoom-1.jpeg)
 
-### SPI 和 API 有什么区别？
+### SPI 和 API 有什么区别？ {id="what-is-the-difference-between-spi-and-api"}
 
 **那 SPI 和 API 有啥区别？**
 
@@ -2184,18 +2183,18 @@ SPI 将服务接口和具体的服务实现分离开来，将服务调用方和�
 
 举个通俗易懂的例子：公司 H 是一家科技公司，新设计了一款芯片，然后现在需要量产了，而市面上有好几家芯片制造业公司，这个时候，只要 H 公司指定好了这芯片生产的标准（定义好了接口标准），那么这些合作的芯片公司（服务提供者）就按照标准交付自家特色的芯片（提供不同方案的实现，但是给出来的结果是一样的）。
 
-### SPI 的优缺点？
+### SPI 的优缺点？{id="what-are-the-advantages-and-disadvantages-of-spi"}
 
 通过 SPI 机制能够大大地提高接口设计的灵活性，但是 SPI 机制也存在一些缺点，比如：
 
 - 需要遍历加载所有的实现类，不能做到按需加载，这样效率还是相对较低的。
 - 当多个 `ServiceLoader` 同时 `load` 时，会有并发问题。
 
-## 序列化和反序列化
+## 序列化和反序列化 {id="serialization-and-deserialization"}
 
-关于序列化和反序列化的详细解读，请看这篇文章 [Java 序列化详解](./serialization.md) ，里面涉及到的知识点和面试题更全面。
+关于序列化和反序列化的详细解读，请看这篇文章 [Java 序列化详解]() ，里面涉及到的知识点和面试题更全面。
 
-### 什么是序列化?什么是反序列化?
+### 什么是序列化?什么是反序列化? {id="what-is-serialization-and-what-is-deserialization"}
 
 如果我们需要持久化 Java 对象比如将 Java 对象保存在文件中，或者在网络传输 Java 对象，这些场景都需要用到序列化。
 
@@ -2238,7 +2237,7 @@ SPI 将服务接口和具体的服务实现分离开来，将服务调用方和�
 
 因为，OSI 七层协议模型中的应用层、表示层和会话层对应的都是 TCP/IP 四层模型中的应用层，所以序列化协议属于 TCP/IP 协议应用层的一部分。
 
-### 如果有些字段不想进行序列化怎么办？
+### 如果有些字段不想进行序列化怎么办？{id="what-if-you-dont-want-to-serialize-some-fields"}
 
 对于不想进行序列化的变量，使用 `transient` 关键字修饰。
 
@@ -2250,13 +2249,13 @@ SPI 将服务接口和具体的服务实现分离开来，将服务调用方和�
 - `transient` 修饰的变量，在反序列化后变量值将会被置成类型的默认值。例如，如果是修饰 `int` 类型，那么反序列后结果就是 `0`。
 - `static` 变量因为不属于任何对象(Object)，所以无论有没有 `transient` 关键字修饰，均不会被序列化。
 
-### 常见序列化协议有哪些？
+### 常见序列化协议有哪些？{id="what-are-the-common-serialization-protocols"}
 
 JDK 自带的序列化方式一般不会用 ，因为序列化效率低并且存在安全问题。比较常用的序列化协议有 Hessian、Kryo、Protobuf、ProtoStuff，这些都是基于二进制的序列化协议。
 
 像 JSON 和 XML 这种属于文本类序列化方式。虽然可读性比较好，但是性能较差，一般不会选择。
 
-### 为什么不推荐使用 JDK 自带的序列化？
+### 为什么不推荐使用 JDK 自带的序列化？ {id="why-isnt-jdk-serialization-recommended"}
 
 我们很少或者说几乎不会直接使用 JDK 自带的序列化方式，主要原因有下面这些原因：
 
@@ -2264,15 +2263,15 @@ JDK 自带的序列化方式一般不会用 ，因为序列化效率低并且存
 - **性能差**：相比于其他序列化框架性能更低，主要原因是序列化之后的字节数组体积较大，导致传输成本加大。
 - **存在安全问题**：序列化和反序列化本身并不存在问题。但当输入的反序列化的数据可被用户控制，那么攻击者即可通过构造恶意输入，让反序列化产生非预期的对象，在此过程中执行构造的任意代码。相关阅读：[应用安全：JAVA 反序列化漏洞之殇](https://cryin.github.io/blog/secure-development-java-deserialization-vulnerability/) 。
 
-## I/O
+## I/O {id="java-io"}
 
 关于 I/O 的详细解读，请看下面这几篇文章，里面涉及到的知识点和面试题更全面。
 
-- [Java IO 基础知识总结](../io/io-basis.md)
-- [Java IO 设计模式总结](../io/io-design-patterns.md)
-- [Java IO 模型详解](../io/io-model.md)
+- [Java IO 基础知识总结]()
+- [Java IO 设计模式总结]()
+- [Java IO 模型详解]()
 
-### Java IO 流了解吗？
+### Java IO 流了解吗？ {id="do-you-know-java-io"}
 
 IO 即 `Input/Output`，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出。数据传输过程类似于水流，因此称为 IO 流。IO 流在 Java 中分为输入流和输出流，而根据数据的处理方式又分为字节流和字符流。
 
@@ -2281,7 +2280,7 @@ Java IO 流的 40 多个类都是从如下 4 个抽象类基类中派生出来�
 - `InputStream`/`Reader`: 所有的输入流的基类，前者是字节输入流，后者是字符输入流。
 - `OutputStream`/`Writer`: 所有输出流的基类，前者是字节输出流，后者是字符输出流。
 
-### I/O 流为什么要分为字节流和字符流呢?
+### I/O 流为什么要分为字节流和字符流呢? {id="why-are-io-streams-divided-into-byte-streams-and-character-streams"}
 
 问题本质想问：**不管是文件读写还是网络发送接收，信息的最小存储单元都是字节，那为什么 I/O 流操作要分为字节流操作和字符流操作呢？**
 
@@ -2290,17 +2289,17 @@ Java IO 流的 40 多个类都是从如下 4 个抽象类基类中派生出来�
 - 字符流是由 Java 虚拟机将字节转换得到的，这个过程还算是比较耗时；
 - 如果我们不知道编码类型的话，使用字节流的过程中很容易出现乱码问题。
 
-### Java IO 中的设计模式有哪些？
+### Java IO 中的设计模式有哪些？ {id="what-are-the-design-patterns-in-java-io"}
 
-参考答案：[Java IO 设计模式总结](../io/io-design-patterns.md)
+参考答案：[Java IO 设计模式总结]()
 
-### BIO、NIO 和 AIO 的区别？
+### BIO、NIO 和 AIO 的区别？ {id="what-are-the-differences-between-bio-nio-and-aio"}
 
-参考答案：[Java IO 模型详解](../io/io-model.md)
+参考答案：[Java IO 模型详解]()
 
-## 语法糖
+## 语法糖 {id="java-syntactic-sugar"}
 
-### 什么是语法糖？
+### 什么是语法糖？ {id="what-is-syntactic-sugar"}
 
 **语法糖（Syntactic sugar）** 代指的是编程语言为了方便程序员开发程序而设计的一种特殊语法，这种语法对编程语言的功能并没有影响。实现相同的功能，基于语法糖写出来的代码往往更简单简洁且更易阅读。
 
@@ -2315,14 +2314,14 @@ for (String s : strs) {
 
 不过，JVM 其实并不能识别语法糖，Java 语法糖要想被正确执行，需要先通过编译器进行解糖，也就是在程序编译阶段将其转换成 JVM 认识的基本语法。这也侧面说明，Java 中真正支持语法糖的是 Java 编译器而不是 JVM。如果你去看`com.sun.tools.javac.main.JavaCompiler`的源码，你会发现在`compile()`中有一个步骤就是调用`desugar()`，这个方法就是负责解语法糖的实现的。
 
-### Java 中有哪些常见的语法糖？
+### Java 中有哪些常见的语法糖？{id="what-are-the-common-syntactic-sugars-in-java"}
 
 Java 中最常用的语法糖主要有泛型、自动拆装箱、变长参数、枚举、内部类、增强 for 循环、try-with-resources 语法、lambda 表达式等。
 
-关于这些语法糖的详细解读，请看这篇文章 [Java 语法糖详解](./syntactic-sugar.md) 。
+关于这些语法糖的详细解读，请看这篇文章 [Java 语法糖详解]() 。
 
 
-## 参考
+## 参考 {id="reference"}
 
 - What is the difference between JDK and JRE?：https://stackoverflow.com/questions/1906445/what-is-the-difference-between-jdk-and-jre
 - Oracle vs OpenJDK：https://www.educba.com/oracle-vs-openjdk/
@@ -2330,3 +2329,8 @@ Java 中最常用的语法糖主要有泛型、自动拆装箱、变长参数、
 - 彻底弄懂 Java 的移位操作符：https://juejin.cn/post/6844904025880526861
 - 深入解析 String#intern：<https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html>
 - R 大（RednaxelaFX）关于常量折叠的回答：https://www.zhihu.com/question/55976094/answer/147302764
+
+
+[1]: https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E8%AA%9E%E8%A8%80
+[2]: https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E5%99%A8
+[3]: https://zh.wikipedia.org/wiki/%E7%9B%B4%E8%AD%AF%E8%AA%9E%E8%A8%80
