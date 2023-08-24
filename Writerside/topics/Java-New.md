@@ -1,7 +1,8 @@
+---
+title: Java新特性
+---
+
 # Java 8-17 新特性
-
-
-
 
 下面是我总结的一些新特性,具体可以参考：[openjdk.org/projects/jd…](https://link.juejin.cn/?target=https%3A%2F%2Fopenjdk.org%2Fprojects%2Fjdk%2F)
 
