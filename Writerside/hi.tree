@@ -34,5 +34,8 @@
                 </toc-element>
             </toc-element>
         </toc-element>
+        <toc-element topic="Jvm-Book.topic">
+            <toc-element topic="Java-Command.md" />
+        </toc-element>
     </toc-element>
 </instance-profile>

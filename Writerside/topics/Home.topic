@@ -13,15 +13,15 @@
 
         <spotlight>
             <a href="Java.topic"
-               description="Java Backend Development" type="learn"/>
-            <a href="Java-Concurrency.topic"
-               description="Java Concurrency" type="academy"/>
+               description="Java Backend Development" type="learn" summary="A Collection of Java"/>
+            <a href="Jvm-Book.topic"
+               description="Write JVM by Yourself" type="academy" summary="自己动手写Java虚拟机"/>
         </spotlight>
 
         <primary>
             <title>Java</title>
             <a href="Java-Top-Basic.topic"
-               description="Java Top Basic"/>
+               description="Java Top Basic" summary="Java Basic"/>
             <a href="Java-Concurrency.topic"
                description="Java Concurrency"/>
 
