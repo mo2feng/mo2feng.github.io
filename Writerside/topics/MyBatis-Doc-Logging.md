@@ -83,25 +83,9 @@ public interface BlogMapper {
 
 在应用的类路径中创建一个名称为 `logback.xml` 的文件，文件的具体内容如下：
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration>
-<configuration>
+<code-block src="mybatis/logback.xml">
 
-  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%5level [%thread] - %msg%n</pattern>
-    </encoder>
-  </appender>
-
-  <logger name="org.mybatis.example.BlogMapper">
-    <level value="trace"/>
-  </logger>
-  <root level="error">
-    <appender-ref ref="stdout"/>
-  </root>
-</configuration>
-```
+</code-block>
 
 添加以上配置后，SLF4J(Logback) 就会记录 `org.mybatis.example.BlogMapper` 的详细执行操作，且仅记录应用中其它类的错误信息（若有）。
 
@@ -178,24 +162,9 @@ pom.xml
 ```
 log4j2.xml
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
 
-  <Appenders>
-    <Console name="stdout" target="SYSTEM_OUT">
-      <PatternLayout pattern="%5level [%t] - %msg%n"/>
-    </Console>
-  </Appenders>
-
-  <Loggers>
-    <Logger name="org.mybatis.example.BlogMapper" level="trace"/>
-    <Root level="error" >
-      <AppenderRef ref="stdout"/>
-    </Root>
-  </Loggers>
-
-</Configuration>
 ```
+{src="mybatis/log4j2.xml"}
 
 
 
@@ -210,14 +179,8 @@ pom.xml
 ```
 log4j.properties
 ```
-log4j.rootLogger=ERROR, stdout
-
-log4j.logger.org.mybatis.example.BlogMapper=TRACE
-
-log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
 ```
+{src="mybatis/log4j.properties"}
 
 ### JDK logging 配置示例
 logging.properties
