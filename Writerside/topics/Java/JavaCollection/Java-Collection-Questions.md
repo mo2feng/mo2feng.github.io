@@ -155,7 +155,7 @@ System.out.println(listOfStrings);
 
 这里简单列举一个例子：
 
-```java
+```
 // ArrayList的底层数组大小为10，此时存储了7个元素
 +---+---+---+---+---+---+---+---+---+---+
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |   |   |   |
@@ -183,7 +183,7 @@ System.out.println(listOfStrings);
 
 ![unlink 方法逻辑](https://oss.javaguide.cn/github/javaguide/java/collection/linkedlist-unlink.jpg)
 
-### LinkedList 为什么不能实现 RandomAccess 接口？ {id="java-collection-linkedlist-not-implement-randomaccess"}
+### LinkedList 为什么不能实现 RandomAccess 接口？ {id="java-collection-linkedList-not-implement-randomAccess"}
 
 `RandomAccess` 是一个标记接口，用来表明实现该接口的类支持随机访问（即可以通过索引快速访问元素）。由于 `LinkedList` 底层数据结构是链表，内存地址不连续，只能通过指针来定位，不支持随机快速访问，所以不能实现 `RandomAccess` 接口。
 
