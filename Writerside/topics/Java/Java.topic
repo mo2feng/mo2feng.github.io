@@ -11,8 +11,8 @@
         </description>
 
         <spotlight>
-            <a href="Java-Basic-T.md"
-               description="Java" type="start"/>
+            <a href="Java-Basic-T.topic"
+               description="Java" type="start" summary="Java学习资源和知识点"/>
             <a href="Java-Concurrency.topic"
                description="Java Concurrency" type="learn"/>
         </spotlight>

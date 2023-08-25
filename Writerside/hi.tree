@@ -9,7 +9,7 @@
     <toc-element topic="Home.topic">
     </toc-element>
     <toc-element topic="Java.topic">
-        <toc-element topic="Java-Basic-T.md">
+        <toc-element topic="Java-Basic-T.topic">
             <toc-element topic="Java-Basic-Questions.md"/>
             <toc-element topic="Java-Keyword-Summary.md"/>
         </toc-element>
