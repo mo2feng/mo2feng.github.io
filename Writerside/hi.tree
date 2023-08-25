@@ -17,7 +17,7 @@
             <toc-element topic="Java-Collection-Questions.md"/>
         </toc-element>
         <toc-element topic="Java-Concurrency.topic"/>
-        <toc-element topic="Java-New.md"/>
+        <toc-element topic="Java-Version-New.md"/>
         <toc-element topic="Java-Top-Basic.topic">
             <toc-element topic="Object-Oriented.topic">
                 <toc-element topic="What-Is-Object-Oriented.topic"/>
