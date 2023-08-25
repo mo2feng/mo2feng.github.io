@@ -9,7 +9,7 @@ MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性
     - [typeHandlers（类型处理器）](#typehandlers)
     - [objectFactory（对象工厂）](#objectfactory)
     - [plugins（插件）](#plugins)
-    - environments（环境配置）
+    - [environments（环境配置）](#environments)
         - environment（环境变量）
             - transactionManager（事务管理器）
             - dataSource（数据源）
@@ -22,7 +22,7 @@ MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性
 
 这些属性可以在外部进行配置，并可以进行动态替换。你既可以在典型的 Java 属性文件中配置这些属性，也可以在 properties 元素的子元素中设置。例如：
 
-```
+```xml
 <properties resource="org/mybatis/example/config.properties">
   <property name="username" value="dev_user"/>
   <property name="password" value="F2Fa3!33TYyg"/>
@@ -31,7 +31,7 @@ MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性
 
 设置好的属性可以在整个配置文件中用来替换需要动态配置的属性值。比如:
 
-```
+```xml
 <dataSource type="POOLED">
   <property name="driver" value="${driver}"/>
   <property name="url" value="${url}"/>
@@ -40,11 +40,11 @@ MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性
 </dataSource>
 ```
 
-这个例子中的 username 和 password 将会由 properties 元素中设置的相应值来替换。 driver 和 url 属性将会由 config.properties 文件中对应的值来替换。这样就为配置提供了诸多灵活选择。
+这个例子中的 `username` 和 `password` 将会由 properties 元素中设置的相应值来替换。 `driver` 和 `url` 属性将会由 config.properties 文件中对应的值来替换。这样就为配置提供了诸多灵活选择。
 
-也可以在 SqlSessionFactoryBuilder.build() 方法中传入属性值。例如：
+也可以在 `SqlSessionFactoryBuilder.build()` 方法中传入属性值。例如：
 
-```
+```java
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, props);
 
 // ... 或者 ...
@@ -62,7 +62,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 从 MyBatis 3.4.2 开始，你可以为占位符指定一个默认值。例如：
 
-```
+```xml
 <dataSource type="POOLED">
   <!-- ... -->
   <property name="username" value="${username:ut_user}"/> <!-- 如果属性 'username' 没有被配置，'username' 属性的值将为 'ut_user' -->
@@ -71,16 +71,16 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 这个特性默认是关闭的。要启用这个特性，需要添加一个特定的属性来开启这个特性。例如：
 
-```
+```xml
 <properties resource="org/mybatis/example/config.properties">
   <!-- ... -->
   <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/> <!-- 启用默认值特性 -->
 </properties>
 ```
+<tip>
+ 如果你在属性名中使用了 `":"` 字符（如：`db:username`），或者在 SQL 映射中使用了 OGNL 表达式的三元运算符（如： `${tableName != null ? tableName : 'global_constants'}`），就需要设置特定的属性来修改分隔属性名和默认值的字符。例如：
 
-**提示** 如果你在属性名中使用了 `":"` 字符（如：`db:username`），或者在 SQL 映射中使用了 OGNL 表达式的三元运算符（如： `${tableName != null ? tableName : 'global_constants'}`），就需要设置特定的属性来修改分隔属性名和默认值的字符。例如：
-
-```
+```xml
 <properties resource="org/mybatis/example/config.properties">
   <!-- ... -->
   <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- 修改默认值的分隔符 -->
@@ -90,6 +90,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
   <property name="username" value="${db:username?:ut_user}"/>
 </dataSource>
 ```
+</tip>
 
 
 
@@ -134,7 +135,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 一个配置完整的 settings 元素的示例如下：
 
-```
+```xml
 <settings>
   <setting name="cacheEnabled" value="true"/>
   <setting name="lazyLoadingEnabled" value="true"/>
@@ -172,7 +173,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 类型别名可为 Java 类型设置一个缩写名字。 它仅用于 XML 配置，意在降低冗余的全限定类名书写。例如：
 
-```
+```xml
 <typeAliases>
   <typeAlias alias="Author" type="domain.blog.Author"/>
   <typeAlias alias="Blog" type="domain.blog.Blog"/>
@@ -187,7 +188,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 也可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean，比如：
 
-```
+```xml
 <typeAliases>
   <package name="domain.blog"/>
 </typeAliases>
@@ -195,7 +196,7 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 
 每一个在包 `domain.blog` 中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 `domain.blog.Author` 的别名为 `author`；若有注解，则别名为其注解值。见下面的例子：
 
-```
+```java
 @Alias("author")
 public class Author {
     ...
@@ -250,7 +251,7 @@ public class Author {
 
 MyBatis 在设置预处理语句（PreparedStatement）中的参数或从结果集中取出一个值时， 都会用类型处理器将获取到的值以合适的方式转换成 Java 类型。下表描述了一些默认的类型处理器。
 
-**提示** 从 3.4.5 开始，MyBatis 默认支持 JSR-310（日期和时间 API） 。
+> 从 3.4.5 开始，MyBatis 默认支持 JSR-310（日期和时间 API） 。
 
 | 类型处理器                   | Java 类型                       | JDBC 类型                                                    |
 | :--------------------------- | :------------------------------ | :----------------------------------------------------------- |
@@ -294,7 +295,7 @@ MyBatis 在设置预处理语句（PreparedStatement）中的参数或从结果�
 
 你可以重写已有的类型处理器或创建你自己的类型处理器来处理不支持的或非标准的类型。 具体做法为：实现 `org.apache.ibatis.type.TypeHandler` 接口， 或继承一个很便利的类 `org.apache.ibatis.type.BaseTypeHandler`， 并且可以（可选地）将它映射到一个 JDBC 类型。比如：
 
-```
+```java
 // ExampleTypeHandler.java
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ExampleTypeHandler extends BaseTypeHandler<String> {
@@ -319,6 +320,8 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
     return cs.getString(columnIndex);
   }
 }
+```
+```xml
 <!-- mybatis-config.xml -->
 <typeHandlers>
   <typeHandler handler="org.mybatis.example.ExampleTypeHandler"/>
@@ -341,7 +344,7 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
 最后，可以让 MyBatis 帮你查找类型处理器：
 
-```
+```xml
 <!-- mybatis-config.xml -->
 <typeHandlers>
   <package name="org.mybatis.example"/>
@@ -352,7 +355,7 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
 你可以创建能够处理多个类的泛型类型处理器。为了使用泛型类型处理器， 需要增加一个接受该类的 class 作为参数的构造器，这样 MyBatis 会在构造一个类型处理器实例的时候传入一个具体的类。
 
-```
+```java
 //GenericTypeHandler.java
 public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 
@@ -373,7 +376,8 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 
 比如说我们想存储取近似值时用到的舍入模式。默认情况下，MyBatis 会利用 `EnumTypeHandler` 来把 `Enum` 值转换成对应的名字。
 
-**注意 `EnumTypeHandler` 在某种意义上来说是比较特别的，其它的处理器只针对某个特定的类，而它不同，它会处理任意继承了 `Enum` 的类。**
+> **注意 `EnumTypeHandler` 在某种意义上来说是比较特别的，其它的处理器只针对某个特定的类，而它不同，它会处理任意继承了 `Enum` 的类。**
+{style="warning"}
 
 不过，我们可能不想存储名字，相反我们的 DBA 会坚持使用整形值代码。那也一样简单：在配置文件中把 `EnumOrdinalTypeHandler` 加到 `typeHandlers` 中即可， 这样每个 `RoundingMode` 将通过他们的序数值来映射成对应的整形数值。
 
@@ -519,9 +523,10 @@ public class ExamplePlugin implements Interceptor {
 
 上面的插件将会拦截在 Executor 实例中所有的 “update” 方法调用， 这里的 Executor 是负责执行底层映射语句的内部对象。
 
-**提示** **覆盖配置类**
-
-除了用插件来修改 MyBatis 核心行为以外，还可以通过完全覆盖配置类来达到目的。只需继承配置类后覆盖其中的某个方法，再把它传递到 SqlSessionFactoryBuilder.build(myConfig) 方法即可。再次重申，这可能会极大影响 MyBatis 的行为，务请慎之又慎。
+ 
+> **覆盖配置类**
+>
+> 除了用插件来修改 MyBatis 核心行为以外，还可以通过完全覆盖配置类来达到目的。只需继承配置类后覆盖其中的某个方法，再把它传递到 SqlSessionFactoryBuilder.build(myConfig) 方法即可。再次重申，这可能会极大影响 MyBatis 的行为，务请慎之又慎。
 
 
 
@@ -529,7 +534,8 @@ public class ExamplePlugin implements Interceptor {
 
 MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者想在具有相同 Schema 的多个生产数据库中使用相同的 SQL 映射。还有许多类似的使用场景。
 
-**不过要记住：尽管可以配置多个环境，但每个 SqlSessionFactory 实例只能选择一种环境。**
+> **尽管可以配置多个环境，但每个 SqlSessionFactory 实例只能选择一种环境。**
+{style="warning"}
 
 所以，如果你想连接两个数据库，就需要创建两个 SqlSessionFactory 实例，每个数据库对应一个。而如果是三个数据库，就需要三个实例，依此类推，记起来很简单：
 
@@ -537,21 +543,21 @@ MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射�
 
 为了指定创建哪种环境，只要将它作为可选的参数传递给 SqlSessionFactoryBuilder 即可。可以接受环境配置的两个方法签名是：
 
-```
+```java
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environment);
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environment, properties);
 ```
 
 如果忽略了环境参数，那么将会加载默认环境，如下所示：
 
-```
+```java
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
 SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, properties);
 ```
 
 environments 元素定义了如何配置环境。
 
-```
+```xml
 <environments default="development">
   <environment id="development">
     <transactionManager type="JDBC">
@@ -582,7 +588,7 @@ environments 元素定义了如何配置环境。
 
 - JDBC – 这个配置直接使用了 JDBC 的提交和回滚功能，它依赖从数据源获得的连接来管理事务作用域。默认情况下，为了与某些驱动程序兼容，它在关闭连接时启用自动提交。然而，对于某些驱动程序来说，启用自动提交不仅是不必要的，而且是一个代价高昂的操作。因此，从 3.5.10 版本开始，你可以通过将 "skipSetAutoCommitOnClose" 属性设置为 "true" 来跳过这个步骤。例如：
 
-  ```
+  ```xml
   <transactionManager type="JDBC">
     <property name="skipSetAutoCommitOnClose" value="true"/>
   </transactionManager>
@@ -590,17 +596,17 @@ environments 元素定义了如何配置环境。
 
 - MANAGED – 这个配置几乎没做什么。它从不提交或回滚一个连接，而是让容器来管理事务的整个生命周期（比如 JEE 应用服务器的上下文）。 默认情况下它会关闭连接。然而一些容器并不希望连接被关闭，因此需要将 closeConnection 属性设置为 false 来阻止默认的关闭行为。例如:
 
-  ```
+  ```xml
   <transactionManager type="MANAGED">
     <property name="closeConnection" value="false"/>
   </transactionManager>
   ```
 
-**提示** 如果你正在使用 Spring + MyBatis，则没有必要配置事务管理器，因为 Spring 模块会使用自带的管理器来覆盖前面的配置。
+>  如果你正在使用 Spring + MyBatis，则没有必要配置事务管理器，因为 Spring 模块会使用自带的管理器来覆盖前面的配置。
 
 这两种事务管理器类型都不需要设置任何属性。它们其实是类型别名，换句话说，你可以用 TransactionFactory 接口实现类的全限定名或类型别名代替它们。
 
-```
+```java
 public interface TransactionFactory {
   default void setProperties(Properties props) { // 从 3.5.2 开始，该方法为默认方法
     // 空实现
@@ -612,7 +618,7 @@ public interface TransactionFactory {
 
 在事务管理器实例化后，所有在 XML 中配置的属性将会被传递给 setProperties() 方法。你的实现还需要创建一个 Transaction 接口的实现类，这个接口也很简单：
 
-```
+```java
 public interface Transaction {
   Connection getConnection() throws SQLException;
   void commit() throws SQLException;
@@ -673,7 +679,7 @@ dataSource 元素使用标准的 JDBC 数据源接口来配置 JDBC 连接对象
 
 你可以通过实现接口 `org.apache.ibatis.datasource.DataSourceFactory` 来使用第三方数据源实现：
 
-```
+```xml
 public interface DataSourceFactory {
   void setProperties(Properties props);
   DataSource getDataSource();
@@ -682,7 +688,7 @@ public interface DataSourceFactory {
 
 `org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory` 可被用作父类来构建新的数据源适配器，比如下面这段插入 C3P0 数据源所必需的代码：
 
-```
+```xml
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -696,7 +702,7 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 
 为了令其工作，记得在配置文件中为每个希望 MyBatis 调用的 setter 方法增加对应的属性。 下面是一个可以连接至 PostgreSQL 数据库的例子：
 
-```
+```xml
 <dataSource type="org.myproject.C3P0DataSourceFactory">
   <property name="driver" value="org.postgresql.Driver"/>
   <property name="url" value="jdbc:postgresql:mydb"/>
@@ -711,13 +717,13 @@ public class C3P0DataSourceFactory extends UnpooledDataSourceFactory {
 
 MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 `databaseId` 属性。 MyBatis 会加载带有匹配当前数据库 `databaseId` 属性和所有不带 `databaseId` 属性的语句。 如果同时找到带有 `databaseId` 和不带 `databaseId` 的相同语句，则后者会被舍弃。 为支持多厂商特性，只要像下面这样在 mybatis-config.xml 文件中加入 `databaseIdProvider` 即可：
 
-```
+```xml
 <databaseIdProvider type="DB_VENDOR" />
 ```
 
 databaseIdProvider 对应的 DB_VENDOR 实现会将 databaseId 设置为 `DatabaseMetaData#getDatabaseProductName()` 返回的字符串。 由于通常情况下这些字符串都非常长，而且相同产品的不同版本会返回不同的值，你可能想通过设置属性别名来使其变短：
 
-```
+```xml
 <databaseIdProvider type="DB_VENDOR">
   <property name="SQL Server" value="sqlserver"/>
   <property name="DB2" value="db2"/>
@@ -729,7 +735,7 @@ databaseIdProvider 对应的 DB_VENDOR 实现会将 databaseId 设置为 `Databa
 
 你可以通过实现接口 `org.apache.ibatis.mapping.DatabaseIdProvider` 并在 mybatis-config.xml 中注册来构建自己的 DatabaseIdProvider：
 
-```
+```java
 public interface DatabaseIdProvider {
   default void setProperties(Properties p) { // 从 3.5.2 开始，该方法为默认方法
     // 空实现

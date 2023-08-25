@@ -4,7 +4,7 @@
 
 Java 程序员面对的最痛苦的事情之一就是在 Java 代码中嵌入 SQL 语句。这通常是因为需要动态生成 SQL 语句，不然我们可以将它们放到外部文件或者存储过程中。如你所见，MyBatis 在 XML 映射中具备强大的 SQL 动态生成能力。但有时，我们还是需要在 Java 代码里构建 SQL 语句。此时，MyBatis 有另外一个特性可以帮到你，让你从处理典型问题中解放出来，比如加号、引号、换行、格式化问题、嵌入条件的逗号管理及 AND 连接。确实，在 Java 代码中动态生成 SQL 代码真的就是一场噩梦。例如：
 
-```
+```sql
 String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
 "P.LAST_NAME,P.CREATED_ON, P.UPDATED_ON " +
 "FROM PERSON P, ACCOUNT A " +
@@ -22,7 +22,7 @@ String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
 
 MyBatis 3 提供了方便的工具类来帮助解决此问题。借助 SQL 类，我们只需要简单地创建一个实例，并调用它的方法即可生成 SQL 语句。让我们来用 SQL 类重写上面的例子：
 
-```
+```java
 private String selectPersonSql() {
   return new SQL() {{
     SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME");
@@ -51,7 +51,7 @@ private String selectPersonSql() {
 
 这里有一些示例：
 
-```
+```java
 // 匿名内部类风格
 public String deletePersonSql() {
   return new SQL() {{
@@ -137,11 +137,12 @@ public String updatePersonSql() {
 | `INTO_VALUES(String...)`                                     | 追加插入值子句到 insert 语句中。应与 INTO_COLUMNS() 一同使用。 |
 | `ADD_ROW()`                                                  | 添加新的一行数据，以便执行批量插入。（于 3.5.2 引入）        |
 
-**提示** 注意，SQL 类将原样插入 `LIMIT`、`OFFSET`、`OFFSET n ROWS` 以及 `FETCH FIRST n ROWS ONLY` 子句。换句话说，类库不会为不支持这些子句的数据库执行任何转换。 因此，用户应该要了解目标数据库是否支持这些子句。如果目标数据库不支持这些子句，产生的 SQL 可能会引起运行错误。
+>  注意，SQL 类将原样插入 `LIMIT`、`OFFSET`、`OFFSET n ROWS` 以及 `FETCH FIRST n ROWS ONLY` 子句。换句话说，类库不会为不支持这些子句的数据库执行任何转换。 因此，用户应该要了解目标数据库是否支持这些子句。如果目标数据库不支持这些子句，产生的 SQL 可能会引起运行错误。
+{style="warning"}
 
 从版本 3.4.2 开始，你可以像下面这样使用可变长度参数：
 
-```
+```java
 public String selectPersonSql() {
   return new SQL()
     .SELECT("P.ID", "A.USERNAME", "A.PASSWORD", "P.FULL_NAME", "D.DEPARTMENT_NAME", "C.COMPANY_NAME")
@@ -171,7 +172,7 @@ public String updatePersonSql() {
 
 从版本 3.5.2 开始，你可以像下面这样构建批量插入语句：
 
-```
+```java
 public String insertPersonsSql() {
   // INSERT INTO PERSON (ID, FULL_NAME)
   //     VALUES (#{mainPerson.id}, #{mainPerson.fullName}) , (#{subPerson.id}, #{subPerson.fullName})
@@ -187,7 +188,7 @@ public String insertPersonsSql() {
 
 从版本 3.5.2 开始，你可以像下面这样构建限制返回结果数的 SELECT 语句,：
 
-```
+```java
 public String selectPersonsWithOffsetLimitSql() {
   // SELECT id, name FROM PERSON
   //     LIMIT #{limit} OFFSET #{offset}
@@ -213,6 +214,9 @@ public String selectPersonsWithFetchFirstSql() {
 
 ## SqlBuilder 和 SelectBuilder (已经废弃)
 
+> 下面内容已被废弃，请不要继续使用
+{style="warning"}
+
 在版本 3.2 之前，我们的实现方式不太一样，我们利用 ThreadLocal 变量来掩盖一些对 Java DSL 不太友好的语言限制。现在，现代 SQL 构建框架使用的构建器和匿名内部类思想已被人们所熟知。因此，我们废弃了基于这种实现方式的 SelectBuilder 和 SqlBuilder 类。
 
 下面的方法仅仅适用于废弃的 SqlBuilder 和 SelectBuilder 类。
@@ -224,14 +228,14 @@ public String selectPersonsWithFetchFirstSql() {
 
 SelectBuilder 和 SqlBuilder 类并不神奇，但最好还是知道它们的工作原理。 SelectBuilder 以及 SqlBuilder 借助静态导入和 ThreadLocal 变量实现了对插入条件友好的简洁语法。要使用它们，只需要静态导入这个类的方法即可，就像这样（只能使用其中的一条，不能同时使用）:
 
-```
+```java
 import static org.apache.ibatis.jdbc.SelectBuilder.*;
 import static org.apache.ibatis.jdbc.SqlBuilder.*;
 ```
 
 然后就可以像下面这样创建一些方法：
 
-```
+```java
 /* 已被废弃 */
 public String selectBlogsSql() {
   BEGIN(); // 重置 ThreadLocal 状态变量
