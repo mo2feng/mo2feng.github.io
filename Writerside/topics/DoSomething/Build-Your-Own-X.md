@@ -1,5 +1,5 @@
 ---
-Title: Build Your Own X
+title: Build Your Own X
 ---
 
 > 转载自Github项目[build-your-own-x](https://github.mofeng.me/codecrafters-io/build-your-own-x),可以作为项目实践来构建自己喜欢的内容
