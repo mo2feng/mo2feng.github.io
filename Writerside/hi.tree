@@ -54,6 +54,7 @@
     <toc-element topic="Specification.topic"/>
     <toc-element topic="Database.topic"/>
     <toc-element topic="Do-Something.topic">
+        <toc-element topic="Build-Your-Own-X.md"/>
         <toc-element topic="Jvm-Book.topic">
             <toc-element topic="Java-Command.md"/>
         </toc-element>
