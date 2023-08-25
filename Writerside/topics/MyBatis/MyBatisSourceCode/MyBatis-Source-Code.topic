@@ -4,6 +4,6 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Mybatis源码理解" id="MyBatis-Source-Code">
-
-    <img src="MyBatis-Architecture-Diagram.png" alt="MyBatis 功能架构图">
+    <link-summary>MyBatis源码解析</link-summary>
+    <img src="MyBatis-Architecture-Diagram.png" alt="MyBatis 功能架构图"/>
 </topic>
