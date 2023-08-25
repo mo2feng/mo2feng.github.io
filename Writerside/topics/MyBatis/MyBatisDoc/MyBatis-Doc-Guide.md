@@ -126,7 +126,7 @@ Blog blog = mapper.selectBlog(101);
 
 ------
 <tip>
-<p><control>对命名空间的一点补充<control></p>
+<p><control>对命名空间的一点补充</control></p>
 
 在之前版本的 MyBatis 中，<emphasis>命名空间（Namespaces）</emphasis>的作用并不大，是可选的。 但现在，随着命名空间越发重要，你必须指定命名空间。
 
