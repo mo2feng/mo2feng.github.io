@@ -172,7 +172,7 @@ I love JavaGuide
 value is JavaGuide
 ```
 
-**注意** : 若提到上面代码运行会抛出 `ClassNotFoundException` 异常,原因是你没有下面把这段代码的包名替换成自己创建的 `TargetObject` 所在的包 。
+> 若提到上面代码运行会抛出 `ClassNotFoundException` 异常,原因是你没有下面把这段代码的包名替换成自己创建的 `TargetObject` 所在的包 。
 
 ```java
 Class<?> targetClass = Class.forName("io.github.mo2feng.TargetObject");
