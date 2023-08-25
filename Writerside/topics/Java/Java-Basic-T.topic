@@ -31,7 +31,17 @@
                 <p>⭐ <a href="https://www.bilibili.com/video/BV1Kb411W75N">宋红康java基础视频</a></p>
             </tab>
             <tab title="文档">
-
+                <p>
+                    ⭐ <a href="https://www.runoob.com/java/java-tutorial.html">菜鸟教程</a> （可以在线练习）
+                </p>
+                <p>
+                    <a href="https://www.liaoxuefeng.com/wiki/1252599548343744">
+                        廖雪峰 Java 教程
+                    </a>
+                </p>
+                <a href="https://tobebetterjavaer.com/home.html">
+                    二哥的Java进阶之路
+                </a> (语言比较风趣,如果你不介意知识星球的广告的话)
             </tab>
         </tabs>
 
