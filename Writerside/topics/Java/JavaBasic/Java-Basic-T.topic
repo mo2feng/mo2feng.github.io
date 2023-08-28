@@ -46,8 +46,8 @@
         </tabs>
 
     </chapter>
-    <chapter title="忽略知识点" id="ignore-knowledge">
-        <deflist sorted="desc">
+    <chapter title="忽略知识点" id="ignore-knowledge" collapsible="true">
+        <deflist sorted="asc">
             <def title="AWT 和 Swing">
                 已经 3202 年了，谁还会用 AWT 和 Swing 去开发桌面应用呢？学好后端开发即可，现在是移动互联网时代，基本上都是手机APP、小程序、Web
                 网页来做前端了，可以把学习的重心放到 Spring Boot、Spring Cloud、Netty、Dubbo、Zookeeper、Mysql上。
