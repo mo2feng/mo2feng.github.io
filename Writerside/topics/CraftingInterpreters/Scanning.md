@@ -62,8 +62,9 @@ private static void runFile(String path) throws IOException {
 如果想与解释器进行更亲密的交流对话，还可以以交互方式运行它。在没有任何参数的情况下启动 jlox，它会启动一个命令提示符中，可以在其中一次输入一行代码并执行。
 
 > 交互式提示也称为“REPL”（发音像“rebel”但带有“p”）。这个名字来自 Lisp，其中实现一个就像围绕一些内置函数包装一个循环一样简单：
-> 
+> ```
 > (print (eval (read)))
+> ```
 > 
 > 从最内存嵌套的调用向外工作，**R**ead一行输入，**E**valuate它，**P**rint结果，然后**L**oop再来一遍。
 
@@ -821,7 +822,7 @@ while (isAlphaNumeric(peek())) advance();
 
 - 下一行的返回值：
   
-  ```c
+  ```
   if (condition) return
   "value"
   ```
@@ -830,7 +831,7 @@ while (isAlphaNumeric(peek())) advance();
 
 - 下一行带括号的表达式：
   
-  ```c
+  ```
   func
   (parenthesized)
   ```
@@ -839,7 +840,7 @@ while (isAlphaNumeric(peek())) advance();
 
 - 在下一行有一个`-`：
   
-  ```c
+  ```
   first
   -second
   ```
@@ -864,7 +865,7 @@ while (isAlphaNumeric(peek())) advance();
   
   JavaScript 中的一个示例：
   
-  ```js
+  ```javascript
   console.log(function() {
     statement();
   });
