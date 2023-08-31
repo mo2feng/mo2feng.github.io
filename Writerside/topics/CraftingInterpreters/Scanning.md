@@ -69,6 +69,7 @@ private static void runFile(String path) throws IOException {
 > 从最内存嵌套的调用向外工作，**R**ead一行输入，**E**valuate它，**P**rint结果，然后**L**oop再来一遍。
 
 ```java
+// lox/Lox.java, add after runFile()
   private static void runPrompt() throws IOException {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
@@ -80,7 +81,6 @@ private static void runFile(String path) throws IOException {
       run(line);
     }
   }
-// lox/Lox.java, add after runFile()
 ```
 
 `readLine()`顾名思义，该函数从命令行读取用户的一行输入作为结果返回。要终止交互式命令行应用程序，通常键入 Control-D。这样做会向程序发出“end-of-file”信号。当这种情况发生时`readLine()`返回`null`，所以用它检查是否退出循环。
@@ -128,13 +128,13 @@ private static void run(String source) {
 
 这个`error()`函数和`report()`辅助函数告诉用户在确定的行上发生了一些语法错误。这确实是能够声称您甚至*有*错误报告的最低限度。想象一下，如果你不小心在某个函数调用中留下了一个悬空的逗号，并且解释器打印出来：
 
-```java
+```
 Error: Unexpected "," somewhere in your code. Good luck finding it!
 ```
 
 那不是很有帮助。我们至少需要将它们指向正确的行号。更好的是开始和结束列，这样用户就知道*该*行的位置。*比这*更好的是向用户*显示*违规行，例如：
 
-```java
+```
 Error: Unexpected "," in argument list.
 
     15 | function(first, second,);
@@ -865,7 +865,7 @@ while (isAlphaNumeric(peek())) advance();
   
   JavaScript 中的一个示例：
   
-  ```javascript
+  ```
   console.log(function() {
     statement();
   });
