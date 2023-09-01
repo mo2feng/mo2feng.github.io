@@ -1,5 +1,6 @@
 # 介绍
 
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## 概要
 

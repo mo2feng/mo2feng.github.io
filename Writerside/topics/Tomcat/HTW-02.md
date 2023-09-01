@@ -1,5 +1,7 @@
 # 第2章:一个简单的Servlet容器
 
+<show-structure for="chapter,procedure" depth="2"/>
+
 ## 概要
 本章通过两个程序来说明你如何开发自己的servlet容器。第一个程序被设计得足够简单使得你能理解一个servlet容器是如何工作的。然后它演变为第二个稍微复杂的servlet容器。 
 
