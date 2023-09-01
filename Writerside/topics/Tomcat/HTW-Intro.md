@@ -35,10 +35,9 @@ servlet容器是一个复杂的系统。不过，一个servlet容器要为一个
 
 Catalina是一个非常复杂的，并优雅的设计开发出来的软件，同时它也是模块化的。基于“Servlet容器是如何工作的”这一节中提到的任务，你可以把Catalina看成是由两个主要模块所组成的：连接器(connector)和容器(container)。在Figure I.1中的架构图，当然是简化了。在稍后的章节里边，你将会一个个的揭开所有更小的组件的神秘面纱。
 
+> Figure 1.1 Catalina's main modules
+
 ```mermaid
----
-title: Figure 1.1 Catalina's main modules
----
 classDiagram
     class Connector
     class Container
