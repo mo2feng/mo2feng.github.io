@@ -110,22 +110,17 @@ classDiagram
      <<Interface>> ServletResponse
      class ServletRequest
      <<Interface>> ServletRequest
-     class Request
-     class Response
-     class HttpServer1
-     class ServletProcessor1
-     class StaticResourceProcessor
-     
-     Request ..|> ServletRequest
-     Response ..|> ServletResponse
-     HttpServer1 ..> Request
-     HttpServer1 ..> Response
-     HttpServer1 -->ServletProcessor1
-     HttpServer1 -->StaticResourceProcessor
-     ServletProcessor1 ..>Request
-     ServletProcessor1 ..>Response
-     StaticResourceProcessor ..> Request
-     StaticResourceProcessor ..> Response
+  
+     ServletRequest <|.. Request 
+     ServletResponse <|.. Response
+     Request <.. HttpServer1
+     Request <..ServletProcessor1
+     Request <.. StaticResourceProcessor
+	 Response <.. HttpServer1
+	 Response <.. ServletProcessor1
+	 Response <.. StaticResourceProcessor
+     ServletProcessor1 <-- HttpServer1
+     StaticResourceProcessor <-- HttpServer1
 ```
 {id="htw-figure-2-1"}
 
@@ -213,7 +208,7 @@ public class HttpServer1 {
     }
 }
 ```
-{id="htw-listing-2-2}
+{id="htw-listing-2-2"}
 
 类的await方法等待HTTP请求直到一个shutdown命令给发出，让你想起第1章的await方法。
 
