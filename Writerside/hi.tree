@@ -59,7 +59,12 @@
             <toc-element topic="Java-Command.md"/>
         </toc-element>
         <toc-element topic="content.md">
-        <toc-element topic="Scanning.md"/>
-            </toc-element>
-             </toc-element>
+            <toc-element topic="Scanning.md"/>
+        </toc-element>
+      
+        <toc-element topic="HTW.md">
+            <toc-element topic="HTW-Intro.md"/>
+            <toc-element topic="HTW-01.md" />
+        </toc-element>
+    </toc-element>
 </instance-profile>
