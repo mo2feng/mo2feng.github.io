@@ -1,5 +1,5 @@
 * ## 第3章:连接器
-
+<show-structure for="chapter,procedure" depth="2"/>
 ## 概要
 在介绍中提到，Catalina中有两个主要的模块：连接器和容器。本章中你将会写一个可以
 创建更好的请求和响应对象的连接器，用来改进第2章中的程序。
@@ -342,51 +342,460 @@ userName=tarzan&password=pwd
 查询字符串可以包括零个或多个参数。在上面的例子中，有两个参数名/值对，`userName/tarzan`和`password/pwd`。在servlet/JSP编程中，参数名`jsessionid`是用来携带一个会话标识符。会话标识符经常被作为cookie来嵌入，但是程序员可以选择把它嵌入到查询字
 符串去，例如，当浏览器的cookie被禁用的时候。 
 
-当`parseRequest`方法被`HttpProcessor`类的`process`方法调用的时候，request变量指向一个HttpRequest实例。parseRequest方法解析请求行用来获得几个值并把这些值赋给HttpRequest对象。现在，让我们来关注一下在Listing 3.4中的parseRequest方法。 Listing 3.4：HttpProcessor类中的parseRequest方法
-  private void parseRequest(SocketInputStream input, OutputStream output) throws IOException, ServletException { // Parse the incoming request line input.readRequestLine(requestLine); String method = new String(requestLine.method, 0, requestLine.methodEnd); String uri = null; String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd); // Validate the incoming request line if (method, length () < 1) { throw new ServletException("Missing HTTP request method"); } else if (requestLine.uriEnd < 1) { throw new ServletException("Missing HTTP request URI"); } // Parse any query parameters out of the request URI int question = requestLine.indexOf("?"); if (question >= 0) { request.setQueryString(new String(requestLine.uri, question + 1, requestLine.uriEnd - question - 1)); uri = new String(requestLine.uri, 0, question); } else { request.setQueryString(null); uri = new String(requestLine.uri, 0, requestLine.uriEnd); } // Checking for an absolute URI (with the HTTP protocol) if (!uri.startsWith("/")) { int pos = uri.indexOf("://"); // Parsing out protocol and host name if (pos != -1) { pos = uri.indexOf('/', pos + 3); if (pos == -1) { uri = ""; } else { uri = uri.substring(pos); }
-  } } // Parse any requested session ID out of the request URI String match = ";jsessionid="; int semicolon = uri.indexOf(match); if (semicolon >= 0) { String rest = uri.substring(semicolon + match,length()); int semicolon2 = rest.indexOf(';'); if (semicolon2 >= 0) { request.setRequestedSessionId(rest.substring(0, semicolon2)); rest = rest.substring(semicolon2); } else { request.setRequestedSessionId(rest); rest = ""; } request.setRequestedSessionURL(true); uri = uri.substring(0, semicolon) + rest; } else { request.setRequestedSessionId(null); request.setRequestedSessionURL(false); } // Normalize URI (using String operations at the moment) String normalizedUri = normalize(uri); // Set the corresponding request properties ((HttpRequest) request).setMethod(method); request.setProtocol(protocol); if (normalizedUri != null) { ((HttpRequest) request).setRequestURI(normalizedUri); } else { ((HttpRequest) request).setRequestURI(uri); } if (normalizedUri == null) { throw new ServletException("Invalid URI: " + uri + "'"); } } parseRequest方法首先调用SocketInputStream类的readRequestLine方法： input.readRequestLine(requestLine); 在这里requestLine是HttpProcessor里边的HttpRequestLine的一个实例： private HttpRequestLine requestLine = new HttpRequestLine();
-  调用它的readRequestLine方法来告诉SocketInputStream去填入HttpRequestLine实例。 接下去，parseRequest方法获得请求行的方法，URI和协议： String method = new String(requestLine.method, 0, requestLine.methodEnd); String uri = null; String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd); 不过，在URI后面可以有查询字符串，假如存在的话，查询字符串会被一个问好分隔开来。因此，parseRequest方法试图首先获取查询字符串。并调用setQueryString方法来填充HttpRequest对象： // Parse any query parameters out of the request URI int question = requestLine.indexOf("?"); if (question >= 0) { // there is a query string. request.setQueryString(new String(requestLine.uri, question + 1, requestLine.uriEnd - question - 1)); uri = new String(requestLine.uri, 0, question); } else { request.setQueryString (null); uri = new String(requestLine.uri, 0, requestLine.uriEnd); } 不过，大多数情况下，URI指向一个相对资源，URI还可以是一个绝对值，就像下面所示： http://www.brainysoftware.com/index.html?name=Tarzan parseRequest方法同样也检查这种情况： // Checking for an absolute URI (with the HTTP protocol) if (!uri.startsWith("/")) { // not starting with /, this is an absolute URI int pos = uri.indexOf("://"); // Parsing out protocol and host name if (pos != -1) { pos = uri.indexOf('/', pos + 3); if (pos == -1) { uri = ""; } else { uri = uri.substring(pos); } } }
-  然后，查询字符串也可以包含一个会话标识符，用jsessionid参数名来指代。因此，parseRequest方法也检查一个会话标识符。假如在查询字符串里边找到jessionid，方法就取得
-  会话标识符，并通过调用setRequestedSessionId方法把值交给HttpRequest实例： // Parse any requested session ID out of the request URI String match = ";jsessionid="; int semicolon = uri.indexOf(match); if (semicolon >= 0) { String rest = uri.substring(semicolon + match.length()); int semicolon2 = rest.indexOf(';'); if (semicolon2 >= 0) { request.setRequestedSessionId(rest.substring(0, semicolon2)); rest = rest.substring(semicolon2); } else { request.setRequestedSessionId(rest); rest = ""; } request.setRequestedSessionURL (true); uri = uri.substring(0, semicolon) + rest; } else { request.setRequestedSessionId(null); request.setRequestedSessionURL(false); } 当jsessionid被找到，也意味着会话标识符是携带在查询字符串里边，而不是在cookie里边。因此，传递true给request的 setRequestSessionURL方法。否则，传递false给setRequestSessionURL方法并传递null给 setRequestedSessionURL方法。 到这个时候，uri的值已经被去掉了jsessionid。 接下去，parseRequest方法传递uri给normalize方法，用于纠正“异常”的URI。例如，任何\的出现都会给/替代。假如uri是正确的格式或者异常可以给纠正的话，normalize将会返回相同的或者被纠正后的URI。假如URI不能纠正的话，它将会给认为是非法的并且通常会返回null。在这种情况下(通常返回null)，parseRequest将会在方法的最后抛出一个异常。 最后，parseRequest方法设置了HttpRequest的一些属性： ((HttpRequest) request).setMethod(method); request.setProtocol(protocol); if (normalizedUri != null) { ((HttpRequest) request).setRequestURI(normalizedUri); } else { ((HttpRequest) request).setRequestURI(uri); } 还有，假如normalize方法的返回值是null的话，方法将会抛出一个异常：
-  if (normalizedUri == null) {
-  throw new ServletException("Invalid URI: " + uri + "'"); }
-  解析头部
+当`parseRequest`方法被`HttpProcessor`类的`process`方法调用的时候，request变量指向一个HttpRequest实例。parseRequest方法解析请求行用来获得几个值并把这些值赋给HttpRequest对象。现在，让我们来关注一下在Listing 3.4中的parseRequest方法。 
+> Listing 3.4：HttpProcessor类中的parseRequest方法
+```java
+private void parseRequest(SocketInputStream input, OutputStream output) throws IOException, ServletException {
+        // Parse the incoming request line
+        input.readRequestLine(requestLine);
+        String method = new String(requestLine.method, 0, requestLine.methodEnd);
+        String uri = null;
+        String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd);
+        // Validate the incoming request line
+        if (method.length() < 1){
+            throw new ServletException("Missing HTTP request method");
+        } else if (requestLine.uriEnd < 1) {
+            throw new ServletException("Missing HTTP request URI");
+        }
+        // Parse any query parameters out of the request URI
+        int question = requestLine.indexOf("?");
+        if (question >= 0) {
+            request.setQueryString(new String(requestLine.uri, question + 1, requestLine.uriEnd - question - 1));
+            uri = new String(requestLine.uri, 0, question);
+        } else {
+            request.setQueryString(null);
+            uri = new String(requestLine.uri, 0, requestLine.uriEnd);
+        }
+        // Checking for an absolute URI (with the HTTP protocol)
+        if (!uri.startsWith("/")) {
+            int pos = uri.indexOf("://");
+            // Parsing out protocol and host name
+            if (pos != -1) {
+                pos = uri.indexOf('/', pos + 3);
+                if (pos == -1) {
+                    uri = "";
+                } else {
+                    uri = uri.substring(pos);
+                }
+            }
+        }
+        // Parse any requested session ID out of the request URI
+        String match = ";jsessionid=";
+        int semicolon = uri.indexOf(match);
+        if (semicolon >= 0) {
+            String rest = uri.substring(semicolon + match, length());
+            int semicolon2 = rest.indexOf(';');
+            if (semicolon2 >= 0) {
+                request.setRequestedSessionId(rest.substring(0, semicolon2));
+                rest = rest.substring(semicolon2);
+            } else {
+                request.setRequestedSessionId(rest);
+                rest = "";
+            }
+            request.setRequestedSessionURL(true);
+            uri = uri.substring(0, semicolon) + rest;
+        } else {
+            request.setRequestedSessionId(null);
+            request.setRequestedSessionURL(false);
+        }
+        // Normalize URI (using String operations at the moment)
+        String normalizedUri = normalize(uri);
+        // Set the corresponding request properties
+        ((HttpRequest) request).setMethod(method);
+        request.setProtocol(protocol);
+        if (normalizedUri != null) {
+            ((HttpRequest) request).setRequestURI(normalizedUri);
+        } else {
+            ((HttpRequest) request).setRequestURI(uri);
+        }
+        if (normalizedUri == null) {
+            throw new ServletException("Invalid URI: " + uri + "'");
+        }
+    }
+```
+`parseRequest`方法首先调用`SocketInputStream`类的`readRequestLine`方法： 
+```java
+input.readRequestLine(requestLine);
+```
+
+在这里`requestLine`是`HttpProcessor`里边的`HttpRequestLine`的一个实例： 
+```java
+private HttpRequestLine requestLine = new HttpRequestLine();
+```
+调用它的`readRequestLine`方法来告诉`SocketInputStream`去填入`HttpRequestLine`实例。 接下去，`parseRequest`方法获得请求行的方法，URI和协议： 
+```java
+String method = new String(requestLine.method, 0, requestLine.methodEnd); 
+String uri = null; 
+String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd);
+```
+不过，在URI后面可以有查询字符串，假如存在的话，查询字符串会被一个问好分隔开来。因此，parseRequest方法试图首先获取查询字符串。并调用setQueryString方法来填充HttpRequest对象：
+
+```java
+// Parse any query parameters out of the request URI 
+int question = requestLine.indexOf("?");
+if (question >= 0) {
+    request.setQueryString(new String(requestLine.uri, question + 1, requestLine.uriEnd - question - 1));
+        uri = new String(requestLine.uri, 0, question);
+} else {
+    request.setQueryString(null);
+    uri = new String(requestLine.uri, 0, requestLine.uriEnd);
+}
+```
+不过，大多数情况下，URI指向一个相对资源，URI还可以是一个绝对值，就像下面所示：
+```
+http://www.brainysoftware.com/index.html?name=Tarzan
+```
+`parseRequest`方法同样也检查这种情况： 
+```java
+ // Checking for an absolute URI (with the HTTP protocol)
+        if (!uri.startsWith("/")) {
+            int pos = uri.indexOf("://");
+            // Parsing out protocol and host name
+            if (pos != -1) {
+                pos = uri.indexOf('/', pos + 3);
+                if (pos == -1) {
+                    uri = "";
+                } else {
+                    uri = uri.substring(pos);
+                }
+            }
+        }
+```
+然后，查询字符串也可以包含一个会话标识符，用`jsessionid`参数名来指代。因此，`parseRequest`方法也检查一个会话标识符。假如在查询字符串里边找到`jessionid`，方法就取得会话标识符，并通过调用`setRequestedSessionId`方法把值交给`HttpRequest`实例： 
+```java
+// Parse any requested session ID out of the request URI
+        String match = ";jsessionid=";
+        int semicolon = uri.indexOf(match);
+        if (semicolon >= 0) {
+            String rest = uri.substring(semicolon + match, length());
+            int semicolon2 = rest.indexOf(';');
+            if (semicolon2 >= 0) {
+                request.setRequestedSessionId(rest.substring(0, semicolon2));
+                rest = rest.substring(semicolon2);
+            } else {
+                request.setRequestedSessionId(rest);
+                rest = "";
+            }
+            request.setRequestedSessionURL(true);
+            uri = uri.substring(0, semicolon) + rest;
+        } else {
+            request.setRequestedSessionId(null);
+            request.setRequestedSessionURL(false);
+        }
+```
+当`jsessionid`被找到，也意味着会话标识符是携带在查询字符串里边，而不是在cookie里边。因此，传递`true`给`request`的 `setRequestSessionURL`方法。否则，传递false给`setRequestSessionURL`方法并传递`null`给 `setRequestedSessionURL`方法。 到这个时候，`uri`的值已经被去掉了`jsessionid`。 
+
+接下去，`parseRequest`方法传递`uri`给`normalize`方法，用于纠正“异常”的URI。例如，任何\的出现都会给/替代。假如`uri`是正确的格式或者异常可以给纠正的话，`normalize`将会返回相同的或者被纠正后的URI。假如URI不能纠正的话，它将会给认为是非法的并且通常会返回`null`。在这种情况下(通常返回`null`)，`parseRequest`将会在方法的最后抛出一个异常。 
+
+最后，parseRequest方法设置了HttpRequest的一些属性： 
+```java
+((HttpRequest) request).setMethod(method);
+request.setProtocol(protocol);
+if (normalizedUri != null) {
+    ((HttpRequest) request).setRequestURI(normalizedUri);
+} else {
+    ((HttpRequest) request).setRequestURI(uri);
+}
+```
+还有，假如`normalize`方法的返回值是`null`的话，方法将会抛出一个异常：
+```java
+if (normalizedUri == null) {
+throw new ServletException("Invalid URI: " + uri + "'"); }
+```
+#### 解析头部
   一个HTTP头部是用类HttpHeader来代表的。这个类将会在第4章详细解释，而现在知道下面的内容就足够了：
 
 * 你可以通过使用类的无参数构造方法构造一个HttpHeader实例。
-
 * 一旦你拥有一个HttpHeader实例，你可以把它传递给SocketInputStream的readHeader方法。假如这里有头部需要读取，readHeader方法将会相应的填充HttpHeader对象。假如再也没有头部需要读取了，HttpHeader实例的nameEnd和valueEnd字段将会置零。
-
 * 为了获取头部的名称和值，使用下面的方法：
+```java
+String name = new String(header.name, 0, header.nameEnd);
+String value = new String(header.value, 0, header.valueEnd);
+```
 
-* String name = new String(header.name, 0, header.nameEnd);
 
-* String value = new String(header.value, 0, header.valueEnd);
-  parseHeaders方法包括一个while循环用于持续的从SocketInputStream中读取头部，直到再也没有头部出现为止。循环从构建一个HttpHeader对象开始，并把它传递给类SocketInputStream的readHeader方法： HttpHeader header = new HttpHeader(); // Read the next header input.readHeader(header); 然后，你可以通过检测HttpHeader实例的nameEnd和valueEnd字段来测试是否可以从输入流中读取下一个头部信息： if (header.nameEnd == 0) { if (header.valueEnd == 0) { return; } else { throw new ServletException (sm.getString("httpProcessor.parseHeaders.colon")); } } 假如存在下一个头部，那么头部的名称和值可以通过下面方法进行检索： String name = new String(header.name, 0, header.nameEnd); String value = new String(header.value, 0, header.valueEnd); 一旦你获取到头部的名称和值，你通过调用HttpRequest对象的addHeader方法来把它加入headers这个HashMap中： request.addHeader(name, value);
-  一些头部也需要某些属性的设置。例如，当servlet调用javax.servlet.ServletRequest的getContentLength方法的时候，content-length头部的值将被返回。而包含cookies的cookie头部将会给添加到cookie集合中。就这样，下面是其中一些过程：
-  if (name.equals("cookie")) { ... // process cookies here } else if (name.equals("content-length")) { int n = -1; try { n = Integer.parseInt (value); } catch (Exception e) { throw new ServletException(sm.getString( "httpProcessor.parseHeaders.contentLength")); } request.setContentLength(n); } else if (name.equals("content-type")) { request.setContentType(value); } Cookie的解析将会在下一节“解析Cookies”中讨论。
-  解析Cookies
-  Cookies是作为一个Http请求头部通过浏览器来发送的。这样一个头部名为"cookie"并且它的值是一些cookie名/值对。这里是一个包括两个cookie:username和password的cookie头部的例子。 Cookie: userName=budi; password=pwd; Cookie的解析是通过类org.apache.catalina.util.RequestUtil的parseCookieHeader方法来处理的。这个方法接受cookie头部并返回一个javax.servlet.http.Cookie数组。数组内的元素数量和头部里边的cookie名/值对个数是一样的。parseCookieHeader方法在Listing 3.5中列出。 Listing 3.5: The org.apache.catalina.util.RequestUtil class's parseCookieHeader method
-  public static Cookie[] parseCookieHeader(String header) { if ((header == null) || (header.length 0 < 1) ) return (new Cookie[0]); ArrayList cookies = new ArrayList(); while (header.length() > 0) { int semicolon = header.indexOf(';'); if (semicolon < 0) semicolon = header.length(); if (semicolon == 0) break; String token = header.substring(0, semicolon);
-  if (semicolon < header.length()) header = header.substring(semicolon + 1); else header = ""; try { int equals = token.indexOf('='); if (equals > 0) { String name = token.substring(0, equals).trim(); String value = token.substring(equals+1).trim(); cookies.add(new Cookie(name, value)); } } catch (Throwable e) { ; } } return ((Cookie[]) cookies.toArray (new Cookie [cookies.size ()])); } 还有，这里是HttpProcessor类的parseHeader方法中用于处理cookie的部分代码: else if (header.equals(DefaultHeaders.COOKIE_NAME)) { Cookie cookies[] = RequestUtil.ParseCookieHeader (value); for (int i = 0; i < cookies.length; i++) { if (cookies[i].getName().equals("jsessionid")) { // Override anything requested in the URL if (!request.isRequestedSessionIdFromCookie()) { // Accept only the first session id cookie request.setRequestedSessionId(cookies[i].getValue()); request.setRequestedSessionCookie(true); request.setRequestedSessionURL(false); } } request.addCookie(cookies[i]); } }
-  获取参数
-  你不需要马上解析查询字符串或者HTTP请求内容，直到servlet需要通过调用javax.servlet.http.HttpServletRequest的getParameter, getParameterMap, getParameterNames或者getParameterValues方法来读取参数。因此，HttpRequest的这四个方法开头调用了parseParameter方法。 这些参数只需要解析一次就够了，因为假如参数在请求内容里边被找到的话，参数解析将会使得SocketInputStream到达字节流的尾部。类HttpRequest使用一个布尔变量parsed来指示是否已经解析过了。
-  参数可以在查询字符串或者请求内容里边找到。假如用户使用GET方法来请求servlet的话，所有的参数将在查询字符串里边出现。假如使用POST方法的话，你也可以在请求内容中找到一些。所有的名/值对将会存储在一个HashMap里边。Servlet程序员可以以Map的形式获得参数(通过调用HttpServletRequest的getParameterMap方法)和参数名/值。There is a catch, though. Servlet程序员不被允许修改参数值。因此，将使用一个特殊的HashMap：org.apache.catalina.util.ParameterMap。 类ParameterMap继承java.util.HashMap，并使用了一个布尔变量locked。当locked是false的时候，名/值对仅仅可以添加，更新或者移除。否则，异常IllegalStateException会抛出。而随时都可以读取参数值。 类ParameterMap将会在Listing 3.6中列出。它覆盖了方法用于增加，更新和移除值。那些方法仅仅在locked为false的时候可以调用。 Listing 3.6: The org.apache.Catalina.util.ParameterMap class.
-  package org.apache.catalina.util; import java.util.HashMap; import java.util.Map; public final class ParameterMap extends HashMap { public ParameterMap() { super (); } public ParameterMap(int initialCapacity) { super(initialCapacity); } public ParameterMap(int initialCapacity, float loadFactor) { super(initialCapacity, loadFactor); } public ParameterMap(Map map) { super(map); } private boolean locked = false; public boolean isLocked() { return (this.locked); } public void setLocked(boolean locked) { this.locked = locked; } private static final StringManager sm = StringManager.getManager("org.apache.catalina.util"); public void clear() { if (locked) throw new IllegalStateException (sm.getString("parameterMap.locked")); super.clear(); }
-  public Object put(Object key, Object value) { if (locked) throw new IllegalStateException (sm.getString("parameterMap.locked")); return (super.put(key, value)); } public void putAll(Map map) { if (locked) throw new IllegalStateException (sm.getString("parameterMap.locked")); super.putAll(map); } public Object remove(Object key) { if (locked) throw new IllegalStateException (sm.getString("parameterMap.locked")); return (super.remove(key)); } } 现在，让我们来看parseParameters方法是怎么工作的。 因为参数可以存在于查询字符串或者HTTP请求内容中，所以parseParameters方法会检查查询字符串和请求内容。一旦解析过后，参数将会在对象变量parameters中找到，所以方法的开头会检查parsed布尔变量，假如已经解析过的话，parsed将会返回true。 if (parsed) return; 然后，parseParameters方法创建一个名为results的ParameterMap变量，并指向parameters。假如 parameters为null的话，它将创建一个新的ParameterMap。 ParameterMap results = parameters; if (results == null) results = new ParameterMap(); 然后，parseParameters方法打开parameterMap的锁以便写值。 results.setLocked(false); 下一步，parseParameters方法检查字符编码，并在字符编码为null的时候赋予默认字符编码。 String encoding = getCharacterEncoding(); if (encoding == null) encoding = "ISO-8859-1";
-  然后，parseParameters方法尝试解析查询字符串。解析参数是使用org.apache.Catalina.util.RequestUtil的parseParameters方法来处理的。
-  // Parse any parameters specified in the query string String queryString = getQueryString(); try { RequestUtil.parseParameters(results, queryString, encoding); } catch (UnsupportedEncodingException e) { ; } 接下来，方法尝试查看HTTP请求内容是否包含参数。这种情况发生在当用户使用POST方法发送请求的时候，内容长度大于零，并且内容类型是application/x-www-form-urlencoded的时候。所以，这里是解析请求内容的代码：
-  // Parse any parameters specified in the input stream String contentType = getContentType(); if (contentType == null) contentType = ""; int semicolon = contentType.indexOf(';'); if (semicolon >= 0) { contentType = contentType.substring (0, semicolon).trim(); } else { contentType = contentType.trim(); } if ("POST".equals(getMethod()) && (getContentLength() > 0) && "application/x-www-form-urlencoded".equals(contentType)) { try { int max = getContentLength(); int len = 0; byte buf[] = new byte[getContentLength()]; ServletInputStream is = getInputStream(); while (len < max) { int next = is.read(buf, len, max - len); if (next < 0 ) { break; } len += next; } is.close(); if (len < max) { throw new RuntimeException("Content length mismatch"); } RequestUtil.parseParameters(results, buf, encoding); }
-  catch (UnsupportedEncodingException ue) { ; } catch (IOException e) { throw new RuntimeException("Content read fail"); } } 最后，parseParameters方法锁定ParameterMap，设置parsed为true，并把results赋予parameters。 // Store the final results results.setLocked(true); parsed = true; parameters = results;
-  创建一个HttpResponse对象
-  HttpResponse类实现了javax.servlet.http.HttpServletResponse。跟随它的是一个叫做HttpResponseFacade的façade类。Figure 3.3显示了HttpResponse类和它的相关类的UML图。
-  在第2章中，你使用的是一个部分实现的HttpResponse类。例如，它的getWriter方法，在它的其中一个print方法被调用的时候，返回一个不会自动清除的java.io.PrintWriter对象。在本章中应用程序将会修复这个问题。为了理解它是如何修复的，你需要知道Writer是什么东西来的。 在一个servlet里边，你使用PrintWriter来写字节。你可以使用任何你希望的编码，但是这些字节将会以字节流的形式发送到浏览器去。因此，第2章中ex02.pyrmont.HttpResponse类的getWriter方法就不奇怪了： public PrintWriter getWriter() { // if autoflush is true, println() will flush, // but print() will not. // the output argument is an OutputStream writer = new PrintWriter(output, true); return writer; }
-  请看，我们是如何构造一个PrintWriter对象的?就是通过传递一个java.io.OutputStream实例来实现的。你传递给PrintWriter的print或println方法的任何东西都是通过底下的OutputStream进行发送的。
-  在本章中，你为PrintWriter使用ex03.pyrmont.connector.ResponseStream类的一个实例来替代 OutputStream。需要注意的是，类ResponseStream是间接的从类java.io.OutputStream传递过去的。 同样的你使用了继承于PrintWriter的类ex03.pyrmont.connector.ResponseWriter。 类ResponseWriter覆盖了所有的print和println方法，并且让这些方法的任何调用把输出自动清除到底下的 OutputStream去。因此，我们使用一个带底层ResponseStream对象的ResponseWriter实例。 我们可以通过传递一个ResponseStream对象实例来初始化类ResponseWriter。然而，我们使用一个java.io.OutputStreamWriter对象充当ResponseWriter对象和ResponseStream对象之间的桥梁。 通过OutputStreamWriter，写进去的字符通过一种特定的字符集被编码成字节。这种字符集可以使用名字来设定，或者明确给出，或者使用平台可接受的默认字符集。write方法的每次调用都会导致在给定的字符上编码转换器的调用。在写入底层的输出流之前，生成的字节都会累积到一个缓冲区中。缓冲区的大小可以自己设定，但是对大多数场景来说，默认的就足够大了。注意的是，传递给write方法的字符是没有被缓冲的。 因此，getWriter方法如下所示: public PrintWriter getWriter() throws IOException { ResponseStream newStream = new ResponseStream(this); newStream.setCommit(false); OutputStreamWriter osr = new OutputStreamWriter(newStream, getCharacterEncoding()); writer = new ResponseWriter(osr); return writer; }
-  静态资源处理器和Servlet处理器
-  类ServletProcessor类似于第2章中的类ex02.pyrmont.ServletProcessor。它们都只有一个方法：process。然而ex03.pyrmont.connector.ServletProcessor中的process方法接受一个HttpRequest和 HttpResponse，代替了Requese和Response实例。下面是本章中process的方法签名： public void process(HttpRequest request, HttpResponse response) { 另外，process方法使用HttpRequestFacade和HttpResponseFacade作为 request和response的facade类。另外，在调用了servlet的service方法之后，它调用了类HttpResponse的 finishResponse方法。 servlet = (Servlet) myClass.newInstance(); HttpRequestFacade requestPacade = new HttpRequestFacade(request); HttpResponseFacade responseFacade = new HttpResponseFacade(response); servlet.service(requestFacade, responseFacade); ((HttpResponse) response).finishResponse(); 类StaticResourceProcessor几乎等同于类ex02.pyrmont.StaticResourceProcessor。
-  运行应用程序
-  要在Windows上运行该应用程序，在工作目录下面敲入以下命令： java -classpath ./lib/servlet.jar;./ ex03.pyrmont.startup.Bootstrap 在Linux下，你使用一个冒号来分隔两个库： java -classpath ./lib/servlet.jar:./ ex03.pyrmont.startup.Bootstrap 要显示index.html，使用下面的URL: http://localhost:808O/index.html 要调用PrimitiveServlet，让浏览器指向下面的URL： http://localhost:8080/servlet/PrimitiveServlet 在你的浏览器中将会看到下面的内容： Hello. Roses are red. Violets are blue. 注意：在第2章中运行PrimitiveServlet不会看到第二行。 你也可以调用ModernServet，在第2章中它不能运行在servlet容器中。下面是相应的URL： http://localhost:8080/servlet/ModernServlet 注意：ModernServlet的源代码在工作目录的webroot文件夹可以找到。 你可以加上一个查询字符串到URL中去测试servlet。加入你使用下面的URL来运行ModernServlet的话，将显示Figure 3.4中的运行结果。 http://localhost:8080/servlet/ModernServlet?userName=tarzan&password=pwd
-  Figure 3.4: Running ModernServlet
-  总结
-  在本章中，你已经知道了连接器是如何工作的。建立起来的连接器是Tomcat4的默认连接器的简化版本。正如你所知道的，因为默认连接器并不高效，所以已经被弃用了。例如，所有的HTTP请求头部都被解析了，即使它们没有在servlet中使用过。因此，默认连接器很慢，并且已经被Coyote所代替了。Coyote是一个更快的连接器，它的源代码可以在Apache软件基金会的网站中下载。不管怎样，默认连接器作为一个优秀的学习工具，将会在第4章中详细讨论。
+`parseHeaders`方法包括一个while循环用于持续的从SocketInputStream中读取头部，直到再也没有头部出现为止。循环从构建一个HttpHeader对象开始，并把它传递给类SocketInputStream的readHeader方法： 
+```java
+HttpHeader header = new HttpHeader(); 
+// Read the next header 
+input.readHeader(header);
+```
+然后，你可以通过检测`HttpHeader`实例的`nameEnd`和`valueEnd`字段来测试是否可以从输入流中读取下一个头部信息： 
+```java
+if (header.nameEnd == 0) { 
+    if (header.valueEnd == 0) { return; } 
+    else { 
+        throw new ServletException(
+            sm.getString("httpProcessor.parseHeaders.colon")
+        ); 
+    }
+}
+```
+假如存在下一个头部，那么头部的名称和值可以通过下面方法进行检索： 
+```java
+String name = new String(header.name, 0, header.nameEnd); 
+String value = new String(header.value, 0, header.valueEnd);
+```
+一旦你获取到头部的名称和值，你通过调用`HttpRequest`对象的`addHeader`方法来把它加入headers这个HashMap中： 
+```java
+request.addHeader(name, value);
+```
+ 一些头部也需要某些属性的设置。例如，当servlet调用`javax.servlet.ServletRequest`的`getContentLength`方法的时候，`content-length`头部的值将被返回。而包含`cookies`的cookie头部将会给添加到cookie集合中。就这样，下面是其中一些过程：
+ ```java
+  if (name.equals("cookie")) { ... // process cookies here } else if (name.equals("content-length")) { int n = -1; try { n = Integer.parseInt (value); } catch (Exception e) { throw new ServletException(sm.getString( "httpProcessor.parseHeaders.contentLength")); } request.setContentLength(n); } else if (name.equals("content-type")) { request.setContentType(value); }
+ ```
+Cookie的解析将会在下一节“解析Cookies”中讨论。
+#####  解析Cookies
+Cookies是作为一个Http请求头部通过浏览器来发送的。这样一个头部名为"cookie"并且它的值是一些cookie名/值对。这里是一个包括两个cookie:`username`和`password`的cookie头部的例子。 
+```
+Cookie: userName=budi; password=pwd;
+```
+Cookie的解析是通过类`org.apache.catalina.util.RequestUtil`的`parseCookieHeader`方法来处理的。这个方法接受cookie头部并返回一个`javax.servlet.http.Cookie`数组。数组内的元素数量和头部里边的cookie名/值对个数是一样的。parseCookieHeader方法在Listing 3.5中列出。 
+
+> Listing 3.5: The org.apache.catalina.util.RequestUtil class's parseCookieHeader method
+```java
+  public static Cookie[] parseCookieHeader(String header) {
+        if ((header == null) || (header.length 0 < 1) )return (new Cookie[0]);
+        ArrayList cookies = new ArrayList();
+        while (header.length() > 0) {
+            int semicolon = header.indexOf(';');
+            if (semicolon < 0) semicolon = header.length();
+            if (semicolon == 0) break;
+            String token = header.substring(0, semicolon);
+            if (semicolon < header.length()) header = header.substring(semicolon + 1);
+            else header = "";
+            try {
+                int equals = token.indexOf('=');
+                if (equals > 0) {
+                    String name = token.substring(0, equals).trim();
+                    String value = token.substring(equals + 1).trim();
+                    cookies.add(new Cookie(name, value));
+                }
+            } catch (Throwable e) {
+                ;
+            }
+        }
+        return ((Cookie[]) cookies.toArray(new Cookie[cookies.size()]));
+    }
+```
+还有，这里是`HttpProcessor`类的`parseHeader`方法中用于处理cookie的部分代码: 
+```java
+else if (header.equals(DefaultHeaders.COOKIE_NAME)) {
+    Cookie cookies[] = RequestUtil.ParseCookieHeader(value);
+    for (int i = 0; i < cookies.length; i++) {
+        if (cookies[i].getName().equals("jsessionid")) {
+            // Override anything requested in the URL
+            if (!request.isRequestedSessionIdFromCookie()) {
+                // Accept only the first session id cookie
+                request.setRequestedSessionId(cookies[i].getValue());
+                request.setRequestedSessionCookie(true);
+               request.setRequestedSessionURL(false);
+            }
+        }
+        request.addCookie(cookies[i]);
+    }
+}
+```
+
+  
+##### 获取参数
+你不需要马上解析查询字符串或者HTTP请求内容，直到servlet需要通过调用`javax.servlet.http.HttpServletRequest`的`getParameter`, `getParameterMap`, `getParameterNames`或者`getParameterValues`方法来读取参数。
+  
+因此`，HttpRequest`的这四个方法开头调用了`parseParameter`方法。 这些参数只需要解析一次就够了，因为假如参数在请求内容里边被找到的话，参数解析将会使得`SocketInputStream`到达字节流的尾部。类`HttpRequest`使用一个布尔变量parsed来指示是否已经解析过了。
+
+参数可以在查询字符串或者请求内容里边找到。假如用户使用`GET`方法来请求servlet的话，所有的参数将在查询字符串里边出现。假如使用`POST`方法的话，你也可以在请求内容中找到一些。所有的名/值对将会存储在一个`HashMap`里边。
+
+Servlet程序员可以以Map的形式获得参数(通过调用HttpServletRequest的getParameterMap方法)和参数名/值。There is a catch, though. Servlet程序员不被允许修改参数值。因此，将使用一个特殊的HashMap：`org.apache.catalina.util.ParameterMap`。 类ParameterMap继承`java.util.HashMap`，并使用了一个布尔变量`locked`。当`locked`是false的时候，名/值对仅仅可以添加，更新或者移除。否则，异常`IllegalStateException`会抛出。而随时都可以读取参数值。 类`ParameterMap`将会在Listing 3.6中列出。它覆盖了方法用于增加，更新和移除值。那些方法仅仅在locked为false的时候可以调用。 
+
+> Listing 3.6: The org.apache.Catalina.util.ParameterMap class.
+
+```java
+package org.apache.catalina.util;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public final class ParameterMap extends HashMap {
+    public ParameterMap() {
+        super();
+    }
+
+    public ParameterMap(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    public ParameterMap(int initialCapacity, float loadFactor) {
+        super(initialCapacity, loadFactor);
+    }
+
+    public ParameterMap(Map map) {
+        super(map);
+    }
+
+    private boolean locked = false;
+
+    public boolean isLocked() {
+        return (this.locked);
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    private static final StringManager sm = StringManager.getManager("org.apache.catalina.util");
+
+    public void clear() {
+        if (locked) throw new IllegalStateException(sm.getString("parameterMap.locked"));
+        super.clear();
+    }
+
+    public Object put(Object key, Object value) {
+        if (locked) throw new IllegalStateException(sm.getString("parameterMap.locked"));
+        return (super.put(key, value));
+    }
+
+    public void putAll(Map map) {
+        if (locked) throw new IllegalStateException(sm.getString("parameterMap.locked"));
+        super.putAll(map);
+    }
+
+    public Object remove(Object key) {
+        if (locked) throw new IllegalStateException(sm.getString("parameterMap.locked"));
+        return (super.remove(key));
+    }
+}
+```
+现在，让我们来看`parseParameters`方法是怎么工作的。 
+ 
+因为参数可以存在于查询字符串或者HTTP请求内容中，所以`parseParameters`方法会检查查询字符串和请求内容。一旦解析过后，参数将会在对象变量parameters中找到，所以方法的开头会检查parsed布尔变量，假如已经解析过的话，parsed将会返回`true`。
+ 
+```java
+if (parsed) return;
+```
+然后，`parseParameters`方法创建一个名为`results`的`ParameterMap`变量，并指向`parameters`。假如` parameters`为null的话，它将创建一个新的`ParameterMap`。
+```java
+ ParameterMap results = parameters; 
+ if (results == null) results = new ParameterMap(); 
+```
+然后，`parseParameters`方法打开`parameterMap`的锁以便写值。 
+```java
+results.setLocked(false);
+``` 
+
+下一步，`parseParameters`方法检查字符编码，并在字符编码为null的时候赋予默认字符编码。 
+```java
+String encoding = getCharacterEncoding(); 
+if (encoding == null) encoding = "ISO-8859-1";
+```
+然后，`parseParameters`方法尝试解析查询字符串。解析参数是使用o`rg.apache.Catalina.util.RequestUtil`的`parseParameters`方法来处理的。
+```java
+// Parse any parameters specified in the query string 
+String queryString = getQueryString(); 
+try { 
+    RequestUtil.parseParameters(results, queryString, encoding); 
+} catch (UnsupportedEncodingException e) { ; }
+```
+接下来，方法尝试查看HTTP请求内容是否包含参数。这种情况发生在当用户使用POST方法发送请求的时候，内容长度大于零，并且内容类型是`application/x-www-form-urlencoded`的时候。所以，这里是解析请求内容的代码：
+```java
+// Parse any parameters specified in the input stream String contentType = getContentType(); if (contentType == null) contentType = ""; int semicolon = contentType.indexOf(';'); if (semicolon >= 0) { contentType = contentType.substring (0, semicolon).trim(); } else { contentType = contentType.trim(); } if ("POST".equals(getMethod()) && (getContentLength() > 0) && "application/x-www-form-urlencoded".equals(contentType)) { try { int max = getContentLength(); int len = 0; byte buf[] = new byte[getContentLength()]; ServletInputStream is = getInputStream(); while (len < max) { int next = is.read(buf, len, max - len); if (next < 0 ) { break; } len += next; } is.close(); if (len < max) { throw new RuntimeException("Content length mismatch"); } RequestUtil.parseParameters(results, buf, encoding); }
+catch (UnsupportedEncodingException ue) { ; } catch (IOException e) { throw new RuntimeException("Content read fail"); } }
+
+```
+最后，`parseParameters`方法锁定`ParameterMap`，设置parsed为true，并把results赋予parameters。 
+```java
+// Store the final results results.setLocked(true);
+parsed = true; parameters = results;
+```
+
+### 创建一个HttpResponse对象
+`HttpResponse`类实现了`javax.servlet.http.HttpServletResponse`。跟随它的是一个叫做`HttpResponseFacade`的façade类。Figure 3.3显示了HttpResponse类和它的相关类的UML图。
+```mermaid
+classDiagram
+    PrinterWriter  <|.. ResponseWriter
+    ResponseWriter <.. HttpResponse
+    ServletOutputStream <|.. ResponseStream
+    HttpServeletResponse <|.. HttpResponseFacade
+    HttpServeletResponse <|.. HttpResponse
+    HttpResponse *-- ResponseStream
+   
+```
+
+在第2章中，你使用的是一个部分实现的`HttpResponse`类。例如，它的`getWriter`方法，在它的其中一个print方法被调用的时候，返回一个不会自动清除的`java.io.PrintWriter`对象。在本章中应用程序将会修复这个问题。
+
+为了理解它是如何修复的，你需要知道Writer是什么东西来的。 在一个servlet里边，你使用`PrintWriter`来写字节。你可以使用任何你希望的编码，但是这些字节将会以字节流的形式发送到浏览器去。
+
+因此，第2章中`ex02.pyrmont.HttpResponse`类的`getWriter`方法就不奇怪了： 
+```java
+public PrintWriter getWriter() { 
+    // if autoflush is true, println() will flush, 
+    // but print() will not. 
+    // the output argument is an 
+    OutputStream writer = new PrintWriter(output, true); 
+    return writer; 
+}
+```
+请看，我们是如何构造一个`PrintWriter`对象的?就是通过传递一个`java.io.OutputStream`实例来实现的。你传递给`PrintWriter`的`print`或`println`方法的任何东西都是通过底下的`OutputStream`进行发送的。
+
+在本章中，你为`PrintWriter`使用`ex03.pyrmont.connector.ResponseStream`类的一个实例来替代 `OutputStream`。需要注意的是，类`ResponseStream`是间接的从类`java.io.OutputStream`传递过去的。 同样的你使用了继承于`PrintWriter`的类`ex03.pyrmont.connector.ResponseWriter`。 
+
+类ResponseWriter覆盖了所有的`print`和`println`方法，并且让这些方法的任何调用把输出自动清除到底下的 `OutputStream`去。因此，我们使用一个带底层`ResponseStream`对象的`ResponseWriter`实例。 我们可以通过传递一个ResponseStream对象实例来初始化类`ResponseWriter`。然而，我们使用一个`java.io.OutputStreamWriter`对象充当`ResponseWriter`对象和`ResponseStream`对象之间的桥梁。 通过`OutputStreamWriter`，写进去的字符通过一种特定的字符集被编码成字节。这种字符集可以使用名字来设定，或者明确给出，或者使用平台可接受的默认字符集。write方法的每次调用都会导致在给定的字符上编码转换器的调用。在写入底层的输出流之前，生成的字节都会累积到一个缓冲区中。缓冲区的大小可以自己设定，但是对大多数场景来说，默认的就足够大了。注意的是，传递给write方法的字符是没有被缓冲的。 因此，getWriter方法如下所示: 
+```java
+public PrintWriter getWriter() throws IOException {
+    ResponseStream newStream = new ResponseStream(this); 
+    newStream.setCommit(false);
+    OutputStreamWriter osr = new OutputStreamWriter(newStream,getCharacterEncoding());
+    writer = new ResponseWriter(osr);
+    return writer;
+}
+```
+
+### 静态资源处理器和Servlet处理器
+类`ServletProcessor`类似于第2章中的类`ex02.pyrmont.ServletProcessor`。它们都只有一个方法：`process`。然而`ex03.pyrmont.connector.ServletProcessor`中的`proces`s方法接受一个`HttpRequest`和 `HttpResponse`，代替了`Requese`和`Response`实例。
+  
+下面是本章中process的方法签名： 
+```java
+public void process(HttpRequest request, HttpResponse response) { 
+```
+另外，`process`方法使用`HttpRequestFacade`和`HttpResponseFacade`作为 `request`和`response`的facade类。另外，在调用了servlet的`service`方法之后，它调用了类`HttpResponse`的 `finishResponse`方法。 
+```java
+servlet = (Servlet) myClass.newInstance(); 
+HttpRequestFacade requestPacade = new HttpRequestFacade(request); HttpResponseFacade responseFacade = new HttpResponseFacade(response); servlet.service(requestFacade, responseFacade);
+((HttpResponse) response).finishResponse();
+```
+类`StaticResourceProcessor`几乎等同于类`ex02.pyrmont.StaticResourceProcessor`。
+
+### 运行应用程序
+要在Windows上运行该应用程序，在工作目录下面敲入以下命令： 
+```shell
+java -classpath ./lib/servlet.jar;./ ex03.pyrmont.startup.Bootstrap
+```
+
+在Linux下，你使用一个冒号来分隔两个库：
+```shell
+java -classpath ./lib/servlet.jar:./ ex03.pyrmont.startup.Bootstrap
+```
+要显示index.html，使用下面的URL: 
+```
+http://localhost:808O/index.html 
+```
+要调用PrimitiveServlet，让浏览器指向下面的URL：
+```
+http://localhost:8080/servlet/PrimitiveServlet
+```  
+在你的浏览器中将会看到下面的内容： `Hello. Roses are red. Violets are blue`.
+
+> 注意：在第2章中运行PrimitiveServlet不会看到第二行。 
+
+你也可以调用ModernServet，在第2章中它不能运行在servlet容器中。下面是相应的URL： http://localhost:8080/servlet/ModernServlet 
+
+> 注意：ModernServlet的源代码在工作目录的webroot文件夹可以找到。 
+
+你可以加上一个查询字符串到URL中去测试servlet。加入你使用下面的URL来运行ModernServlet的话，将显示Figure 3.4中的运行结果。 
+```
+http://localhost:8080/servlet/ModernServlet?userName=tarzan&password=pwd
+```
+Figure 3.4: Running ModernServlet
+
+
+### 总结
+在本章中，你已经知道了连接器是如何工作的。建立起来的连接器是Tomcat4的默认连接器的简化版本。正如你所知道的，因为默认连接器并不高效，所以已经被弃用了。例如，所有的HTTP请求头部都被解析了，即使它们没有在servlet中使用过。因此，默认连接器很慢，并且已经被Coyote所代替了。Coyote是一个更快的连接器，它的源代码可以在Apache软件基金会的网站中下载。不管怎样，默认连接器作为一个优秀的学习工具，将会在第4章中详细讨论。

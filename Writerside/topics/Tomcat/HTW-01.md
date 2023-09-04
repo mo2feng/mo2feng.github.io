@@ -1,9 +1,10 @@
 # 第一章:一个简单的Web服务器
 <show-structure for="chapter,procedure" depth="2"/>
 
+## 概要
 本章说明java web服务器是如何工作的。Web服务器也成为超文本传输协议(HTTP)服务器，因为它使用HTTP来跟客户端进行通信的，这通常是个web浏览器。一个基于java的web服务器使用两个重要的类：java.net.Socket和java.net.ServerSocket，并通过HTTP消息进行通信。因此这章就自然是从HTTP和这两个类的讨论开始的。接下去，解释这章附带的一个简单的web服务器。
 
-## 超文本传输协议(HTTP) {id="htw-http-protocol"}
+### 超文本传输协议(HTTP) {id="htw-http-protocol"}
 
 HTTP是一种协议，允许web服务器和浏览器通过互联网进行来发送和接受数据。它是一种请求和响应协议。客户端请求一个文件而服务器响应请求。HTTP使用可靠的TCP连接--TCP默认使用80端口。第一个HTTP版是HTTP/0.9，然后被HTTP/1.0所替代。正在取代HTTP/1.0的是当前版本HTTP/1.1，它定义于征求意见文档(RFC) 2616，可以从http://www.w3.org/Protocols/HTTP/1.1/rfc2616.pdf下载。 
 
@@ -79,7 +80,7 @@ Content-Length: 112
 
 响应头部和请求头部类似，也包括很多有用的信息。响应的主体内容是响应本身的HTML内容。头部和主体内容通过CRLF分隔开来。
 
-## `Socket`类 {id="htw-java-socket"}
+### `Socket`类 {id="htw-java-socket"}
 
 套接字是网络连接的一个端点。套接字使得一个应用可以从网络中读取和写入数据。放在两个不同计算机上的两个应用可以通过连接发送和接受字节流。为了从你的应用发送一条信息到另一个应用，你需要知道另一个应用的IP地址和套接字端口。在Java里边，套接字指的是`java.net.Socket`类。 
 
@@ -135,7 +136,7 @@ class Main {
 
 > **注意**：你可以本书附带的`com.brainysoftware.pyrmont.util.HttpSniffe`类来发送一个HTTP请求并显示响应。要使用这个Java程序，你必须连接到互联网上。虽然它有可能并不会起作用，假如你有设置防火墙的话。
 
-## `ServerSocket`类 {id="htw-java-serversocket"}
+### `ServerSocket`类 {id="htw-java-serversocket"}
 
 Socket类代表一个客户端套接字，即任何时候你想连接到一个远程服务器应用的时候你构造的套接字，现在，假如你想实施一个服务器应用，例如一个HTTP服务器或者FTP服务器，你需要一种不同的做法。这是因为你的服务器必须随时待命，因为它不知道一个客户端应用什么时候会尝试去连接它。为了让你的应用能随时待命，你需要使用`java.net.ServerSocket`类。这是服务器套接字的实现。 
 
