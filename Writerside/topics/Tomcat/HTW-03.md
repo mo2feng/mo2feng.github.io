@@ -1,5 +1,6 @@
-* ## 第3章:连接器
+# 第3章:连接器
 <show-structure for="chapter,procedure" depth="2"/>
+
 ## 概要
 在介绍中提到，Catalina中有两个主要的模块：连接器和容器。本章中你将会写一个可以
 创建更好的请求和响应对象的连接器，用来改进第2章中的程序。
@@ -797,5 +798,5 @@ http://localhost:8080/servlet/ModernServlet?userName=tarzan&password=pwd
 Figure 3.4: Running ModernServlet
 
 
-### 总结
+## 总结
 在本章中，你已经知道了连接器是如何工作的。建立起来的连接器是Tomcat4的默认连接器的简化版本。正如你所知道的，因为默认连接器并不高效，所以已经被弃用了。例如，所有的HTTP请求头部都被解析了，即使它们没有在servlet中使用过。因此，默认连接器很慢，并且已经被Coyote所代替了。Coyote是一个更快的连接器，它的源代码可以在Apache软件基金会的网站中下载。不管怎样，默认连接器作为一个优秀的学习工具，将会在第4章中详细讨论。
