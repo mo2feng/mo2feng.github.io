@@ -4,7 +4,7 @@
 ## 概要
 在介绍中提到，Catalina中有两个主要的模块：连接器和容器。本章中你将会写一个可以
 创建更好的请求和响应对象的连接器，用来改进第2章中的程序。
-一个符合Servlet 2.3和2.4规范的连接器必须创建j`avax.servlet.http.HttpServletRequest`和`javax.servlet.http.HttpServletResponse`，并传递给被调用的servlet的`service`方法。
+一个符合Servlet 2.3和2.4规范的连接器必须创建`javax.servlet.http.HttpServletRequest`和`javax.servlet.http.HttpServletResponse`，并传递给被调用的servlet的`service`方法。
 
 在第2章中，servlet容器只可以运行实现了`javax.servlet.Servlet`的servlet，并传递 `javax.servlet.ServletRequest`和`javax.servlet.ServletResponse`实例给`service`方法。因为连接器并不知道servlet的类型(例如它是否实现了`javax.servlet.Servlet`，继承了`javax.servlet.GenericServlet`，或者继承了`javax.servlet.http.HttpServlet`)，所以连接器必须始终提供`HttpServletRequest`和`HttpServletResponse`的实例。 
 
