@@ -84,7 +84,6 @@
 ##  10. switch 惊悚现身(Switch Statements)
 
 大多数时候，一看到switch语句，就应该考虑以多态替换。
-![Alt text](image-1.png)
 
 ##  11. 平行继承体系(Parallel Inheritance Hierarchies)
 
