@@ -5,5 +5,17 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Java并发编程" id="Java-Concurrency">
     <link-summary>Java并发编程</link-summary>
-    <img src="Java-Concurrency-List.png" alt="Java并发编程知识图谱"/>
+    <chapter collapsible="true" title="Java并发变成知识图谱" id="java-juc">
+        <img src="Java-Concurrency-List.png" alt="Java并发编程知识图谱"/>
+    </chapter>
+
+    <chapter title="学习资料" id="java-juc-learnings">
+        <p>B站视频 [https://www.bilibili.com/video/BV1PJ411n7xZ]</p>
+
+        <p> 纸质书只推荐一本《Java 并发编程实战》，豆瓣评分 9.0。
+            不过这本书确实有点老了，基本上是按照 Java 6 来讲解的，希望出版社能早点出 2.0 版。</p>
+
+        <p>http://concurrent.redspider.group/RedSpider.html</p>
+    </chapter>
+
 </topic>
