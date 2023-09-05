@@ -51,7 +51,11 @@
             <toc-element topic="MyBatis-Source-Code.topic"/>
         </toc-element>
     </toc-element>
-    <toc-element topic="Specification.topic"/>
+    <toc-element topic="Specification.topic">
+      <toc-element topic="Refactoring.md">
+            <toc-element topic="Code-Smell.md"/>
+        </toc-element>
+    </toc-element>
     <toc-element topic="Database.topic"/>
     <toc-element topic="Do-Something.topic">
         <toc-element topic="Build-Your-Own-X.md"/>
