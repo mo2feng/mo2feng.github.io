@@ -45,10 +45,12 @@
 
 将所有对该变量的引用动作，替换为对它赋值的那个表达式自身。
 <compare id="inline-temp-compare">
+
 ```java
 double basePrice = anOrder.basePrice();
 return basePrice > 1000;
 ```
+
 ```java
 return anOrder.basePrice() > 1000;
 ```
