@@ -9,4 +9,5 @@
     <p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/">Spring Boot 官方文档</a></p>
     <p><a href="https://docs.spring.io/spring-framework/reference/">Spring Frameworkd 官方文档</a></p>
 
+    <p><a href="https://www.liaoxuefeng.com/wiki/1539348902182944">廖雪峰的手写Spring</a> 可以用来属性Spring的原理</p>
 </topic>
