@@ -30,7 +30,7 @@
                 <p>⭐ <a href="https://www.bilibili.com/video/BV1fh411y7R8">韩顺平 - 零基础 30 天学会 Java </a></p>
                 <p>⭐ <a href="https://www.bilibili.com/video/BV1Kb411W75N">宋红康java基础视频</a></p>
             </tab>
-            <tab title="文档">
+            <tab title="在线资料">
                 <p>
                     ⭐ <a href="https://www.runoob.com/java/java-tutorial.html">菜鸟教程</a> （可以在线练习）
                 </p>
@@ -39,12 +39,12 @@
                         廖雪峰 Java 教程
                     </a>
                 </p>
-                <a href="https://tobebetterjavaer.com/home.html">
-                    二哥的Java进阶之路
-                </a> (语言比较风趣,如果你不介意知识星球的广告的话)
             </tab>
         </tabs>
-
+    </chapter>
+    <chapter title="其他开源项目" id="other-open-source-project">
+        <p><a href="https://javaguide.cn/">Java面试+学习指南 </a></p>
+         <p><a href="https://bugstack.cn/">虫洞栈 </a></p>
     </chapter>
     <chapter title="忽略知识点" id="ignore-knowledge" collapsible="true">
         <deflist sorted="asc">
