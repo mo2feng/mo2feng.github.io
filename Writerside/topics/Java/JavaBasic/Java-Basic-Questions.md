@@ -304,7 +304,7 @@ System.out.println("左移 10 位后的数据对应的二进制字符 " + Intege
 
 右移运算符使用类似，篇幅问题，这里就不做演示了。
 
-### continue、break 和 return 的区别是什么？ {id="what-is-the-difference-between-continue-break-and-return"}
+### continue、break 和 return 的区别是什么？{id="what-is-the-difference-between-continue-break-and-return"}
 
 在循环结构中，当循环条件不满足或者循环次数达到要求时，循环会正常结束。但是，有时候可能需要在循环的过程中，当发生了某种条件之后 ，提前终止循环，这就需要用到下面几个关键词：
 
