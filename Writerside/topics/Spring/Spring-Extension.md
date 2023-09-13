@@ -607,4 +607,6 @@ public class CService {
 ```
 
 ## 参考
+[Customizing the Nature of a Bean](https://docs.spring.io/spring-framework/docs/5.3.29/reference/html/core.html#beans-factory-nature)
+
 [聊聊Spring中最常用的11个扩展点](https://juejin.cn/post/7145084738775023646)
