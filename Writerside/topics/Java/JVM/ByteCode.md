@@ -41,7 +41,7 @@
 ### （4）类与数组
 
 |过程|符号|
-|-|-|
+|-|-|   
 |创建类实 |new	|
 |创建新数组|newarray, anewarray, multianwarray	|
 |访问类的域和类实例域|getfield, putfield, getstatic, putstatic	|
@@ -151,11 +151,11 @@
 |0x55|	castore|	将栈顶 char 型数值存入指定数组的指定索引位置|
 |0x56|	sastore|	将栈顶 short 型数值存入指定数组的指定索引位置|
 |0x57|	pop|	将栈顶数值弹出|
-|0x58|	pop2|	将栈顶的一个（long 或 double 类型的)或两个数值弹出（其它）|
+|0x58|	pop2|	将栈顶的一个(long 或 double 类型的)或两个数值弹出（其它）|
 |0x59|	dup|	复制栈顶数值并将复制值压入栈顶|
 |0x5a|	dup_x1|	复制栈顶数值并将两个复制值压入栈顶|
 |0x5b|	dup_x2|	复制栈顶数值并将三个（或两个）复制值压入栈顶|
-|0x5c|	dup2|复制栈顶一个（long 或 double 类型的)或两个（其它）数值并将复制值压|入栈|顶|
+|0x5c|	dup2|复制栈顶一个(long 或 double 类型的)或两个（其它）数值并将复制值压|入栈|顶|
 |0x5d|	dup2_x1|	<待补充>|
 |0x5e|	dup2_x2|	<待补充>|
 |0x5f|	swap|	将栈最顶端的两个数值互换(数值不能是 long 或 double 类型的)|
