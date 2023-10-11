@@ -32,30 +32,33 @@
 
 ### （3）条件转移
 
-过程	符号
-有条件转移	ifeq, iflt, ifle, ifne, ifgt, ifge, ifnull, ifnonnull, if_icmpeq, if_icmpene, if_icmplt, if_icmpgt, if_icmple, if_icmpge, if_acmpeq, if_acmpne, lcmp, fcmpl, fcmpg, dcmpl, dcmpg
-复合条件转移	tableswitch, lookupswitch
-无条件转移	goto, goto_w, jsr, jsr_w, ret
+|过程|符号|
+|-|-|
+|有条件转移	|ifeq, iflt, ifle, ifne, ifgt, ifge, ifnull, ifnonnull, if_icmpeq, if_icmpene, if_icmplt, if_icmpgt, if_icmple, if_icmpge, if_acmpeq, if_acmpne, lcmp, fcmpl, fcmpg, dcmpl, dcmpg|
+|复合条件转移 |	tableswitch, lookupswitch |
+|无条件转移	|goto, goto_w, jsr, jsr_w, ret |
 
 ### （4）类与数组
 
-过程	符号
-创建类实便：new	
-创建新数组：newarray, anewarray, multianwarray	
-访问类的域和类实例域：getfield, putfield, getstatic, putstatic	
-获取数组长度：arraylength	
-检相类实例或数组属性：instanceof, checkcast	
+|过程|符号|
+|-|-|
+|创建类实 |new	|
+|创建新数组|newarray, anewarray, multianwarray	|
+|访问类的域和类实例域|getfield, putfield, getstatic, putstatic	|
+|获取数组长度|arraylength	|
+|检相类实例或数组属性instanceof, checkcast	|
 
 ### （5）调度与返回加finally
 
-过程	符号
-调度对象的实便方法	invokevirt l
-调用由接口实现的方法	invokeinterface
-调用需要特殊处理的实例方法	invokespecial
-调用命名类中的静态方法	invokestatic
-方法返回	ireturn, lreturn, freturn, dreturn, areturn, return
-异常	athrow
-finally 关键字的实现使用	jsr, jsr_w, ret
+|过程|符号|
+|-|-|
+|调度对象的实便方法|	invokevirt |
+|调用由接口实现的方法|	invokeinterface |
+|调用需要特殊处理的实例方法|	invokespecial |
+|调用命名类中的静态方法|	invokestatic |
+|方法返回|	ireturn, lreturn, freturn, dreturn, areturn, return |
+|异常|	athrow finally  |
+|关键字的实现使用|	jsr, jsr_w, ret| 
 
 ## JVM 指令集表
 |指令码|	助记符	|说明|
@@ -209,10 +212,10 @@ finally 关键字的实现使用	jsr, jsr_w, ret
 |0x92|	i2c|	将栈顶 int 型数值强制转换成 char 型数值并将结果压入栈顶|
 |0x93|	i2s|	将栈顶 int 型数值强制转换成 short 型数值并将结果压入栈顶|
 |0x94|	lcmp|	比较栈顶两 long 型数值大小，并将结果（1，0，-1）压入栈顶|
-0x95|	fcmpl|	比较栈顶两 float 型数值大小，并将结果（1，0，-1）压入栈顶；当其中|一|个数|值为 NaN 时，将 -1 压入栈顶|
-0x96|	fcmpg|	比较栈顶两 float 型数值大小，并将结果（1，0，-1）压入栈顶；当其中|一|个数|值为 NaN 时，将 1 压入栈顶|
-0x97|	dcmpl|	比较栈顶两 double 型数值大小，并将结果（1，0，-1）压入栈顶；当其|中|一个|数值为 NaN 时，将 -1 压入栈顶|
-0x98|	dcmpg|	比较栈顶两 double 型数值大小，并将结果（1，0，-1）压入栈顶；当其|中|一个|数值为 NaN 时，将 1 压入栈顶|
+|0x95|	fcmpl|	比较栈顶两 float 型数值大小，并将结果（1，0，-1）压入栈顶；当其中|一|个数|值为 NaN 时，将 -1 压入栈顶|
+|0x96|	fcmpg|	比较栈顶两 float 型数值大小，并将结果（1，0，-1）压入栈顶；当其中|一|个数|值为 NaN 时，将 1 压入栈顶|
+|0x97|	dcmpl|	比较栈顶两 double 型数值大小，并将结果（1，0，-1）压入栈顶；当其|中|一个|数值为 NaN 时，将 -1 压入栈顶|
+|0x98|	dcmpg|	比较栈顶两 double 型数值大小，并将结果（1，0，-1）压入栈顶；当其|中|一个|数值为 NaN 时，将 1 压入栈顶|
 |0x99|	ifeq|	当栈顶 int 型数值等于 0 时跳转|
 |0x9a|	ifne|	当栈顶 int 型数值不等于 0 时跳转|
 |0x9b|	iflt|	当栈顶 int 型数值小于 0 时跳转|
@@ -248,7 +251,7 @@ finally 关键字的实现使用	jsr, jsr_w, ret
 |0xb9|	invokeinterface|	调用接口方法|
 |0xba|	–|	|
 |0xbb|	new|	创建一个对象，并将其引用值压入栈顶|
-0xbc|	newarray|	创建一个指定原始类型（如int, float, char…）的数组，并将其引|用值压入栈顶|
+|0xbc|	newarray|	创建一个指定原始类型（如int, float, char…）的数组，并将其引|用值压入栈顶|
 |0xbd|	anewarray|	创建一个引用型（如类，接口，数组）的数组，并将其引用值压入栈顶|
 |0xbe|	arraylength|	获得数组的长度值并压入栈顶|
 |0xbf|	athrow|	将栈顶的异常抛出|
@@ -256,8 +259,8 @@ finally 关键字的实现使用	jsr, jsr_w, ret
 |0xc1|	instanceof|	检验对象是否是指定的类的实例，如果是将 1 压入栈顶，否则将0压入||栈顶||
 |0xc2|	monitorenter|	获得对象的锁，用于同步方法或同步块|
 |0xc3|	monitorexit|	释放对象的锁，用于同步方法或同步块|
-|0xc4|	wide|	<待补充>|
-|0xc5|	multianewarray|	创建指定类型和指定维度的多维数组（执行该指令时，操作栈中必||须包|含各维度的长度值），并将其引用值压入栈顶|
+|0xc4|	wide| Extend local variable index by additional bytes|
+|0xc5|	multianewarray|	创建指定类型和指定维度的多维数组（执行该指令时，操作栈中必须包含各维度的长度值），并将其引用值压入栈顶|
 |0xc6|	ifnull|	为 null 时跳转|
 |0xc7|	ifnonnull|	不为 null 时跳转|
 |0xc8|	goto_w|	无条件跳转（宽索引）|
