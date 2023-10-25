@@ -2042,3 +2042,64 @@ Sealed JNI 的目标是提高本机代码的安全性，并减少与不受信任
 4. 垃圾收集器接口：JDK 17 引入了一组新的垃圾收集器接口，允许开发人员实现自定义的垃圾收集器。这样，开发人员可以根据自己的需求和场景开发定制的垃圾收集器。
 
 这些改进和优化旨在提供更好的垃圾收集器性能、降低停顿时间，并提高大堆和低延迟应用程序的吞吐量。具体的改进和优化细节可以在 JDK 17 的发行说明和相关文档中找到。
+
+
+
+## JDK18-JDK21
+
+### HotSpot JVM
+422: 	Linux/RISC-V Port (19)
+
+
+### Garbage Collectors
+439: 	Generational ZGC (21)
+
+
+### Serviceability
+451: 	Prepare to Disallow the Dynamic Loading of Agents (21)
+### Language
+441: 	Pattern Matching for switch (21)
+
+440: 	Record Patterns (21)
+
+### Libraries
+
+444: 	Virtual Threads (21)
+
+Collections
+
+431: 	Sequenced Collections (21)
+
+Cryptography
+
+452: 	Key Encapsulation Mechanism API (21)
+
+I/O
+
+400: 	UTF-8 by Default (18)
+
+Networking
+
+418: 	Internet-Address Resolution SPI (18)
+
+408: 	Simple Web Server (18)
+
+Reflection & Method Handles
+
+416: 	Reimplement Core Reflection with Method Handles (18)
+
+### Preview & Incubating
+#### Language
+430: 	String Templates (Preview) (21)
+445: 	Unnamed Classes and Instance Main Methods (Preview) (21)
+443: 	Unnamed Patterns and Variables (Preview) (21)
+Libraries
+442: 	Foreign Function & Memory API (Third Preview) (21)
+446: 	Scoped Values (Preview) (21)
+453: 	Structured Concurrency (Preview) (21)
+448: 	Vector API (Sixth Incubator) (21)
+### Deprecations
+HotSpot JVM
+449: 	Deprecate the Windows 32-bit x86 Port for Removal (21)
+Libraries
+421: 	Deprecate Finalization for Removal (18)
