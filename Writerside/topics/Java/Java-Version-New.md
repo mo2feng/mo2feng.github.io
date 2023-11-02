@@ -645,8 +645,8 @@ module bookmanagement.ui {
 
 在这个文件中，我们声明了 `bookmanagement.ui` 模块的名称，并且指定了它依赖于 `bookmanagement.core` 模块。我们通过 `exports` 关键字声明了 `com.example.bookmanagement.ui` 包对外的公共 API，并且使用 `uses` 关键字声明了它使用了 `com.example.bookmanagement.core.BookService` 接口。 最后，我们来看一下 `bookmanagement.data` 模块的 `module-info.java` 文件：
 
-```javascript
-javascript复制代码module bookmanagement.data {
+```java
+module bookmanagement.data {
     exports com.example.bookmanagement.data;
     provides com.example.bookmanagement.core.BookService
     with com.example.bookmanagement.data.DefaultBookService;
@@ -655,9 +655,8 @@ javascript复制代码module bookmanagement.data {
 
 在这个文件中，我们声明了 `bookmanagement.data` 模块的名称，并且通过 `exports` 关键字声明了 `com.example.bookmanagement.data` 包对外的公共 API。我们还使用 `provides` 关键字声明了 `com.example.bookmanagement.core.BookService` 接口的实现类为 `com.example.bookmanagement.data.DefaultBookService`。 通过这些模块定义文件，我们明确了每个模块的名称、依赖关系和对外的公共 API。现在，我们可以使用 JDK 9 提供的命令进行编译、打包和运行。 例如，我们可以使用以下命令编译 `bookmanagement.core` 模块：
 
-```bash
-bash
-复制代码javac -d out/bookmanagement.core src/bookmanagement.core/module-info.java src/bookmanagement.core/com/example/bookmanagement/core/*.java
+```shell
+javac -d out/bookmanagement.core src/bookmanagement.core/module-info.java src/bookmanagement.core/com/example/bookmanagement/core/*.java
 ```
 
 然后，我们可以使用 `jar` 命令将 `bookmanagement.core` 模块打包为一个模块化 JAR 文件：
@@ -2045,61 +2044,3 @@ Sealed JNI 的目标是提高本机代码的安全性，并减少与不受信任
 
 
 
-## JDK18-JDK21
-
-### HotSpot JVM
-422: 	Linux/RISC-V Port (19)
-
-
-### Garbage Collectors
-439: 	Generational ZGC (21)
-
-
-### Serviceability
-451: 	Prepare to Disallow the Dynamic Loading of Agents (21)
-### Language
-441: 	Pattern Matching for switch (21)
-
-440: 	Record Patterns (21)
-
-### Libraries
-
-444: 	Virtual Threads (21)
-
-Collections
-
-431: 	Sequenced Collections (21)
-
-Cryptography
-
-452: 	Key Encapsulation Mechanism API (21)
-
-I/O
-
-400: 	UTF-8 by Default (18)
-
-Networking
-
-418: 	Internet-Address Resolution SPI (18)
-
-408: 	Simple Web Server (18)
-
-Reflection & Method Handles
-
-416: 	Reimplement Core Reflection with Method Handles (18)
-
-### Preview & Incubating
-#### Language
-430: 	String Templates (Preview) (21)
-445: 	Unnamed Classes and Instance Main Methods (Preview) (21)
-443: 	Unnamed Patterns and Variables (Preview) (21)
-Libraries
-442: 	Foreign Function & Memory API (Third Preview) (21)
-446: 	Scoped Values (Preview) (21)
-453: 	Structured Concurrency (Preview) (21)
-448: 	Vector API (Sixth Incubator) (21)
-### Deprecations
-HotSpot JVM
-449: 	Deprecate the Windows 32-bit x86 Port for Removal (21)
-Libraries
-421: 	Deprecate Finalization for Removal (18)
