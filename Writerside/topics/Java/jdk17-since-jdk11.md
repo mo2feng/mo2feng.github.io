@@ -1,6 +1,6 @@
 # Java11升Java17重要特性
 
-## 概述{id="overview"}
+## 概述 {id="overview"}
 
 ### JDK 17升级的必要性？{id="why-java17"}
 
@@ -25,9 +25,9 @@
 2. 新工具和库更新
 3. JVM优化
 
-##  语言新特性{id="language-feature"}
+##  语言新特性 {id="language-feature"}
 
-###  JDK14 - Switch 表达式{id="jdk14-switch-expression"}
+###  JDK14 - Switch 表达式 {id="jdk14-switch-expression"}
 
 
 switch 表达式带来的不仅仅是编码上的简洁、流畅，也精简了 switch 语句的使用方式，同时也兼容之前的 switch 语句的使用；之前使用 switch 语句时，在每个分支结束之前，往往都需要加上 break 关键字进行分支跳出，以防 switch 语句一直往后执行到整个 switch 语句结束，由此造成一些意想不到的问题。switch 语句一般使用冒号 ：来作为语句分支代码的开始，而 switch 表达式则提供了新的分支切换方式，即 -> 符号右则表达式方法体在执行完分支方法之后，自动结束 switch 分支，同时 -> 右则方法块中可以是表达式、代码块或者是手动抛出的异常。以往的 switch 语句写法如下：
@@ -79,7 +79,7 @@ int dayOfWeek = switch (day) {
 
 使用 switch 表达式来替换之前的 switch 语句，确实精简了不少代码，提高了编码效率，同时也可以规避一些可能由于不太经意而出现的意想不到的情况，可见 Java 在提高使用者编码效率、编码体验和简化使用方面一直在不停的努力中，同时也期待未来有更多的类似 lambda、switch 表达式这样的新特性出来。
 
-### JDK15 - 文本块{id="jdk15-text-block"}
+### JDK15 - 文本块 {id="jdk15-text-block"}
 
 > 文本块，是一个多行字符串，它可以避免使用大多数转义符号，自动以可预测的方式格式化字符串，并让开发人员在需要时可以控制格式。
 
@@ -102,7 +102,7 @@ public static void main(String[] args) {
 SELECT * from USER WHERE `id` = 1 ORDER BY `id`, `name`;
 ```
 
-### JDK16 - instanceof 模式匹配{id="jdk16-instanceof-pattern-matching"}
+### JDK16 - instanceof 模式匹配 {id="jdk16-instanceof-pattern-matching"}
 
 > 模式匹配通过对 instacneof 运算符进行模式匹配来增强 Java 编程语言。
 
@@ -153,7 +153,7 @@ if (obj instanceof String s && s.length() > 5) {.. s.contains(..) ..}
 
 与传统写法对比，可以发现模式匹配不但提高了程序的安全性、健壮性，另一方面，不需要显式的去进行二次类型转换，减少了大量不必要的强制类型转换。模式匹配变量在模式匹配成功之后，可以直接使用，同时它还被限制了作用范围，大大提高了程序的简洁性、可读性和安全性。instanceof 的模式匹配，为 Java 带来的有一次便捷的提升，能够剔除一些冗余的代码，写出更加简洁安全的代码，提高码代码效率。
 
-### JDK16 - Records类型{id="jdk16-records"}
+### JDK16 - Records类型 {id="jdk16-records"}
 
 > Records 最早在 Java 14 中作为预览特性引入，在 Java 15 中还是预览特性，在Java 16中成为正式版。
 
@@ -216,7 +216,7 @@ boolean isRecord()
 
 而 isRecord() 方法，则返回所在类是否是 Record 类型，如果是，则返回 true。
 
-### JDK17 - 密封的类和接口{id="jdk17-sealed-class-and-interface"}
+### JDK17 - 密封的类和接口 {id="jdk17-sealed-class-and-interface"}
 
 > **封闭类**可以是封闭类和或者封闭接口，用来增强 Java 编程语言，**防止其他类或接口扩展或实现它们**。这个特性由Java 15的预览版本晋升为正式版本。
 
@@ -263,9 +263,9 @@ final class GraduateStudent extends Student { }  //研究生
 
 很强很实用的一个特性，可以限制类的层次结构。
 
-## 新工具和库更新{id="new-tools-and-libraries-updates"}
+## 新工具和库更新 {id="new-tools-and-libraries-updates"}
 
-### JDK13 - Socket API 重构{id="jdk13-socket-api-refactoring"}
+### JDK13 - Socket API 重构 {id="jdk13-socket-api-refactoring"}
 
 Java 中的 Socket API 已经存在了二十多年了，尽管这么多年来，一直在维护和更新中，但是在实际使用中遇到一些局限性，并且不容易维护和调试，所以要对其进行大修大改，才能跟得上现代技术的发展，毕竟二十多年来，技术都发生了深刻的变化。Java 13 为 Socket API 带来了新的底层实现方法，并且在 Java 13 中是默认使用新的 Socket 实现，使其易于发现并在排除问题同时增加可维护性。
 
@@ -288,7 +288,7 @@ Java 13 中的新底层实现，引入 NioSocketImpl 的实现用以替换 Socke
 
 通过这些更改，Java Socket API 将更易于维护，更好地维护将使套接字代码的可靠性得到改善。同时 NIO 实现也可以在基础层面完成，从而保持 Socket 和 ServerSocket 类层面上的不变。
 
-### JDK14 - 改进 NullPointerExceptions 提示信息{id="jdk14-nullpointerexceptions"}
+### JDK14 - 改进 NullPointerExceptions 提示信息 {id="jdk14-nullpointerexceptions"}
 
 Java 14 改进 NullPointerException 的可查性、可读性，能更准确地定位 null 变量的信息。该特性能够帮助开发者和技术支持人员提高生产力，以及改进各种开发工具和调试工具的质量，能够更加准确、清楚地根据动态异常与程序代码相结合来理解程序。
 
@@ -329,7 +329,7 @@ Exception in thread "main" java.lang.NullPointerException:
 
 该增强改进特性，不仅适用于属性访问，还适用于方法调用、数组访问和赋值等有可能会导致 NullPointerException 的地方。
 
-### JDK15 - 隐藏类 Hidden Classes{id="jdk15-hidden-classes"}
+### JDK15 - 隐藏类 Hidden Classes {id="jdk15-hidden-classes"}
 
 > 隐藏类是为框架（frameworks）所设计的，隐藏类不能直接被其他类的字节码使用，只能在运行时生成类并通过反射间接使用它们。
 
@@ -367,7 +367,7 @@ java.lang.invoke.LambdaMetaFactory //可以生成隐藏的nestmate类，以容�
 
 普通类是通过调用`ClassLoader::defineClass`创建的，而隐藏类是通过调用`Lookup::defineHiddenClass`创建的。这使JVM从提供的字节中派生一个隐藏类，链接该隐藏类，并返回提供对隐藏类的反射访问的查找对象。调用程序可以通过返回的查找对象来获取隐藏类的Class对象。
 
-### JDK15 - DatagramSocket API重构{id="jdk15-datagram-socket-api-refactor"}
+### JDK15 - DatagramSocket API重构 {id="jdk15-datagram-socket-api-refactor"}
 
 > 重新实现了老的 DatagramSocket API 接口，更改了 java.net.DatagramSocket 和 java.net.MulticastSocket 为更加简单、现代化的底层实现，更易于维护和调试。
 
@@ -498,7 +498,7 @@ public void inc(Integer count) {
 }
 ```
 
-### JDK17 - 增强的伪随机数生成器{id="jdk-17-enhanced-pseudo-random-number-generator"}
+### JDK17 - 增强的伪随机数生成器 {id="jdk-17-enhanced-pseudo-random-number-generator"}
 
 > 为伪随机数生成器 (PRNG) 提供新的接口类型和实现。这一变化提高了不同 PRNG 的互操作性，并使得根据需求请求算法变得容易，而不是硬编码特定的实现。简单而言只需要理解如下三个问题：
 
@@ -574,13 +574,13 @@ public void testNextLong() {
 }
 ```
 
-####  **为什么需要增强**？
+####  **为什么需要增强**？{id="why-need-enhance }
 
 1. 上述几个类实现代码质量和接口抽象不佳
 2. 缺少常见的伪随机算法
 3. 自定义扩展随机数的算法只能自己去实现，缺少统一的接口
 
-####  **增强后是什么样的**？
+####  **增强后是什么样的**？ {id="what-is-after-enhance"}
 
 代码的优化自不必说，我们就看下新增了哪些常见的伪随机算法
 
@@ -614,7 +614,7 @@ Java 13 中，ZGC 内存释放功能，默认情况下是开启的，不过可�
 
 还可以使用参数：`-XX：ZUncommitDelay = <seconds>`（默认值为 300 秒）来配置延迟释放，此延迟时间可以指定释放多长时间之前未使用的内存。
 
-###  JDK14 - G1 的 NUMA 可识别内存分配{id="jdk14-g1-numa-aware-memory-allocation"}
+###  JDK14 - G1 的 NUMA 可识别内存分配 {id="jdk14-g1-numa-aware-memory-allocation"}
 
 Java 14 改进非一致性内存访问（NUMA）系统上的 G1 垃圾收集器的整体性能，主要是对年轻代的内存分配进行优化，从而提高 CPU 计算过程中内存访问速度。
 
@@ -651,7 +651,7 @@ support was removed in <version>
 
 具体弃用情况如下，通过弃用组合参数：`-XX:+UseParallelGC -XX:-UseParallelOldGC`，来弃用年轻代、老年期中并行、串行混搭使用的情况；同时，对于单独使用参数：`-XX:-UseParallelOldGC` 的地方，也将显示该参数已被弃用的警告信息。
 
-### JDK15 - 禁用偏向锁定{id="jdk15-disable-biased-locking"}
+### JDK15 - 禁用偏向锁定 {id="jdk15-disable-biased-locking"}
 
 > 准备禁用和废除偏向锁，在 JDK 15 中，默认情况下禁用偏向锁，并弃用所有相关的命令行选项。
 

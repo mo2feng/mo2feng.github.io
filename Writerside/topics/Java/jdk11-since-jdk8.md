@@ -20,9 +20,9 @@ Java 11 已于 2018 年 9 月 25 日正式发布，之前在 Java 10 新特性�
 2. 新工具和库更新
 3. JVM优化
 
-## 语言新特性{id="language-new-features"}
+## 语言新特性 {id="language-new-features"}
 
-### JDK9 - 允许在接口中使用私有方法 {id="private-method-in-interface"}
+### 允许在接口中使用私有方法(JDK9) {id="private-method-in-interface"}
 
 在如下代码中，buildMessage 是接口 SayHi 中的私有方法，在默认方法 sayHi 中被使用。
 
@@ -38,7 +38,7 @@ public interface SayHi {
 }
 ```
 
-###  JDK10 - 局部变量类型推断{id="type-intent-for-local-variable"}
+### 局部变量类型推断(JDK10) {id="jdk10-type-intent-for-local-variable"}
 
 局部变量类型推断是 Java 10 中最值得开发人员注意的新特性，这是 Java 语言开发人员为了简化 Java 应用程序的编写而进行的又一重要改进。
 
@@ -69,7 +69,7 @@ Stream<String> stream = getStream();
 
 不过对于开发者而言，变量类型显式声明会提供更加全面的程序语言信息，对于理解和维护代码有很大的帮助。Java 10 中新引入的局部变量类型推断能够帮助我们快速编写更加简洁的代码，但是局部变量类型推断的保留字 var 的使用势必会引起变量类型可视化缺失，并不是任何时候使用 var 都能容易、清晰的分辨出变量的类型。一旦 var 被广泛运用，开发者在没有 IDE 的支持下阅读代码，势必会对理解程序的执行流程带来一定的困难。所以还是建议尽量显式定义变量类型，在保持代码简洁的同时，也需要兼顾程序的易读性、可维护性。
 
-### JDK11 - 用于 Lambda 参数的局部变量语法{id="Local-Variable-Syntax-for-Lambda-Parameters"}
+### 用于 Lambda 参数的局部变量语法(JDK11) {id="Local-Variable-Syntax-for-Lambda-Parameters"}
 
 在 Lambda 表达式中使用局部变量类型推断是 Java 11 引入的唯一与语言相关的特性，这一节，我们将探索这一新特性。
 
@@ -118,9 +118,9 @@ try (var x = ...) { ... } catch ...
 (@Nonnull var x, @Nullable var y) -> x.process(y)
 ```
 
-## 新工具和库更新{id="new-tools-and-libraries"}
+## 新工具和库更新 {id="new-tools-and-libraries"}
 
-### JDK9 - 集合、Stream 和 Optional更新方法{id="new-method-for-collection-stream-and-optional"}
+### 集合、Stream 和 Optional更新方法(JDK9) {id="new-method-for-collection-stream-and-optional"}
 
 在集合上，Java 9 增加 了 `List.of()`、`Set.of()`、`Map.of()` 和 `Map.ofEntries()`等工厂方法来创建不可变集合 ，如 如下 所示。
 
@@ -174,7 +174,7 @@ public void testStream() throws Exception {
 }
 ```
 
-###  JDK9 - 进程 API (Process Handle){id="process-api-process-handle"}
+###  JDK9 - 进程 API (Process Handle) {id="process-api-process-handle"}
 
 Java 9 增加了 ProcessHandle 接口，可以对原生进程进行管理，尤其适合于管理长时间运行的进程。在使用 ProcessBuilder 来启动一个进程之后，可以通过 Process.toHandle()方法来得到一个 ProcessHandl e 对象的实例。通过 ProcessHandle 可以获取到由 ProcessHandle.Info 表 示的进程的基本信息，如命令行参数、可执行文件路径和启动时间等。ProcessHandle 的 onExit()方法返回一个 CompletableFuture对象，可以在进程结束时执行自定义的动作。 如下代码中给出了进程 API 的使用示例。
 
@@ -191,7 +191,7 @@ processHandle.onExit().whenCompleteAsync((handle, throwable) -> {
 });
 ```
 
-###  JDK9 - 变量句柄 (Var Handle)(id="var-handle")
+###  JDK9 - 变量句柄 (Var Handle) {id="jdk9-var-handle"}
 
 变量句柄是一个变量或一组变量的引用，包括静态域，非静态域，数组元素和堆外数据结构中的组成部分等。变量句柄的含义类似于已有的方法句柄。变量句柄由 Java 类 java.lang.invoke.VarHandle 来表示。可以使用类 java.lang.invoke.MethodHandles.Lookup 中的静态工厂方法来创建 VarHandle 对象。通过变量句柄，可以在变量上进行各种操作。这些操作称为访问模式。不同的访问模式尤其在内存排序上的不同语义。目前一共有 31 种 访问模式，而每种访问模式都 在 VarHandle 中 有对应的方法。这些方法可以对变量进行读取、写入、原子更新、数值原子更新和比特位原子操作等。VarHandle 还可以用来访问数组中的单个元素，以及把 byte[]数组 和 ByteBuffer 当成是不同原始类型的数组来访问。
 
@@ -221,7 +221,7 @@ public class VarHandleTest {
 }
 ```
 
-### JDK9 - I/O 流新特性{id="new-features-for-i-o"}
+### JDK9 - I/O 流新特性 {id="new-features-for-i-o"}
 
 类 `java.io.InputStream` 中增加了新的方法来读取和复制 `InputStream` 中包含的数据。
 
@@ -260,7 +260,7 @@ public class TestInputStream {
 
 ObjectInputFilter 可以对 ObjectInputStream 中 包含的内容进行检查，来确保其中包含的数据是合法的。可以使用 ObjectInputStream 的方法 setObjectInputFilter 来设置。ObjectInputFilter 在 进行检查时，可以检查如对象图的最大深度、对象引用的最大数量、输入流中的最大字节数和数组的最大长度等限制，也可以对包含的类的名称进行限制。
 
-### JDK9 - 改进应用安全性能{id="improve-application-security-performance"}
+### JDK9 - 改进应用安全性能 {id="improve-application-security-performance"}
 
 Java 9 新增了 4 个 SHA-3 哈希算法，SHA3-224、SHA3-256、SHA3-384 和 SHA3-512。另外也增加了通过 `java.security.SecureRandom` 生成使用 DRBG 算法的强随机数。如下代码中给出了 SHA-3 哈希算法的使用示例。
 
@@ -275,13 +275,13 @@ public class SHA3 {
 }
 ```
 
-### JDK10 - 根证书认证{id="Root-Certificate-Authentication"}
+### 根证书认证(JDK10) {id="Root-Certificate-Authentication"}
 
 自 Java 9 起在 keytool 中加入参数 -cacerts ，可以查看当前 JDK 管理的根证书。而 Java 9 中 cacerts 目录为空，这样就会给开发者带来很多不便。**从 Java 10 开始，将会在 JDK 中提供一套默认的 CA 根证书**。
 
 作为 JDK 一部分的 cacerts 密钥库旨在包含一组能够用于在各种安全协议的证书链中建立信任的根证书。但是，JDK 源代码中的 cacerts 密钥库至目前为止一直是空的。因此，在 JDK 构建中，默认情况下，关键安全组件（如 TLS）是不起作用的。要解决此问题，用户必须使用一组根证书配置和 cacerts 密钥库下的 CA 根证书。
 
-###  JDK11 - 标准 HTTP Client 升级{id="Standard-HTTP-Client-Upgrade"}
+###  JDK11 - 标准 HTTP Client 升级 {id="Standard-HTTP-Client-Upgrade"}
 
 Java 11 对 Java 9 中引入并在 Java 10 中进行了更新的 Http Client API 进行了标准化，在前两个版本中进行孵化的同时，Http Client 几乎被完全重写，并且现在完全支持异步非阻塞。
 
@@ -300,7 +300,7 @@ Java 11 中的新 Http Client API，提供了对 HTTP/2 等业界前沿标准的
           .join();
 ```
 
-### JDK11 - 简化启动单个源代码文件的方法{id="Simplified-method-to-start-a-single-source-file"}
+### JDK11 - 简化启动单个源代码文件的方法 {id="Simplified-method-to-start-a-single-source-file"}
 
 Java 11 版本中最令人兴奋的功能之一是增强 Java 启动器，使之能够运行单一文件的 Java 源代码。此功能允许使用 Java 解释器直接执行 Java 源代码。源代码在内存中编译，然后由解释器执行。唯一的约束在于所有相关的类必须定义在同一个 Java 文件中。
 
@@ -325,7 +325,7 @@ $ javac HelloWorld.java
 $ java -cp . hello.World
 ```
 
-### JDK11 - 支持 TLS 1.3 协议{id="Support-TLS-1.3-protocol"}
+### JDK11 - 支持 TLS 1.3 协议 {id="Support-TLS-1.3-protocol"}
 
 Java 11 中包含了传输层安全性（TLS）1.3 规范（RFC 8446）的实现，替换了之前版本中包含的 TLS，包括 TLS 1.2，同时还改进了其他 TLS 功能，例如 OCSP 装订扩展（RFC 6066，RFC 6961），以及会话散列和扩展主密钥扩展（RFC 7627），在安全性和性能方面也做了很多提升。
 
@@ -351,19 +351,19 @@ Java 11 中包含了传输层安全性（TLS）1.3 规范（RFC 8446）的实现
 - TLS 1.3 支持的加密套件与 TLS 1.2 和早期版本不同，若应用程序硬编码了加密算法单元，则在升级的过程中需要修改相应代码才能升级使用 TLS 1.3。
 - TLS 1.3 版本的 session 用行为及秘钥更新行为与 1.2 及之前的版本不同，若应用依赖于 TLS 协议的握手过程细节，则需要注意。
 
-## JVM优化{id="Optimizing-the-JVM"}
+## JVM优化 {id="Optimizing-the-JVM"}
 
-### JDK9 - 统一 JVM 日志{id="jdk9-unified-jvm-logging"}
+### JDK9 - 统一 JVM 日志 {id="jdk9-unified-jvm-logging"}
 
 Java 9 中 ，JVM 有了统一的日志记录系统，可以使用新的命令行选项-Xlog 来控制 JVM 上 所有组件的日志记录。该日志记录系统可以设置输出的日志消息的标签、级别、修饰符和输出目标等。Java 9 移除了在 Java 8 中 被废弃的垃圾回收器配置组合，同时 把 G1 设为默认的垃圾回收器实现。另外，CMS 垃圾回收器已经被声明为废弃。Java 9 也增加了很多可以通过 jcmd 调用的诊断命令。
 
-### JDK10 - 统一 GC 接口{id="jdk10-unified-gc-interface"}
+### JDK10 - 统一 GC 接口 {id="jdk10-unified-gc-interface"}
 
 在当前的 Java 结构中，组成垃圾回收器（GC）实现的组件分散在代码库的各个部分。尽管这些惯例对于使用 GC 计划的 JDK 开发者来说比较熟悉，但对新的开发人员来说，对于在哪里查找特定 GC 的源代码，或者实现一个新的垃圾收集器常常会感到困惑。更重要的是，随着 Java modules 的出现，我们希望在构建过程中排除不需要的 GC，但是当前 GC 接口的横向结构会给排除、定位问题带来困难。
 
 为解决此问题，需要整合并清理 GC 接口，以便更容易地实现新的 GC，并更好地维护现有的 GC。Java 10 中，hotspot/gc 代码实现方面，引入一个干净的 GC 接口，改进不同 GC 源代码的隔离性，多个 GC 之间共享的实现细节代码应该存在于辅助类中。这种方式提供了足够的灵活性来实现全新 GC 接口，同时允许以混合搭配方式重复使用现有代码，并且能够保持代码更加干净、整洁，便于排查收集器问题。
 
-### JDK10 - 并行全垃圾回收器 G1{id="jdk10-parallel-full-gc-g1"}
+### JDK10 - 并行全垃圾回收器 G1 {id="jdk10-parallel-full-gc-g1"}
 
 大家如果接触过 Java 性能调优工作，应该会知道，调优的最终目标是通过参数设置来达到快速、低延时的内存垃圾回收以提高应用吞吐量，尽可能的避免因内存回收不及时而触发的完整 GC（Full GC 会带来应用出现卡顿）。
 
@@ -371,7 +371,7 @@ G1 垃圾回收器是 Java 9 中 Hotspot 的默认垃圾回收器，是以一种
 
 **Java 10 中将采用并行化 mark-sweep-compact 算法，并使用与年轻代回收和混合回收相同数量的线程**。具体并行 GC 线程数量可以通过： `-XX：ParallelGCThreads` 参数来调节，但这也会影响用于年轻代和混合收集的工作线程数。
 
-### JDK11 - Epsilon：低开销垃圾回收器{id="jdk11-epsilon-low-overhead-gc"}
+### JDK11 - Epsilon：低开销垃圾回收器 {id="jdk11-epsilon-low-overhead-gc"}
 
 Epsilon 垃圾回收器的目标是开发一个控制内存分配，但是不执行任何实际的垃圾回收工作。它提供一个完全消极的 GC 实现，分配有限的内存资源，最大限度的降低内存占用和内存吞吐延迟时间。
 
@@ -391,7 +391,7 @@ Epsilon 线性分配单个连续内存块。可复用现存 VM 代码中的 TLAB
 
 执行任何的 GC 周期，不用关系对象图，对象标记，对象复制等。引进一种新的 barrier-set 实现可能是该 GC 对 JVM 最大的变化。
 
-### JDK11 - 低开销的 Heap Profiling{id="jdk11-low-cost-heap-profiling"}
+### JDK11 - 低开销的 Heap Profiling {id="jdk11-low-cost-heap-profiling"}
 
 Java 11 中提供一种低开销的 Java 堆分配采样方法，能够得到堆分配的 Java 对象信息，并且能够通过 JVMTI 访问堆信息。
 
@@ -404,7 +404,7 @@ Java 11 中提供一种低开销的 Java 堆分配采样方法，能够得到堆
 
 对用户来说，了解它们堆里的内存分布是非常重要的，特别是遇到生产环境中出现的高 CPU、高内存占用率的情况。目前有一些已经开源的工具，允许用户分析应用程序中的堆使用情况，比如：Java Flight Recorder、jmap、YourKit 以及 VisualVM tools.。但是这些工具都有一个明显的不足之处：无法得到对象的分配位置，headp dump 以及 heap histogram 中都没有包含对象分配的具体信息，但是这些信息对于调试内存问题至关重要，因为它能够告诉开发人员他们的代码中发生的高内存分配的确切位置，并根据实际源码来分析具体问题，这也是 Java 11 中引入这种低开销堆分配采样方法的原因。
 
-### JDK11 - 可伸缩低延迟垃圾收集器(ZGC){id="jdk11-scalable-low-latency-garbage-collectorzgc"}
+### JDK11 - 可伸缩低延迟垃圾收集器(ZGC) {id="jdk11-scalable-low-latency-garbage-collectorzgc"}
 
 ZGC 即 Z Garbage Collector（垃圾收集器或垃圾回收器），这应该是 Java 11 中最为瞩目的特性，没有之一。ZGC 是一个可伸缩的、低延迟的垃圾收集器，主要为了满足如下目标进行设计：
 
