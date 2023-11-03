@@ -7,7 +7,7 @@
 1. JDK 11 作为一个 LTS版本，它的商业支持时间框架比 JDK 8 短，**JDK 11 的 LTS 会提供技术支持直至 2023 年 9 月, 对应的补丁和安全警告等支持将持续至 2026 年**。JDK 17 作为下一代 LTS 将提供至少到 2026 年的支持时间框架；
 2. Java系最为重要的开发框架**Spring Framework 6 和 Spring Boot 3对JDK版本的最低要求是JDK 17**；所以可以预见, 为了使用Spring最新框架，很多团队和开发者将被迫从Java 11（甚至Java 8)直接升级到Java 17版本。
 
-### JDK 11 升级到JDK 17 性能提升多少？{id="performance-jdk11-vs-jdk17"}
+### JDK 11 升级到JDK 17 性能提升多少？{id="performance-improve-jdk11-vs-jdk17"}
 
 从规划调度引擎 OptaPlanner 项目（原文在[这里在新窗口打开](https://www.optaplanner.org/blog/2021/09/15/HowMuchFasterIsJava17.html)）对 JDK 17和 JDK 11 的性能基准测试进行了对比来看：
 
@@ -17,7 +17,7 @@
 
 简而言之，JDK17 更快，高吞吐量垃圾回收器比低延迟垃圾回收器更快。
 
-### 如何更好的理解从JDK 11 到 JDK 17 升级中带来的重要特性？
+### 如何更好的理解从JDK 11 到 JDK 17 升级中带来的重要特性？{id="understand-jdk11-vs-jdk17"}
 
 主要从如下三个方面理解，后续的章节主要围绕这三个方面进行：
 
@@ -502,7 +502,7 @@ public void inc(Integer count) {
 
 > 为伪随机数生成器 (PRNG) 提供新的接口类型和实现。这一变化提高了不同 PRNG 的互操作性，并使得根据需求请求算法变得容易，而不是硬编码特定的实现。简单而言只需要理解如下三个问题：
 
-####  **JDK 17之前如何生成随机数**？{id="jdk-17-before-how-to-generate-random-numbers"}
+####  **JDK17之前如何生成随机数**？{id="jdk-17-before-how-to-generate-random-numbers"}
 
 1. **Random 类**
 
