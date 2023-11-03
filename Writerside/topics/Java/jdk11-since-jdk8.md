@@ -8,11 +8,11 @@ Java 11 已于 2018 年 9 月 25 日正式发布，之前在 Java 10 新特性�
 
 按照官方介绍，新的版本发布周期将会严格按照时间节点，于每年的 3 月和 9 月发布，Java 11 发布的时间节点也正好处于 Java 8 免费更新到期的前夕。与 Java 9 和 Java 10 这两个被称为”功能性的版本”不同，Java 11 仅将提供长期支持服务（LTS, Long-Term-Support），还将作为 Java 平台的默认支持版本，并且会提供技术支持直至 2023 年 9 月，对应的补丁和安全警告等支持将持续至 2026 年。
 
-### JDK 8 升级到JDK 11 性能提升多少？{id="jdk-8-vs-jdk-11-performance"}
+### JDK8 升级到JDK11 性能提升多少？ {id="jdk-8-vs-jdk-11-performance"}
 
 从规划调度引擎 OptaPlanner 项目对 [JDK 8和 JDK 11 的性能基准测试在新窗口打开](https://www.optaplanner.org/blog/2019/01/17/HowMuchFasterIsJava11.html)进行了对比来看：
 
-### 如何更好的理解从JDK 8 到 JDK 11 升级中带来的重要特性？{id="how-to-understand-jdk-8-to-jdk-11-upgrade"}
+### 如何更好的理解从JDK8 到 JDK11 升级中带来的重要特性？ {id="how-to-understand-jdk-8-to-jdk-11-upgrade"}
 
 > 主要从如下三个方面理解，后续的章节主要围绕这三个方面进行：
 
