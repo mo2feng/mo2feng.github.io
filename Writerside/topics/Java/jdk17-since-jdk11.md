@@ -371,7 +371,7 @@ java.lang.invoke.LambdaMetaFactory //可以生成隐藏的nestmate类，以容�
 
 > 重新实现了老的 DatagramSocket API 接口，更改了 java.net.DatagramSocket 和 java.net.MulticastSocket 为更加简单、现代化的底层实现，更易于维护和调试。
 
-![img](/images/java/java-15-1.png)
+
 
 `java.net.datagram.Socket`和`java.net.MulticastSocket`的当前实现可以追溯到JDK 1.0，那时IPv6还在开发中。因此，当前的多播套接字实现尝试调和IPv4和IPv6难以维护的方式。
 
@@ -584,7 +584,6 @@ public void testNextLong() {
 
 代码的优化自不必说，我们就看下新增了哪些常见的伪随机算法
 
-![img](/images/java/java17-random-1.png)
 
 如何使用这个呢？可以使用RandomGenerator
 
