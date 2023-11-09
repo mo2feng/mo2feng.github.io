@@ -9,7 +9,7 @@
 
 ### JDK 11 升级到JDK 17 性能提升多少？ {id="performance-improve-jdk11-vs-jdk17"}
 
-从规划调度引擎 OptaPlanner 项目（原文在[这里在新窗口打开](https://www.optaplanner.org/blog/2021/09/15/HowMuchFasterIsJava17.html)）对 JDK 17和 JDK 11 的性能基准测试进行了对比来看：
+从规划调度引擎 OptaPlanner 项目（[原文链接](https://www.optaplanner.org/blog/2021/09/15/HowMuchFasterIsJava17.html)）对 JDK 17和 JDK 11 的性能基准测试进行了对比来看：
 
 1. 对于 G1GC（默认），Java 17 比 Java 11 快 8.66%；
 2. 对于 ParallelGC，Java 17 比 Java 11 快 6.54%；
@@ -17,13 +17,6 @@
 
 简而言之，JDK17 更快，高吞吐量垃圾回收器比低延迟垃圾回收器更快。
 
-### 如何更好的理解从JDK 11 到 JDK 17 升级中带来的重要特性？ {id="understand-jdk11-vs-jdk17"}
-
-主要从如下三个方面理解，后续的章节主要围绕这三个方面进行：
-
-1. 语言新特性
-2. 新工具和库更新
-3. JVM优化
 
 ##  语言新特性 {id="language-feature"}
 

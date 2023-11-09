@@ -10,15 +10,8 @@ Java 11 已于 2018 年 9 月 25 日正式发布，之前在 Java 10 新特性�
 
 ### JDK8 升级到JDK11 性能提升多少？ {id="jdk-8-vs-jdk-11-performance"}
 
-从规划调度引擎 OptaPlanner 项目对 [JDK 8和 JDK 11 的性能基准测试在新窗口打开](https://www.optaplanner.org/blog/2019/01/17/HowMuchFasterIsJava11.html)进行了对比来看：
+从规划调度引擎 OptaPlanner 项目对 [JDK8和JDK11的性能基准测试](https://www.optaplanner.org/blog/2019/01/17/HowMuchFasterIsJava11.html)进行了对比来看，JDK 11 比 JDK 8 快 10% 到 20%。
 
-### 如何更好的理解从JDK8 到 JDK11 升级中带来的重要特性？ {id="how-to-understand-jdk-8-to-jdk-11-upgrade"}
-
-> 主要从如下三个方面理解，后续的章节主要围绕这三个方面进行：
-
-1. 语言新特性
-2. 新工具和库更新
-3. JVM优化
 
 ## 语言新特性 {id="language-new-features"}
 
