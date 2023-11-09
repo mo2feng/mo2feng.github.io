@@ -1,5 +1,7 @@
 # Java8升Java11的重要特性
 
+<show-structure for="chapter,procedure" depth="2"/>
+
 ## 概述{id="overview"}
 
 ### JDK 10后版本发布规则？{id="jdk-10-after-version"}

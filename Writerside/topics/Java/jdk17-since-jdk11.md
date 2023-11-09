@@ -1,5 +1,7 @@
 # Java11升Java17重要特性
 
+<show-structure for="chapter,procedure" depth="2"/>
+
 ## 概述 {id="overview"}
 
 ### JDK 17升级的必要性？ {id="why-java17"}
