@@ -84,5 +84,8 @@
       <toc-element topic="requirement.md"/>
        <toc-element topic="architecture.md"/>
         <toc-element topic="preparation.md"/>
+        <toc-element topic="construction-practices.md"/>
+        <toc-element topic="construction-design.md"/>
+        <toc-element topic="class-quality.md"/>
     </toc-element>
 </instance-profile>
