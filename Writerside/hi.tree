@@ -82,5 +82,7 @@
     </toc-element>
     <toc-element topic="checklist.md">
       <toc-element topic="requirement.md"/>
+       <toc-element topic="architecture.md"/>
+        <toc-element topic="preparation.md"/>
     </toc-element>
 </instance-profile>
