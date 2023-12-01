@@ -80,4 +80,7 @@
             <toc-element topic="HTW-03.md" />
         </toc-element>
     </toc-element>
+    <toc-element topic="checklist.md">
+      <toc-element topic="requirement.md"/>
+    </toc-element>
 </instance-profile>
