@@ -87,5 +87,11 @@
         <toc-element topic="construction-practices.md"/>
         <toc-element topic="construction-design.md"/>
         <toc-element topic="class-quality.md"/>
+        <toc-element topic="high-quality-sub-program.md"/>
+        <toc-element topic="defensive-programming.md"/>
+        <toc-element topic="pseudocode-procedure.md"/>
+        <toc-element topic="data-usage.md"/>
+        <toc-element topic="variable-names.md"/>
+
     </toc-element>
 </instance-profile>
