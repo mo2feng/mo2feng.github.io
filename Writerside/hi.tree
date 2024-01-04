@@ -94,4 +94,10 @@
         <toc-element topic="variable-names.md"/>
 
     </toc-element>
+
+    <toc-element topic="activiti.md">
+      <toc-element topic="activiti-db.md"/>
+
+    </toc-element>
+
 </instance-profile>
