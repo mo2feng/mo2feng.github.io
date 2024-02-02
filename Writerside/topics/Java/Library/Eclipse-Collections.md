@@ -1,8 +1,8 @@
-# Eclipse Collections 库介绍
+# Eclipse Collections 库介绍 {id="lib-Eclipse-Collections"}
 
 我们一直在寻找提升代码效率和性能的方法，以满足日益增长的业务需求。今天，我想向大家介绍一个强大的 Java 库 —— Eclipse Collections，它可能会成为我们项目中的新宠。
 
-## 为什么选择 Eclipse Collections？
+## 为什么选择 Eclipse Collections？ {id="why-choose-Eclipse-Collections"}
 
 性能卓越：Eclipse Collections 提供了一系列经过精心优化的集合类，如 ArrayBag 和 TrieMap，它们在处理大量数据时表现出色，特别是在添加、删除和迭代操作上。
 
@@ -16,4 +16,4 @@
 
 强大的社区支持：Eclipse Collections 拥有活跃的开发者社区，这意味着我们可以获得丰富的文档资源和及时的技术支持。
 
-## 如何使用 Eclipse Collections？
+## 如何使用 Eclipse Collections？{id="how-to-use-Eclipse-Collections"}
