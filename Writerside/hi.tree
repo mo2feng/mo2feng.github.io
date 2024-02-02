@@ -38,6 +38,7 @@
                 <toc-element topic="Collections.md"/>
                 <toc-element topic="Java-Enumerate.md"/>
                 <toc-element topic="Java-IO.md"/>
+                <toc-element topic="Java-Date.md"/>
             </toc-element>
         </toc-element>
         <toc-element topic="Kotlin-For-Java-Developer.md" />

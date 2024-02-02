@@ -1,6 +1,6 @@
-# ALL ABOUT JAVA.UTIL.DATE
+# 避免使用 JAVA.UTIL.DATE 
 
-> 翻译文章(施工中)，原文连接：https://codeblog.jonskeet.uk/2017/04/23/all-about-java-util-date/
+> 翻译文章，原文连接：https://codeblog.jonskeet.uk/2017/04/23/all-about-java-util-date/
 
 在Stack Overflow上引发大量相似问题的类中，`java.util.Date` 可谓名列前茅。这种情况的出现主要有四个原因：
 
