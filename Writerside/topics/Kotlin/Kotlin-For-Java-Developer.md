@@ -2,9 +2,9 @@
 
 
 ## 每个 Java 开发者都应该学 Kotlin
-推荐学习 Kotlin 的理由有很多，比如：Kotlin 更简洁，Kotlin 有协程，Kotlin 有扩展函数，学了 Kotlin 后学别的语言会很快，比如：Python，Swift，Dart, Ruby...
+推荐学习 Kotlin 的理由有很多，比如：Kotlin 更简洁，Kotlin 有协程，Kotlin 有扩展函数，学了 Kotlin 后学别的语言会很快，比如：Python，Swift，Dart(这个就是Fullter框架的语言), Ruby...
 
-不过，如果你是 Android 开发者，我劝你别再做无谓的挣扎了，赶紧入坑吧！
+不过，如果你是 ~~公司要求的 /~~ Android 开发者，我劝你别再做无谓的挣扎了！
 
 ## 快速认识 Kotlin
 Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。Kotlin 有着以下几个特点：
@@ -14,7 +14,7 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 * 兼容，与 Java 兼容
 * 工具友好，IntelliJ 对 Kotlin 简直不要太友好
 
-> JetBrains 不仅创造了 Kotlin，还创造了著名的 IntelliJ IDEA。Android 开发者使用的 Android Studio 就是基于 IntelliJ 改造出来的。
+> JetBrains 不仅创造了 Kotlin，还创造了著名的 IntelliJ IDEA。
 
 ## 基础语法
 
@@ -48,12 +48,12 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 |internal|同 Module 内可见|
 
 ### 3. 变量定义 (Defining Variables)
-定义一个 Int 类型的变量:
+定义一个 Int 类型的可变变量:
 ```kotlin
 var a: Int = 1
 ```
   
-定义一个 Int 类型的常量(不可变的变量？只读的变量？)
+定义一个 Int 类型的可变的变量(初始化之后不可改变)：
 ```kotlin
 val b: Int = 1
 ```
@@ -66,10 +66,11 @@ val c = 1
 val d: Int;
 d = 1;
 ```  
+
 小结：
 
 * `var` 定义变量
-* `val` 定义常量(不可变的变量？只读变量？)
+* `val` 定义不可变的变量
 * Kotlin 支持类型自动推导
 
 > 思考题3：
@@ -121,46 +122,44 @@ val name = userInstance?.user?.baseInfo?.profile?.name?: "Kotlin"
 ```
 小结：
 
-* T 代表不可为空类型，编译器会检查，保证不会被 null 赋值
-* T? 代表可能为空类型
-* 不能将 T? 赋值给 T
+* `T` 代表不可为空类型，编译器会检查，保证不会被 null 赋值
+*` T?` 代表可能为空类型
+* 不能将 `T?` 赋值给 `T`
 * 使用 instance?.fun() 进行空安全调用
 * 使用 Elvis 操作符为可空变量替代值，简化逻辑
 
 ### 5. 类型检查与转换 (Type Checks and Casts)
-   类型判断、智能类型转换：
-   if (x is String) {
+#### 类型判断、智能类型转换 {id="type-check-and-auto-cast"}
+   ```kotlin
+   // x is String 类似 Java 里的 instanceOf
+    if (x is String) {
     print(x.length) // x 被编译自动转换为 String
    }
-   // x is String 类似 Java 里的 instanceOf
-   1.
-   2.
-   3.
-   4.
-   不安全的类型转换 as
-   val y = null
-   val x: String = y as String
+   ```
+ 
+#### 不安全的类型转换 as {id="unsafe-cast"}
+   ```kotlin
+    val y = null
+    val x: String = y as String
    //抛异常，null 不能被转换成 String
-   1.
-   2.
-   3.
-   安全的类型转换 as?
+   ```
+
+
+####  安全的类型转换 as? {id="safe-cast"}
+   ```kotlin
    val y = null
    val z: String? = y as? String
    print(z)
    // 输出 null
-   1.
-   2.
-   3.
-   4.
-   小结：
+   ```
 
-使用is 关键字进行类型判断
-使用as 进行类型转换，可能会抛异常
-使用as? 进行安全的类型转换
+小结：
+* 使用is 关键字进行类型判断
+* 使用as 进行类型转换，可能会抛异常
+* 使用as? 进行安全的类型转换
 
 ### 6. if 判断
-   基础用法跟 Java 一毛一样。它们主要区别在于：Java If is Statement，Kotlin If is Expression。因此它对比 Java 多了些“高级”用法，懒得讲了，咱看后面的实战吧。
+   基础用法跟 Java 一毛一样。它们主要区别在于：Java If is Statement，Kotlin If is Expression。因此它对比 Java 多了些“高级”用法，懒得讲了，看后面的实战吧。
 
 ### 7. for 循环
    跟 Java 也差不多：
@@ -186,7 +185,7 @@ for (i in 6 downTo 0 step 2) {
 ```
 
 ### 8. when
-when 就相当于高级版的 switch，它的高级之处在于支持`模式匹配(Pattern Matching)`:
+when 就相当于高级版的 switch(类似JDK21 中的新switch 语法)，它的高级之处在于支持`模式匹配(Pattern Matching)`:
 
 ```kotlin
 val x = 9
