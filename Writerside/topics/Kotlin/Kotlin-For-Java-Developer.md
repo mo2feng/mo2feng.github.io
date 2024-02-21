@@ -27,8 +27,10 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 
 > 思考题：
 
-#####  既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？{collapsible="true"}
+####  既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？{collapsible="true"}
+
 {collapsible="true" default-state="collapsed"}
+
 Kotlin 是一种静态类型的编程语言，它在设计时就考虑到了与 Java 的完全互操作性。Kotlin Int 是 Kotlin 语言中的整数类型，而 Java int 和 Java Integer 是 Java 中的整数类型。
 Java int 是 Java 中的基本数据类型，用于表示整数。
 Java Integer 是 Java 中的包装类，用于封装基本类型 int，它是一个对象。
@@ -51,10 +53,8 @@ fun someKotlinFunction() {
 但是 **Kotlin 中的Int 类型不可为空，而 Java 的 Integer 类型可以为空**。如果需要传递一个可空的 Int 值给 Java 方法，需要使用 Kotlin 的可空类型。
 
 
+#### Kotlin Any 类型与 Java Object 类型之间有什么关系？{collapsible="true"}
 
-> 思考题
-
-##### Kotlin Any 类型与 Java Object 类型之间有什么关系？{collapsible="true"}
 
 ### 2. 可见性修饰符 (Visibility Modifiers)
 
