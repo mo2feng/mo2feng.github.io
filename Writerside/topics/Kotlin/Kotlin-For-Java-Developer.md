@@ -599,11 +599,11 @@ Kotlin 为lazy 委托提供三种线程模式，他们分别是：
 * `LazyThreadSafetyMode.PUBLICATION`
 上面这三种模式，前面两种很好理解：
 
-LazyThreadSafetyMode.SYNCHRONIZED 通过加锁实现多线程同步，这也是默认的模式。
-LazyThreadSafetyMode.NONE 则没有任何线程安全代码，线程不安全。
+`LazyThreadSafetyMode.SYNCHRONIZED` 通过加锁实现多线程同步，这也是默认的模式。
+`LazyThreadSafetyMode.NONE` 则没有任何线程安全代码，线程不安全。
 我们详细看看LazyThreadSafetyMode.PUBLICATION，官方文档的解释是这样的：
 
-Initializer function can be called several times on concurrent access to uninitialized [Lazy] instance value, but only the first returned value will be used as the value of [Lazy] instance.
+> Initializer function can be called several times on concurrent access to uninitialized [Lazy] instance value, but only the first returned value will be used as the value of [Lazy] instance.
 
 意思就是，用LazyThreadSafetyMode.PUBLICATION模式的 lazy 委托变量，它的初始化方法是可能会被多个线程执行多次的，但最后这个变量的取值是仅以第一次算出的值为准的。即，哪个线程最先算出这个值，就以这个值为准。
 
