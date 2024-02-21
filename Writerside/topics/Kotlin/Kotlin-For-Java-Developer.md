@@ -1,11 +1,6 @@
 # 写给Java开发者的Kotlin入坑指南
 
 
-## 每个 Java 开发者都应该学 Kotlin
-推荐学习 Kotlin 的理由有很多，比如：Kotlin 更简洁，Kotlin 有协程，Kotlin 有扩展函数，学了 Kotlin 后学别的语言会很快，比如：Python，Swift，Dart(这个就是Fullter框架的语言), Ruby...
-
-不过，如果你是 ~~公司要求的 /~~ Android 开发者，我劝你别再做无谓的挣扎了！
-
 ## 快速认识 Kotlin
 Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。Kotlin 有着以下几个特点：
 
@@ -33,6 +28,8 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 > 思考题1：
 > 
 > 既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？
+
+
 
 > 思考题2：
 > 
@@ -76,6 +73,21 @@ d = 1;
 > 思考题3：
 >
 > Kotlin val 变量与 Java 的 final 有什么关系？
+
+#### 点击查看 {collapsible="true"}
+在 Kotlin 中，`val` 关键字用于声明一个不可变的变量，这意味着一旦一个变量被初始化后，它的值就不能再被改变。这与 Java 中的 `final` 变量非常相似。
+当你用 Kotlin 编写代码时，使用 val 声明的变量在编译成 Java 字节码后，会被转换成 Java 中的 `final` 变量。这意味着 Kotlin 的 val 变量在 Java 代码中看起来就像是一个 `final` 变量。
+例如，在 Kotlin 中你可能有这样的声明：
+```kt
+val a: Int = 10
+```
+这会被编译成 Java 代码中的：
+```java
+final int a = 10;
+```
+这种设计选择确保了 Kotlin 的不可变变量在 Java 代码中也是不可变的，保持了类型安全和线程安全性。同时，这也使得 Kotlin 代码能够与 Java 代码无缝交互，因为 Java 开发者可以信赖 Kotlin val 变量不会被重新赋值。
+需要注意的是，尽管 Kotlin 的` val` 类似于 Java 的 `final`，但它们在语义上并不完全相同。在 Kotlin 中，`val` 可以用于创建运行时的不可变对象，而 Java 的 final 仅保证变量引用本身不会被改变，不保证引用的对象本身是不可变的。例如，一个 `final` 的` ArrayList` 在 Java 中可以被修改，尽管你不能重新分配它。而在 Kotlin 中，如果你想要一个不可变的集合，你需要使用专门的不可变集合类型，如 `List` 而不是` MutableList`。
+
 
 ### 4 空安全 (Null Safety)
 
