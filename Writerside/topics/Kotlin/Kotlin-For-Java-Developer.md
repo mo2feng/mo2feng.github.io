@@ -106,6 +106,7 @@ val a: Int = 10
 final int a = 10;
 ```
 这种设计选择确保了 Kotlin 的不可变变量在 Java 代码中也是不可变的，保持了类型安全和线程安全性。同时，这也使得 Kotlin 代码能够与 Java 代码无缝交互，因为 Java 开发者可以信赖 Kotlin val 变量不会被重新赋值。
+
 需要注意的是，尽管 Kotlin 的` val` 类似于 Java 的 `final`，但它们在语义上并不完全相同。在 Kotlin 中，`val` 可以用于创建运行时的不可变对象，而 Java 的 final 仅保证变量引用本身不会被改变，不保证引用的对象本身是不可变的。例如，一个 `final` 的` ArrayList` 在 Java 中可以被修改，尽管你不能重新分配它。而在 Kotlin 中，如果你想要一个不可变的集合，你需要使用专门的不可变集合类型，如 `List` 而不是` MutableList`。
 
 
