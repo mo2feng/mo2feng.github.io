@@ -1,5 +1,5 @@
 # 写给Java开发者的Kotlin入坑指南
-
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## 快速认识 Kotlin
 Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。Kotlin 有着以下几个特点：
