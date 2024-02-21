@@ -25,9 +25,31 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 |Short|16|Kotlin 没有 short|
 |Byte|8|Kotlin 没有 byte|
 
-> 思考题1：
-> 
-> 既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？
+> 思考题：
+
+既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？
+
+#### 查看 {collapsible="true"}
+Kotlin 是一种静态类型的编程语言，它在设计时就考虑到了与 Java 的完全互操作性。Kotlin Int 是 Kotlin 语言中的整数类型，而 Java int 和 Java Integer 是 Java 中的整数类型。
+Java int 是 Java 中的基本数据类型，用于表示整数。
+Java Integer 是 Java 中的包装类，用于封装基本类型 int，它是一个对象。
+在 Kotlin 中，Int 是 java.lang.Integer 的一个封装，这意味着在 Kotlin 代码中使用的 Int 类型，在编译为 JVM 字节码后，会直接映射到 Java 的 Integer 类型。但是，由于 Kotlin 对基本类型和包装类型进行了内联操作，因此在性能上通常不会有太大的差异。
+当 Kotlin 代码与 Java 代码交互时，Kotlin 的 Int 类型可以直接与 Java 的 int 和 Integer 类型无缝工作。编译器会处理这种转换，使得开发者无需手动进行类型转换。这意味着，你可以直接在 Kotlin 中使用 Java 的方法，传入 Int 类型的值，即使该方法期望的是 int 或 Integer 类型的参数。
+例如，如果你有一个 Java 方法如下：
+```
+public void setNumber(int number) {
+    // 方法体
+}
+```
+在 Kotlin 中，你可以这样调用它：
+
+```
+fun someKotlinFunction() {
+    val kotlinInt: Int = 42
+    setNumber(kotlinInt) // 直接传递 Kotlin Int 给期望 Java int 的方法
+}
+```
+但是 **Kotlin 中的Int 类型不可为空，而 Java 的 Integer 类型可以为空**。如果需要传递一个可空的 Int 值给 Java 方法，需要使用 Kotlin 的可空类型。
 
 
 
