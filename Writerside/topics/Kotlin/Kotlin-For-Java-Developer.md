@@ -92,13 +92,14 @@ d = 1;
 * Kotlin 支持类型自动推导
 
 > 思考题：
+
 {collapsible="true"}
 Kotlin val 变量与 Java 的 final 有什么关系？
 {collapsible="true" default-state="collapsed"}
 ：在 Kotlin 中，`val` 关键字用于声明一个不可变的变量，这意味着一旦一个变量被初始化后，它的值就不能再被改变。这与 Java 中的 `final` 变量非常相似。
 当你用 Kotlin 编写代码时，使用 val 声明的变量在编译成 Java 字节码后，会被转换成 Java 中的 `final` 变量。这意味着 Kotlin 的 val 变量在 Java 代码中看起来就像是一个 `final` 变量。
 例如，在 Kotlin 中你可能有这样的声明：
-```kt
+```kotlin
 val a: Int = 10
 ```
 这会被编译成 Java 代码中的：
