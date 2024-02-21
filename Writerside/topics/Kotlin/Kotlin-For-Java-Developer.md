@@ -27,7 +27,7 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 
 > 思考题：
 
-既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？{collapsible="true"}
+#####  既然 Kotlin 与 Java 是兼容的，那么 Kotlin Int 与 Java int、Java Integer 之间是什么关系？{collapsible="true"}
 
 Kotlin 是一种静态类型的编程语言，它在设计时就考虑到了与 Java 的完全互操作性。Kotlin Int 是 Kotlin 语言中的整数类型，而 Java int 和 Java Integer 是 Java 中的整数类型。
 Java int 是 Java 中的基本数据类型，用于表示整数。
@@ -54,7 +54,7 @@ fun someKotlinFunction() {
 
 > 思考题
 
-Kotlin Any 类型与 Java Object 类型之间有什么关系？{collapsible="true"}
+##### Kotlin Any 类型与 Java Object 类型之间有什么关系？{collapsible="true"}
 
 ### 2. 可见性修饰符 (Visibility Modifiers)
 
@@ -93,8 +93,7 @@ d = 1;
 
 > 思考题：
 
-{collapsible="true"}
-Kotlin val 变量与 Java 的 final 有什么关系？
+#### Kotlin val 变量与 Java 的 final 有什么关系？ {collapsible="true"}
 {collapsible="true" default-state="collapsed"}
 ：在 Kotlin 中，`val` 关键字用于声明一个不可变的变量，这意味着一旦一个变量被初始化后，它的值就不能再被改变。这与 Java 中的 `final` 变量非常相似。
 当你用 Kotlin 编写代码时，使用 val 声明的变量在编译成 Java 字节码后，会被转换成 Java 中的 `final` 变量。这意味着 Kotlin 的 val 变量在 Java 代码中看起来就像是一个 `final` 变量。
