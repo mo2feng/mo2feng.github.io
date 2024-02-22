@@ -11,6 +11,463 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 
 > JetBrains 不仅创造了 Kotlin，还创造了著名的 IntelliJ IDEA。
 
+## 差别
+
+### 和Java的基本区别
+
+* 没有new关键字, 直接创建对象.
+* 没有;
+* 类型分为Nullable(带?)和Non-Null.
+* 继承类和实现接口都用`:`.
+
+### 类型
+在Kotlin中支持的数据类型: `Double`,` Float`, `Long`, `Int`, `Short`, `Byte`. 不再像Java一样支持小数到大数的默认转换, 所有的转换都要通过显式的方法, 比如`toInt()`方法.
+
+字符类型: `Char`, 不能像Java中一样直接当数字对待了. 
+
+布尔类型: `Boolean`.
+
+以上类型在运行时都会被表示为JVM原生类型(除非是可空类型和泛型应用), 但是在代码中它们只有一种写法(不像Java中有`int`和`Integer`两种), 在用户看来它们就是普通的类.
+
+所有的类型需要可空(nullable)类型时, 会被自动装箱.
+
+字符串类型: `String`: 字符串是不可变(immutable)类型, 可以用`[]`访问元素, 可以用`$`加入模板表达式(可以是变量也可以是用{}包含的表达式).
+
+### 方法声明
+#### 方法声明格式:
+
+```
+fun 方法名(参数): 返回值类型 {    方法体}
+```
+
+参数列表中变量名在前面, 变量类型在后面.
+
+比如:
+
+```
+fun sum(a: Int, b: Int): Int {    return a + b}
+```
+
+方法体要是返回一个简单的表达式, 可以直接用`=`
+
+```
+fun sum(a: Int, b: Int) = a + b
+```
+
+这种情况下由于返回值类型可以被推断出来, 所以也可以省略不写.
+
+返回值为空时，类型为` Unit`，可以省略不写.
+
+当方法有body时, 除非返回值是`Unit`, 否则返回值类型是不能被省略的.
+
+#### 方法默认参数
+声明方法的时候, 可以用`=`给参数设置默认值. 当调用方法时省略了该参数, 就会使用默认值.
+
+调用方法的时候可以指定参数的名字.
+
+```
+fun reformat(str: String,             normalizeCase: Boolean = true,             upperCaseFirstLetter: Boolean = true,             divideByCamelHumps: Boolean = false,             wordSeparator: Char = ' ') {...}
+```
+
+调用的时候:
+
+reformat(str, wordSeparator = '_')
+
+更多可以查看官方文档: [Functions](https://kotlinlang.org/docs/functions.html)
+
+### 变量声明
+变量声明有两个关键字: `val`和`var`.
+
+其中val只能被赋值一次, 相当于final.
+
+```kotlin
+val a: Int = 1  // 立即声明并赋值
+val b = 2   // 自动推断`Int`类型 
+val c: Int  // 没有初始值, 需要声明类型
+c = 3       // 明确赋值
+```
+
+变量声明时如果初始化可以推断出类型, 则可以省略类型.
+
+### 流程控制
+#### if
+在kotlin中的if是一个表达式(expression), 即可以返回值.
+
+它的分支可以是{}包围的block, 其中最后一个表达式就是对应分支的值.
+
+```kotlin
+val max = if (a > b) {    
+    print("Choose a")    
+    a
+} else {   
+    print("Choose b")    
+    b
+}
+```
+        
+当if作为表达式被使用的时候, 它**必须**有else.
+
+Java中常用的三元运算符条件? 满足 : 不满足, 在Kotlin中是**不存在**的.
+
+Kotlin中的Elvis Operator是用来进行null判断然后选择处理的. (具体见下篇空安全文章介绍)
+
+#### when
+when是用来取代Java中的switch的.
+```kotlin
+when (x) {   
+    1 -> print("x == 1")    
+    2 -> print("x == 2")    
+    else -> { // Note the block        
+        print("x is neither 1 nor 2")    
+    }
+}
+```
+
+和if一样, when也是可以被用作expression(表达式)或statement. 作为表达式使用的时候, else是必须的(除非编译器可以推断所有的情况都已经被覆盖了).
+
+#### 循环
+while, do...while, break, continue的用法都和Java一样.
+
+for的用法也类似, 只不过在Java中是`:`, 在Kotlin中变成了`in`.
+
+Kotlin有一些Range操作符
+```kotlin
+val x = 10
+val y = 9
+if (x in 1..y+1) {
+    println("fits in range")
+}
+```
+更多可以参考: [Ranges](https://kotlinlang.org/docs/basic-syntax.html#ranges)
+
+
+### 空安全: Kotlin的一大卖点 {id="null-safety"}
+Kotlin的type system旨在减少NullPointerException(NPE).
+
+主要是通过编译期间, 就区分了哪些东西是不会为null的, 哪些是可能为null的. 如果想要把null传递给不能为null的类型, 会有编译错误. 可能为null的引用使用时必须要做相应的检查.
+
+```kotlin
+var a: String = "abc"
+// a = null // compile error
+val aLength = a.length
+
+var b: String? = "abc"
+b = null // ok
+// val bLength = b.length // 不能直接使用, compile error
+```
+### 检查是否为null
+对于可能为null的类型, 可以用if来做显式的检查. 但是这种只适用于变量不可变的情形, 免得刚检查完是否为null, 它就变了.
+
+### Safe Calls
+可以用操作符·来进行安全操作.
+
+```kotlin
+var b: String? = "abc"
+val bLength = b?.length // 如果b不为null, 返回长度, 如果b为null, 返回null
+```
+上面bLength类型为Int?.
+
+Safe calls在链式操作时非常有用. 比如:
+
+`bob?.department?.head?.name`
+其中任何一个环节为null了最后的结果就为null.
+
+还可以用在表达式的左边:
+
+````kotlin
+// 如果 `person` 或者 `person.department` 为 null,方法就不会被调用
+person?.department?.head = managersPool.getManager()
+````
+### let()
+实践中比较常见的是用`let()`操作符, 对非null的值做一些操作:
+
+```kotlin
+ val listWithNulls: List<String?> = listOf("Kotlin", null)
+    for (item in listWithNulls) {    
+        item?.let { 
+            println(it)  // it 编辑lambda表达式的默认变量
+        }
+    }
+```
+参考 [Scope Functions](https://kotlinlang.org/docs/scope-functions.html#let)
+
+
+### Elvis Operator
+我们可能有这样的需求, 有个可能为null的变量, 我们需要在其不为null的时候返回一个表达式, 为null的时候返回一个特定的值.
+
+比如:
+
+```kotlin
+val l: Int = if (b != null) b.length else -1
+`
+我们可以写成这样:
+
+```kotlin
+val l = b?.length ?: -1
+```
+仅当?:左边为null的时候, 右边的表达式才会执行.
+
+实际应用: 在Kotlin中, return和throw都是表达式, 所以我们可以这样用:
+
+```kotlin 
+fun foo(node: Node): String? {
+    val parent = node.getParent() ?: return null
+    val name = node.getName() ?: throw IllegalArgumentException("name expected")
+// ...
+}
+```
+### 操作符!!
+
+`!!`操作符表达的是: "嘿, 肯定不为`null`". 所以它称作not-null assertion operator. 它的作用是把原来可能为`null`的类型**强转**成不能为`null`的类型.
+
+> 如果这种断言失败了, 就抛出NPE了.
+
+### 仍然可能会遇到NPE的情形
+* `throw NullPointerException()`.
+* `!!`使用在了为null的对象上.
+* 初始化相关的一些数据不一致情形.
+* 一个构造中没有初始化的this传递到其他地方使用.
+* 基类的构造中使用了`open`的成员, 实现在子类中, 此时可能还没有被初始化.
+* 和Java互相调用的时候:
+
+    * Java声明的类型叫[platform type](https://kotlinlang.org/docs/java-to-kotlin-nullability-guide.html#platform-types), 其null安全和Java中的一样.
+    * 和Java互相调用时的泛型使用了错误的类型. 比如Kotlin中的`MutableList<String>`, 在Java代码中可能加入一个`null`. 此时应该声明为`MutableList<String?>`.
+    * 其他外部Java代码导致的情形.
+
+
+
+
+### 安全强转
+强转时如果类型不匹配会抛出ClassCastException 可以用`as?`来做安全强转, 当类型不匹配的时候返回`null`, 而不是抛出异常.
+
+```kotlin
+val aInt: Int? = a as? Int
+```
+类型检查用关键字`is`.
+
+### 集合过滤
+集合中有个`filterNotNull()`可以用来过滤出非空元素.
+
+```kotlin
+    val nullableList: List<Int?> = listOf(1, 2, null, 4)
+    val intList: List<Int> = nullableList.filterNotNull()
+    println(intList) //[1, 2, 4]
+```
+
+### Kotlin中的类和对象
+Kotlin中的类关键字仍然是`class`, 但是创建类的实例不需要`new`.
+
+### 构造函数
+构造函数分为: `primary constructor`(一个)和`secondary constructor`(0个、1个或多个).
+
+如果一个非抽象类自己没有声明任何构造器, 它将会生成一个无参数的主构造, 可见性为`public`.
+
+#### 主构造 Primary Constructor
+主构造函数写在类名后面, 作为class header:
+
+```kotlin
+class Person constructor(firstName: String) {
+//... 
+}
+```
+如果没有注解和可见性修饰符, 关键字`constructor`是可以省略的:
+
+```kotlin
+class Person2(firstName: String) {
+//... 
+}
+```
+
+#### init代码块和属性初始化代码
+主构造函数是不能包含任何代码的, 如果需要初始化的代码, 可以放在init块中.
+
+在实例的初始化阶段, init块和属性初始化的执行顺序和它们在body中出现的顺序一致.
+```kotlin
+class InitOrderDemo(name: String) {
+    val firstProperty = "First property: $name".also(::println)
+
+    init {
+        println("First initializer block that prints $name")
+    }
+
+    val secondProperty = "Second property: ${name.length}".also(::println)
+
+    init {
+        println("Second initializer block that prints ${name.length}")
+    }
+}
+```
+这个类被实例化的时候,`print`的顺序和代码中的顺序一致.
+
+这个例子也可以看出, 主构造函数中传入的参数在`init`块和属性初始化代码中是可以直接使用的.
+
+实际上, 对于主构造中传入的参数是可以直接声明为属性并初始化的.
+
+```kotlin
+class PersonWithProperties(val firstName: String, val lastName: String, var age: Int) {
+//... 
+}
+```
+可以是`val`也可以是`var`.
+
+#### 次构造函数 {id="Secondary-Constructors"}
+次构造是用`constructor`关键字标记, 写在body里的构造.
+
+如果有主构造, 次构造需要代理到主构造, 用`this`关键字.
+
+注意init块是和主构造关联的, 所以会在次构造代码之前执行.
+
+即便没有声明主构造, 这个代理也是隐式发生的, 所以init块仍然会执行.
+
+```kotlin
+class Constructors {
+    init {
+        println("Init block")
+    }
+
+    constructor(i: Int) {
+        println("Constructor")
+    }
+}
+```
+
+创建实例, 输出:
+
+Init blockConstructor
+
+### 继承
+继承用`:`. 方法覆写的时候`override`关键字是必须的.
+
+Kotlin中默认是不鼓励继承的(类和方法默认都是final的):
+
+* 类需要显式声明为`open`才可以被继承.
+* 方法要显式声明为`open`才可以被覆写.
+
+抽象类(abstract)默认是`open`的. 一个已经标记为`override`的方法是`open`的, 如果想要禁止它被进一步覆写, 可以在前面加上`final`.
+
+属性也可以被覆盖, 同方法类似, 基类需要标记`open`, 子类标记`override`.
+
+注意`val`可以被覆写成`var`, 但是反过来却不行.
+
+```kotlin
+interface Foo {
+    val count: Int
+}
+
+class Bar1(override val count: Int) : Foo
+
+class Bar2 : Foo {
+    override var count: Int = 0
+}
+```
+
+注意, 由于初始化顺序问题. 在基类的构造, `init`块和属性初始化中, 不要使用`open`的成员.
+
+### 对象表达式和对象声明
+Java中的匿名内部类, 在Kotlin中用对象表达式(expression)和对象声明(declaration).
+
+表达式和声明的区别: 声明不可以被用在`=`的右边.
+
+#### 对象表达式 {id="object-expression"}
+用`objec`关键字可以创建一个匿名类的对象.
+
+这个匿名类可以继承一个或多个基类:
+
+```kotlin
+open class A(x: Int) {
+    public open val y: Int = x
+}
+
+interface B {
+// ...
+}
+
+val ab: A = object : A(1), B {
+    override val y = 15
+}
+```
+
+也可以没有基类:
+
+```kotlin
+fun foo() {
+    val adHoc = object {
+        var x: Int = 0        var y: Int = 0
+    } 
+    print (adHoc.x + adHoc.y)
+}
+```
+
+#### 对象声明 {id="object-declaration"}
+在Kotlin中可以用object来声明一个单例.
+```kotlin
+// singleton
+object DataProviderManager {
+    fun doSomething() {
+    }
+}
+
+fun main() {
+    DataProviderManager.doSomething()
+}
+```
+
+对象声明的初始化是线程安全的. 使用的时候直接用类名即可调用它的方法.
+
+#### 伴生对象 {id="Companion-Objects"}
+在类里面写的对象声明可以用companion关键字标记, 表示伴生对象.
+
+Kotlin中的类并没有静态方法. 在大多数情况下, 推荐使用包下的方法.
+
+如果在类中声明一个伴生对象, 就可以像Java中的静态方法一样, 用类名.方法名调用方法.
+
+```kotlin
+class MyClass {
+    companion object Factory {
+        fun create(): MyClass = MyClass()
+    }
+}
+
+fun main() {
+    MyClass.create()
+}
+```
+
+### Model类神器: data class
+~~Lombok 给我死~~
+
+model类可以用`data`来标记为`data class`.
+
+```kotlin
+data class User(val name: String, val age: Int)
+```
+编译器会根据在主构造中声明的所有属性, 自动生成需要的方法, 包括`equals()`/`hashCode()`, `toString()`, `componentN()`和`copy()`.
+
+为了让生成的代码有意义, 需要满足这些条件:
+
+* 主构造至少要有一个参数.
+* 所有的主构造参数都要被标记为`val`或`var`.
+* data class不能为`abstract`, `open`, `sealed`或`inner`.
+
+
+> 注意
+
+* 如果equals(), hashCode()或 toString()有显式的实现, 或基类有final版本, 这三个方法将不会被生成, 而使用现有版本.
+* 如果需要生成的类有无参数的构造器, 那么所有的属性都需要指定一个默认值.
+    ```kotlin
+    data class UserWithDefaults(val name: String = "", val age: Int = 0)
+    ```
+* 生成的方法只会使用主构造中声明的属性, 如果想要排除某些属性, 可以放在body中声明.
+
+> 建议
+
+虽然`data class`中的属性可以被声明为`val`或`var`, 但是推荐使用`val`, 即不可变(immutable)的属性, 从而让类的实例是不可变的.
+
+不可变的实例在创建完成之后就不会再改变值. 可以用`copy()`方法创建新的实例, 修改一些属性.
+
+
+
+
 ## 基础语法
 
 ### 1. 所有 Kotlin 类都是对象 (Everything in Kotlin is an object)
