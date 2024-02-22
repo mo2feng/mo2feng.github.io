@@ -1,7 +1,7 @@
 # 写给Java开发者的Kotlin入门指南
 <show-structure for="chapter,procedure" depth="2"/>
 
-## 快速认识 Kotlin
+## 快速认识 Kotlin {id="quick-start"}
 Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。Kotlin 有着以下几个特点：
 
 * 简洁，1行顶5行
@@ -11,7 +11,7 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 
 > JetBrains 不仅创造了 Kotlin，还创造了著名的 IntelliJ IDEA。
 
-## 差别
+## 对比Java {id="compare-with-java"}
 
 ### 和Java的基本区别
 
@@ -254,7 +254,7 @@ val aInt: Int? = a as? Int
     println(intList) //[1, 2, 4]
 ```
 
-### Kotlin中的类和对象
+### Kotlin中的类和对象 {id="class-and-objects-in-kotlin"}
 Kotlin中的类关键字仍然是`class`, 但是创建类的实例不需要`new`.
 
 ### 构造函数
@@ -262,7 +262,7 @@ Kotlin中的类关键字仍然是`class`, 但是创建类的实例不需要`new`
 
 如果一个非抽象类自己没有声明任何构造器, 它将会生成一个无参数的主构造, 可见性为`public`.
 
-#### 主构造 Primary Constructor
+#### 主构造函数 {id = "Primary-Constructor"}
 主构造函数写在类名后面, 作为class header:
 
 ```kotlin
@@ -278,7 +278,7 @@ class Person2(firstName: String) {
 }
 ```
 
-#### init代码块和属性初始化代码
+#### init代码块和属性初始化代码 {id="init-code-block-and-property-initialization-code"}
 主构造函数是不能包含任何代码的, 如果需要初始化的代码, 可以放在init块中.
 
 在实例的初始化阶段, init块和属性初始化的执行顺序和它们在body中出现的顺序一致.
@@ -451,6 +451,7 @@ data class User(val name: String, val age: Int)
 
 
 > 注意
+{style="warning"}
 
 * 如果equals(), hashCode()或 toString()有显式的实现, 或基类有final版本, 这三个方法将不会被生成, 而使用现有版本.
 * 如果需要生成的类有无参数的构造器, 那么所有的属性都需要指定一个默认值.
@@ -468,7 +469,7 @@ data class User(val name: String, val age: Int)
 
 
 
-## 基础语法
+## 基础语法 {collapsible="true"}
 
 ### 1. 所有 Kotlin 类都是对象 (Everything in Kotlin is an object)
    与 Java 不一样是：Kotlin 没有基本数据类型 (Primitive Types)，所有 Kotlin 里面的类都是对象，它们都继承自: Any这个类；与 Java 类似的是，Kotlin 提供了如下的内置类型：
@@ -767,7 +768,7 @@ val instance = Person("Kotlin")
 ```
 
 
-#### `init` 代码块
+#### `init` 代码块 {id="init-code-block"}
 Kotlin 为我们提供了 init 代码块，用于放置初始化代码：
 
 ```kotlin
