@@ -41,7 +41,7 @@ create <newCollection>
      if condition(<element>)
          add <element> to <newCollection>
 ```
-使用EC,可以这样来实现
+EC实现
 
 ```java
 MutableList<Integer> greaterThanFifty = list.select(each -> each > 50);
@@ -58,7 +58,7 @@ create <newCollection>
      if not condition(<element>)
          add <element> to <newCollection>
 ```
-使用EC,可以这样来实现
+EC实现
 ```java
 MutableList<Integer> notGreaterThanFifty = list.reject(each -> each > 50);
 ```
@@ -91,9 +91,7 @@ create <newCollection>
      Add all <results> to <newCollection>
 ```
 
-Java Stream 实现
-```java
-```
+
 
 EC实现
 ```java
