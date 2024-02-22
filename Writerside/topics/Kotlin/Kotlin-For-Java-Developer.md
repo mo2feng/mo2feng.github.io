@@ -1,4 +1,4 @@
-# 写给Java开发者的Kotlin入坑指南
+# 写给Java开发者的Kotlin入门指南
 <show-structure for="chapter,procedure" depth="2"/>
 
 ## 快速认识 Kotlin
@@ -31,29 +31,28 @@ Kotlin 是著名 IDE 公司 JetBrains 创造出的一门基于 JVM 的语言。K
 
 {collapsible="true" default-state="collapsed"}
 
-Kotlin 是一种静态类型的编程语言，它在设计时就考虑到了与 Java 的完全互操作性。Kotlin Int 是 Kotlin 语言中的整数类型，而 Java int 和 Java Integer 是 Java 中的整数类型。
-Java int 是 Java 中的基本数据类型，用于表示整数。
-Java Integer 是 Java 中的包装类，用于封装基本类型 int，它是一个对象。
-在 Kotlin 中，Int 是 java.lang.Integer 的一个封装，这意味着在 Kotlin 代码中使用的 Int 类型，在编译为 JVM 字节码后，会直接映射到 Java 的 Integer 类型。但是，由于 Kotlin 对基本类型和包装类型进行了内联操作，因此在性能上通常不会有太大的差异。
-当 Kotlin 代码与 Java 代码交互时，Kotlin 的 Int 类型可以直接与 Java 的 int 和 Integer 类型无缝工作。编译器会处理这种转换，使得开发者无需手动进行类型转换。这意味着，你可以直接在 Kotlin 中使用 Java 的方法，传入 Int 类型的值，即使该方法期望的是 int 或 Integer 类型的参数。
-例如，如果你有一个 Java 方法如下：
-```
-public void setNumber(int number) {
-    // 方法体
-}
-```
-在 Kotlin 中，你可以这样调用它：
+Kotlin的Int类型在底层是直接映射到Java的int类型的。这意味着在Kotlin中，当你声明一个Int类型的变量时，它在Java字节码层面上就是int类型。Kotlin的Int类型提供了与Java的int类型相同的功能，包括所有的算术运算和比较操作。
 
-```
-fun someKotlinFunction() {
-    val kotlinInt: Int = 42
-    setNumber(kotlinInt) // 直接传递 Kotlin Int 给期望 Java int 的方法
-}
-```
-但是 **Kotlin 中的Int 类型不可为空，而 Java 的 Integer 类型可以为空**。如果需要传递一个可空的 Int 值给 Java 方法，需要使用 Kotlin 的可空类型。
+Kotlin的Int类型在某些情况下可以被视为Java的`Integer`类型。这是因为Kotlin的Int类型是不可空的（non-nullable），而Java的`Integer`类型是可空的（nullable）。在Kotlin中，你可以将Int类型的值赋给`Integer`类型的变量，或者将`Integer`类型的值赋给`Int`类型的变量，但后者需要显式转换（例如，使用`.toInt()`方法）。
+
+在Kotlin中，如果你需要一个可空的整型变量，你应该使用Int?类型。Int?类型在字节码层面上仍然是Integer类型，因为它是可空的。
+
+总结来说，Kotlin的Int类型在功能上与Java的int类型相同，但在类型系统上，它同时提供了与Java的Integer类型相似的可空性处理。这使得Kotlin在处理整型数据时更加灵活，同时保持了与Java的兼容性。
 
 
 #### Kotlin Any 类型与 Java Object 类型之间有什么关系？{collapsible="true"}
+
+{collapsible="true" default-state="collapsed"}
+
+Kotlin的`Any`类型与Java的`Object`类型在概念上是相似的，但它们在语言层面上有一些关键的区别。
+
+在Java中，`Object`是所有类的根类，是所有引用类型的超类。这意味着所有的Java类（除了基本数据类型）都直接或间接地继承自`Object`。基本数据类型（如int, float, boolean等）在Java中不是类，它们有对应的包装类（如`Integer`, `Float`, `Boolean`等），这些包装类继承自`Object`。
+
+在Kotlin中，`Any`类型是所有非空类型的超类型，它不仅包括所有类，还包括Kotlin中的所有基本数据类型（如`Int`, `Float`, `Boolean`等）。在Kotlin中，所有类型都是引用类型，即使是基本数据类型，它们也被当作对象处理。这意味着在Kotlin中，你可以将基本数据类型直接赋值给`Any`类型的变量，而不需要使用包装类。Kotlin的`Any`类型在底层对应于Java的`Object`类型，当你在Kotlin中使用Any类型时，它在编译成Java字节码时会映射为`Object`。
+
+Kotlin的Any类型提供了一些基本的方法，如`equals()`, `hashCode()`, 和 `toString()`，这些方法在Kotlin中被定义为开放（open）方法，允许子类重写它们。然而，Kotlin的Any类型并不包含JavaObject类中的所有方法，例如`wait()`, notify(), notifyAll()等，因为这些方法在Kotlin中没有直接的对应。
+
+总结来说，Kotlin的Any类型在功能上类似于Java的Object类型，但Kotlin通过Any类型统一了对所有类型（包括基本数据类型）的处理，使得类型系统更加简洁和一致。在Kotlin中，你不需要像在Java中那样区分基本数据类型和引用类型，因为所有类型在Kotlin中都是对象。
 
 
 ### 2. 可见性修饰符 (Visibility Modifiers)
@@ -255,7 +254,7 @@ print(a === b)
 // 判断 a、b 是不是同一个对象
 ```
 
-> 思考题4：
+> 思考题
 
 ```kotlin
 val a: Int = 10000
@@ -266,8 +265,6 @@ print(boxedA === anotherBoxedA)
 // 输出什么内容?
 ```
 
-
-思考题5：
 ```kotlin
 val a: Int = 1
 val boxedA: Int? = a
@@ -540,7 +537,6 @@ activity?.toast("Hello world!", Toast.LENGTH_LONG)
 #### 属性扩展
 除了扩展函数，Kotlin 还支持扩展属性，用法基本一致。
 
-思考题6：
 上面的例子中，我们给不可为空的 Context 类增加了扩展函数，因此我们在使用这个方法的时候需要判空。实际上，Kotlin 还支持我们为 可为空的 类增加扩展函数：
 
 ```kotlin
@@ -665,7 +661,22 @@ name 改变了：<no name> -> first: Tom
 name 改变了：first: Tom -> second: Jack
 ```
 
-> 思考题7：
->
-> `lazy` 委托的`LazyThreadSafetyMode.PUBLICATION`适用于什么样的场景？
+> 思考题：
 
+#### `lazy` 委托的`LazyThreadSafetyMode.PUBLICATION`适用于什么样的场景？{collapsible="true"}
+
+{collapsible="true" default-state="collapsed"}
+
+LazyThreadSafetyMode.PUBLICATION适用于那些需要在多线程环境中进行延迟初始化，但不需要严格保证线程安全的场景。在这种模式下，lazy委托的属性值会在第一次被访问时进行初始化，并且这个值会被所有线程共享。如果初始化过程中抛出异常，它会尝试重新初始化。但是，与LazyThreadSafetyMode.SYNCHRONIZED不同，PUBLICATION模式不会阻止其他线程访问尚未初始化的值，这意味着在某些情况下，可能会有多个线程同时执行初始化操作，但最终只有第一个成功初始化的值会被保留。
+
+这种模式适用于以下场景：
+
+单例模式：在多线程环境中，你可能希望创建一个单例对象，但不希望在每次访问时都进行同步。PUBLICATION模式可以确保所有线程都使用同一个已初始化的实例，而不需要在每次访问时都进行同步。
+
+性能优化：如果你的应用在多线程环境中运行，并且初始化操作相对耗时，使用PUBLICATION模式可以避免不必要的同步开销，从而提高性能。这是因为只有第一个线程会执行初始化操作，后续的线程可以直接使用已经初始化的值。
+
+并发控制：在某些情况下，你可能需要在多个线程中并行执行初始化操作，但最终只保留一个结果。PUBLICATION模式通过CAS（Compare-And-Swap）操作确保只有一个线程的初始化结果被保留。
+
+资源密集型操作：如果初始化操作涉及到资源密集型的操作（如数据库连接、网络请求等），PUBLICATION模式可以避免在每次访问时都重新创建资源，从而节省资源。
+
+需要注意的是，使用PUBLICATION模式时，你需要确保初始化操作是幂等的，即多次执行相同的操作不会影响最终结果。此外，如果初始化过程中的操作不是线程安全的，可能会导致竞态条件或其他并发问题。在这种情况下，你可能需要考虑使用SYNCHRONIZED模式或者确保初始化逻辑本身是线程安全的
