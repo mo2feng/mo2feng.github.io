@@ -45,8 +45,12 @@
             <toc-element topic="Guava.md" />
             <toc-element topic="Eclipse-Collections.md" />
         </toc-element>
-        <toc-element topic="Kotlin-For-Java-Developer.md" />
     </toc-element>
+    <toc-element topic="Kotlin-Index.md" >
+        <toc-element topic="Kotlin-For-Java-Developer.md" />
+         <toc-element topic="Kotlin-Idioms.md" />
+    </toc-element>
+
     <toc-element topic="Spring-All.topic"/>
     <toc-element topic="Framework.topic">
         <toc-element topic="MyBatis.topic">

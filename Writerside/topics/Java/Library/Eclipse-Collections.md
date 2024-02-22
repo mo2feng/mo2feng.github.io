@@ -1,19 +1,163 @@
-# Eclipse Collections 库介绍 {id="lib-Eclipse-Collections"}
+# Eclipse Collections 库介绍 
 
-我们一直在寻找提升代码效率和性能的方法，以满足日益增长的业务需求。今天，我想向大家介绍一个强大的 Java 库 —— Eclipse Collections，它可能会成为我们项目中的新宠。
+## Eclipse Collections：便利性驱动的Java集合框架
 
-## 为什么选择 Eclipse Collections？ {id="why-choose-Eclipse-Collections"}
+在快节奏的软件开发中，便利性是提升开发效率的关键因素。Eclipse Collections作为一个专为便利性设计的Java集合框架，提供了以下显著优势：
 
-性能卓越：Eclipse Collections 提供了一系列经过精心优化的集合类，如 ArrayBag 和 TrieMap，它们在处理大量数据时表现出色，特别是在添加、删除和迭代操作上。
+简化代码编写：
+Eclipse Collections提供了直观的API，使得集合操作更加简洁。例如，select、reject、collect等方法可以直接在集合上调用，无需额外的lambda表达式或流操作，大大减少了代码量和复杂性。
 
-内存优化：在资源受限的环境中，ImmutableList 和 ImmutableSet 等集合可以帮助我们减少内存占用，提高应用的响应速度。
+提高代码可读性：
+通过提供清晰的命名和直观的接口，Eclipse Collections使得代码意图更加明确。这不仅有助于新团队成员快速理解现有代码，也便于维护和重构。
 
-功能丰富：库中包含了许多创新的集合类型，如 MultiMap 和 MultiSet，它们为我们处理复杂数据结构提供了新的视角和工具。
+减少样板代码：
+Eclipse Collections通过提供丰富的方法，如groupBy、topOccurrences等，减少了编写重复代码的需要。这些方法封装了常见的集合操作模式，使得开发者可以专注于业务逻辑。
 
-并发友好：在多线程应用中，ConcurrentBag 和 ConcurrentMap 提供了线程安全的集合操作，确保了数据的一致性和并发操作的高效性。
 
-灵活性与扩展性：Eclipse Collections 支持自定义迭代器、序列化和比较器，让我们能够根据项目需求灵活定制集合行为。
+总之，Eclipse Collections通过其简洁的API设计、丰富的功能和强大的社区支持，为Java开发者提供了一个便利性极高的集合操作框架。这不仅能够提升开发效率，还能帮助团队更快地交付高质量的软件产品。
 
-强大的社区支持：Eclipse Collections 拥有活跃的开发者社区，这意味着我们可以获得丰富的文档资源和及时的技术支持。
+## 安装
+11.1版本支持JDK8 - JDK21
+```xml
+<dependency>
+  <groupId>org.eclipse.collections</groupId>
+  <artifactId>eclipse-collections-api</artifactId>
+  <version>11.1.0</version>
+</dependency>
 
-## 如何使用 Eclipse Collections？{id="how-to-use-Eclipse-Collections"}
+<dependency>
+  <groupId>org.eclipse.collections</groupId>
+  <artifactId>eclipse-collections</artifactId>
+  <version>11.1.0</version>
+</dependency>
+```
+
+## 更简洁的代码
+
+1. 伪代码1
+```
+create <newCollection>
+ for each <element> of <collection>
+     if condition(<element>)
+         add <element> to <newCollection>
+```
+使用EC,可以这样来实现
+
+```java
+MutableList<Integer> greaterThanFifty = list.select(each -> each > 50);
+```
+或者这样
+```java
+MutableList<Integer> greaterThanFifty = list.select(Predicates.greaterThan(50));
+```
+
+2. 伪代码2
+```
+create <newCollection>
+ for each <element> of <collection>
+     if not condition(<element>)
+         add <element> to <newCollection>
+```
+使用EC,可以这样来实现
+```java
+MutableList<Integer> notGreaterThanFifty = list.reject(each -> each > 50);
+```
+
+3. 伪代码3
+```
+create <newCollection>
+ for each <element> of <collection>
+     <result> = transform(<element>)
+     add <result> to <newCollection>
+```
+
+Java Stream 实现
+```java
+List<Address> addresses = people.stream()
+            .map(person -> person.getAddress())
+            .collect(Collectors.toList());
+```
+
+EC实现
+```java
+MutableList<Address> addresses = people.collect(person -> person.getAddress());
+```
+
+4. 伪代码4
+```
+create <newCollection>
+ for each <element> of <collection>
+     <results> = transform(<element>)
+     Add all <results> to <newCollection>
+```
+
+Java Stream 实现
+```java
+```
+
+EC实现
+```java
+MutableList<Address> flatAddress = 
+people.flatCollect(person -> person.getAddresses());
+```
+
+5. 伪代码5
+```
+for each <element> of <collection>
+  if condition(<element>)
+    return <element>
+```
+
+EC实现
+```java
+Integer result = 
+    list.detect(each -> each > 50);
+```
+
+6. 伪代码6
+```
+for each <element> of <collection>
+     if condition(<element>)
+         return true
+ otherwise return false
+```
+
+EC实现
+```java
+boolean result = list.anySatisfy(num -> num > 50);
+```
+
+7. 伪代码7
+```
+for each <element> of <collection>
+     if not condition(<element>)
+         return false
+ otherwise return true                
+```
+
+EC实现
+```java
+boolean result = list.allSatisfy(each -> each > 50);
+```
+
+8. 伪代码8
+```
+set <result> to <initialvalue>
+ for each <element> of <collection>
+     <result> = apply(<result>, <element>)
+ return <result>
+```
+EC实现
+```java
+Integer result = Lists.mutable.of(1, 2).injectInto(3, Integer::sum);
+```
+
+## 更高性能的容器
+
+EC 容器与Java的Collection 容器对比
+
+![](https://eclipse.dev/collections/img/set.png)
+
+![](https://eclipse.dev/collections/img/map.png)
+
+![](https://eclipse.dev/collections/img/ints.png)
