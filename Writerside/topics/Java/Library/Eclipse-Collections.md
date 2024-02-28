@@ -169,6 +169,8 @@ ListAddAllTest.ec   thrpt   20  175.720 ± 5.025  ops/s
 ListAddAllTest.jdk  thrpt   20  144.614 ± 5.756  ops/s
 ```
 
+很明显可以看出ec版本的List执行的效率要比EC要高，错误更少
+
 对比源码如下：
 ```java
 @State(Scope.Thread)
@@ -228,4 +230,5 @@ public class ListAddAllTest
 }
 ```
 
-更多的对比结果可以参考[这里](https://github.com/eclipse/eclipse-collections/tree/master/jmh-tests)。
+
+更多的对比可以参考[这里](https://github.com/eclipse/eclipse-collections/tree/master/jmh-tests)。
