@@ -1,4 +1,4 @@
-# Eclipse Collections 库介绍 
+# Eclipse Collections 库推荐
 
 ## Eclipse Collections：便利性驱动的Java集合框架
 
@@ -159,3 +159,72 @@ EC 容器与Java的Collection 容器对比
 ![](https://eclipse.dev/collections/img/map.png)
 
 ![](https://eclipse.dev/collections/img/ints.png)
+
+使用JMH对比 EC 与JDK LIST的addAll性能结果
+
+```
+Benchmark            Mode  Cnt    Score   Error  Units
+ListAddAllTest.ec   thrpt   20  175.720 ± 5.025  ops/s
+ListAddAllTest.jdk  thrpt   20  144.614 ± 5.756  ops/s
+```
+
+对比源码如下：
+```java
+@State(Scope.Thread)
+@BenchmarkMode(Mode.Throughput)
+@OutputTimeUnit(TimeUnit.SECONDS)
+public class ListAddAllTest
+{
+    private static final int SIZE = 1000;
+    private final List<Integer> integersJDK = new ArrayList<>(Interval.oneTo(SIZE));
+    private final MutableList<Integer> integersEC = FastList.newList(Interval.oneTo(SIZE));
+
+    @Benchmark
+    public void jdk()
+    {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < 1000; i++)
+        {
+            result.addAll(this.integersJDK);
+        }
+        if (result.size() != 1_000_000)
+        {
+            throw new AssertionError();
+        }
+    }
+
+    @Benchmark
+    public void ec()
+    {
+        MutableList<Integer> result = FastList.newList();
+        for (int i = 0; i < 1000; i++)
+        {
+            result.addAll(this.integersEC);
+        }
+        if (result.size() != 1_000_000)
+        {
+            throw new AssertionError();
+        }
+    }
+
+    @Test
+    public void runTests() throws RunnerException
+    {
+        int warmupCount = this.warmUpCount();
+        int runCount = this.runCount();
+        Options opts = new OptionsBuilder()
+            .include(".*" + this.getClass().getName() + ".*")
+            .warmupTime(TimeValue.seconds(2))
+            .warmupIterations(warmupCount)
+            .measurementTime(TimeValue.seconds(2))
+            .measurementIterations(runCount)
+            .verbosity(VerboseMode.EXTRA)
+            .forks(2)
+            .build();
+
+        new Runner(opts).run();
+    }
+}
+```
+
+更多的对比结果可以参考[这里](https://github.com/eclipse/eclipse-collections/tree/master/jmh-tests)。
