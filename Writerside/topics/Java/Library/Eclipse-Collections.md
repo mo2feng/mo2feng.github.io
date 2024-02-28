@@ -161,6 +161,7 @@ EC 容器与Java的Collection 容器对比
 ![](https://eclipse.dev/collections/img/ints.png)
 
 使用JMH对比 EC 与JDK LIST的addAll性能结果
+~~渣电脑~~
 
 ```
 Benchmark            Mode  Cnt    Score   Error  Units
