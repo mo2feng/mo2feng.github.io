@@ -14,7 +14,7 @@
 
         <p> 纸质书只推荐一本《Java 并发编程实战》，豆瓣评分 9.0。</p>
            
-        <p> 开源书推荐：<a href="http://concurrent.redspider.group/RedSpider.html">深入浅出Java多线程</a></p>
+        <p> 开源书推荐: <a href="http://concurrent.redspider.group/RedSpider.html">深入浅出Java多线程</a></p>
     </chapter>
 
 </topic>
